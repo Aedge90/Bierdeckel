@@ -1,0 +1,447 @@
+%-------------------------------------------------------------------------------
+% Inner theme file
+%-------------------------------------------------------------------------------
+
+
+\mode<presentation>
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Title page %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{title page}{%
+\begin{pgfpicture}{\factor*1.56cm}{0cm}% Minus left margin
+                  {\paperwidth}{\paperheight}
+  % Headline
+  \pgfputat{\pgfpoint{\paperwidth-\factory*1.77cm}%
+                     {\paperheight-\factory*.7cm}}{%
+    \pgfbox[right,top]{%
+      \pgfuseimage{faulogo-large}
+    }
+  }
+  \pgfputat{\pgfpoint{\paperwidth-\factory*1.77cm-\factor*7.03cm}%
+                     {\paperheight-\factory*.7cm}}{%
+    \pgfbox[right,top]{%
+      \color{normal text.fg}%
+      \pgfuseimage{codesign-large}%
+    }
+  }
+
+  % Decoration on the left
+  \color{boxcolor1}%
+  \pgfrect[fill]{\pgfpoint{0pt}{\paperheight-\factor*7.36cm}}%
+                {\pgfpoint{\factor*.7cm}{-\factor*.82cm}}
+
+  \color{boxcolor2}%
+  \pgfrect[fill]{\pgfpoint{0pt}{\paperheight-\factor*8.08cm}}%
+                {\pgfpoint{\factor*.7cm}{-\factor*.82cm}}
+
+  \color{boxcolor3}%
+  \pgfrect[fill]{\pgfpoint{0pt}{\paperheight-\factor*8.80cm}}%
+                {\pgfpoint{\factor*.7cm}{-\factor*.82cm}}
+
+  \color{boxcolor4}%
+  \pgfrect[fill]{\pgfpoint{0pt}{\paperheight-\factor*9.52cm}}%
+                {\pgfpoint{\factor*.7cm}{-\factor*.82cm}}
+
+  \color{boxcolor5}%
+  \pgfrect[fill]{\pgfpoint{0pt}{\paperheight-\factor*10.24cm}}%
+                {\pgfpoint{\factor*.7cm}{-\factor*.72cm}}
+
+  \color{maincolor}%
+  \pgfrect[fill]{\pgfpoint{0pt}{\paperheight-\factor*3.68cm}}%
+                {\pgfpoint{\factor*.7cm}{-\factor*3.58cm}}
+
+  \ifbeamer@plain%
+    % Plain background box
+    \pgfrect[fill]{\pgfpoint{\factor*.85cm}{\paperheight-\factor*3.68cm}}%
+                  {\pgfpoint{\paperwidth-\factor*.85cm}{-\factor*14.5cm}}
+
+    % Title
+    \pgfputat{\pgfpoint{\factorx*1.1cm}{\paperheight-\factor*3.88cm}}{%
+      \pgfbox[left,top]{%
+        \color{title page.fg}%
+        \pgfmathparse{\factorx*23.8cm}%
+        \parbox{\pgfmathresult pt}{%
+          \smallskip\raggedright%
+          \usebeamerfont{title}{\inserttitle}
+        }
+      }
+    }
+
+    % Subtitle
+    \pgfputat{\pgfpoint{\factorx*1.1cm}{\paperheight-\factor*10.6cm}}{%
+      \pgfbox[left,top]{%
+        \color{title page.fg}%
+        \pgfmathparse{\factorx*23.8cm}%
+        \parbox{\pgfmathresult pt}{%
+          \smallskip\raggedright%
+          \usebeamerfont{subtitle}{\insertsubtitle}
+        }
+      }
+    }
+
+    % Author, institute, and date
+    \pgfputat{\pgfpoint{\factorx*1.1cm}{\paperheight-\factor*18.18cm}}{%
+      \pgfbox[left,bottom]{%
+        \color{title page.fg}%
+        \pgfmathparse{\factorx*23.8cm}%
+        \parbox{\pgfmathresult pt}{%
+          \raggedright\fontsize{9}{11}\selectfont
+          \ifx\insertauthor\empty\else%
+            \insertauthor\newline
+          \fi%
+          \ifx\insertinstitute\empty\else%
+            \insertinstitute\newline
+          \fi%
+          \ifx\insertdate\empty\else%
+            \insertdate
+          \fi%
+          \smallskip
+        }
+      }
+    }
+
+  \else%
+
+    \ifbeamer@longtitle%
+      % Upper box
+      \pgfrect[fill]{\pgfpoint{\factor*.85cm}{\paperheight-\factor*3.68cm}}%
+                    {\pgfpoint{\paperwidth-\factor*.85cm}{-\factor*7.25cm}}
+
+      % Title
+      \pgfputat{\pgfpoint{\factorx*1.1cm}{\paperheight-\factor*3.88cm}}{%
+        \pgfbox[left,top]{%
+          \color{title page.fg}%
+          \pgfmathparse{\factorx*23.8cm}%
+          \parbox{\pgfmathresult pt}{%
+            \smallskip\raggedright%
+            \usebeamerfont{title}{\inserttitle}
+          }
+        }
+      }
+
+      % Subtitle
+      \pgfputat{\pgfpoint{\factorx*1.1cm}{\paperheight-\factor*7.42cm}}{%
+        \pgfbox[left,top]{%
+          \color{title page.fg}%
+          \pgfmathparse{\factorx*23.8cm}%
+          \parbox{\pgfmathresult pt}{%
+            \smallskip\raggedright%
+            \usebeamerfont{subtitle}{\insertsubtitle}
+          }
+        }
+      }
+
+      % Author, institute, and date
+      \pgfputat{\pgfpoint{\factorx*1.1cm}{\paperheight-\factor*10.94cm}}{%
+        \pgfbox[left,bottom]{%
+          \color{title page.fg}%
+          \pgfmathparse{\factorx*23.8cm}%
+          \parbox{\pgfmathresult pt}{%
+            \raggedright\fontsize{9}{11}\selectfont
+            \ifx\insertauthor\empty\else%
+              \insertauthor\newline
+            \fi%
+            \ifx\insertinstitute\empty\else%
+              \insertinstitute\newline
+            \fi%
+            \ifx\insertdate\empty\else%
+              \insertdate
+            \fi%
+            \smallskip
+          }
+        }
+      }
+
+      \ifbeamer@image%
+        % Draw image
+        \pgfputat{\pgfpoint{\factor*.85cm}{\paperheight-\factor*11.05cm}}{%
+          \pgfbox[left,top]{%
+            \pgfuseimage{image-small}
+          }
+        }
+        \ifdefined\imagecopyrightsmall
+          \pgfputat{\pgfpoint{\paperwidth}{\paperheight-\factor*18.18cm}}{%
+            \pgfbox[right,bottom]{%
+              \parbox{\paperwidth}{%
+                \raggedleft\tiny%
+                \imagecopyrightsmall\\
+                \smallskip
+              }
+            }
+          }
+        \fi
+      \else%
+        % Lower box
+        \pgfrect[fill]{\pgfpoint{\factor*.85cm}{\paperheight-\factor*11.06cm}}%
+                      {\pgfpoint{\paperwidth-\factor*.85cm}{-\factor*7.12cm}}
+      \fi
+
+      \ifbeamer@seal%
+        % Draw seal
+        \pgfputat{\pgfpoint{\paperwidth}%
+                           {\paperheight-\factor*7.36cm-\factor*10.82cm}}{%
+          \pgfbox[right,bottom]{%
+            \pgfuseimage{seal-small}
+          }
+        }
+      \fi
+
+    \else % Not long title
+
+      % Upper box
+      \pgfrect[fill]{\pgfpoint{\factor*.85cm}{\paperheight-\factor*3.68cm}}%
+                    {\pgfpoint{\paperwidth-\factor*.85cm}{-\factor*3.58cm}}
+
+      \ifbeamer@image%
+        % Draw image
+        \pgfputat{\pgfpoint{\factor*.85cm}{\paperheight-\factor*7.36cm}}{%
+          \pgfbox[left,top]{%
+            \pgfuseimage{image-large}
+          }
+        }
+        \ifdefined\imagecopyrightlarge
+          \pgfputat{\pgfpoint{\paperwidth}{\paperheight-\factor*18.18cm}}{%
+            \pgfbox[right,bottom]{%
+              \parbox{\paperwidth}{%
+                \raggedleft\tiny%
+                \imagecopyrightlarge\\
+                \smallskip
+              }
+            }
+          }
+        \fi
+      \else%
+        % Lower box
+        \pgfrect[fill]{\pgfpoint{\factor*.85cm}{\paperheight-\factor*7.36cm}}%
+                      {\pgfpoint{\paperwidth-\factor*.85cm}{-\factor*10.82cm}}
+      \fi
+
+      % Title
+      \pgfputat{\pgfpoint{\factorx*1.1cm}{\paperheight-\factor*3.88cm}}{%
+        \pgfbox[left,top]{%
+          \color{title page.fg}%
+          \pgfmathparse{\factorx*23.8cm}%
+          \parbox{\pgfmathresult pt}{%
+            \smallskip\raggedright%
+            \usebeamerfont{title}{\inserttitle}
+          }
+        }
+      }
+
+      % Subtitle
+      \pgfputat{\pgfpoint{\factorx*1.1cm}{\paperheight-\factor*7.52cm}}{%
+        \pgfbox[left,top]{%
+          \color{title page.fg}%
+          \pgfmathparse{\factorx*23.8cm}%
+          \parbox{\pgfmathresult pt}{%
+            \smallskip\raggedright%
+            \usebeamerfont{subtitle}{\insertsubtitle}
+          }
+        }
+      }
+
+      % Shortauthor, shortinstitute, and shortdate (all in single line)
+      \pgfputat{\pgfpoint{\factorx*1.1cm}{\paperheight-\factor*9.26cm}}{%
+        \pgfbox[left,bottom]{%
+          \color{title page.fg}%
+          \pgfmathparse{\factorx*23.8cm}%
+          \parbox{\pgfmathresult pt}{%
+            \raggedright\fontsize{9}{11}\selectfont
+            \ifx\insertshortauthor\empty\else%
+              \mbox{\insertshortauthor}%
+            \fi%
+            \ifx\insertshortinstitute\empty\else%
+              \ifx\insertshortauthor\empty\else%
+                ,\ %
+              \fi%
+              \mbox{\insertshortinstitute}%
+            \fi%
+            \ifx\insertshortdate\empty\else%
+              \ifx\insertshortauthor\empty
+                \ifx\insertshortinstitute\empty\else%
+                  ,\ %
+                \fi
+              \else%
+                ,\ %
+              \fi%
+              \mbox{\insertshortdate}
+            \fi%
+            \smallskip
+          }
+        }
+      }
+
+      \ifbeamer@seal%
+        % Draw seal
+        \pgfputat{\pgfpoint{\paperwidth}%
+                           {\paperheight-\factor*7.36cm-\factor*10.82cm}}{%
+          \pgfbox[right,bottom]{%
+            \pgfuseimage{seal-large}
+          }
+        }
+      \fi
+    \fi % End long title
+
+    \ifbeamer@logo%
+      % Draw logo
+      \pgfputat{\pgfpoint{\paperwidth-\factorx*1.24cm}%
+                         {\paperheight-\factor*17.1cm}}{%
+        \pgfbox[right,bottom]{%
+          \insertlogo
+        }
+      }
+    \fi
+
+  \fi % End plain
+\end{pgfpicture}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Title page end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Section page %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtBeginSection{%
+  \frame[plain,c,noframenumbering]{%
+    \begin{pgfpicture}{\factor*1.56cm}{0cm}% Minus left margin
+                      {\paperwidth}{\paperheight}
+      % Headline
+      \pgfputat{\pgfpoint{\paperwidth-\factory*1.77cm}%
+                         {\paperheight-\factory*.7cm}}{%
+        \pgfbox[right,top]{%
+          \pgfuseimage{faulogo-large}
+        }
+      }
+      \pgfputat{\pgfpoint{\paperwidth-\factory*1.77cm-\factor*7.03cm}%
+                         {\paperheight-\factory*.7cm}}{%
+        \pgfbox[right,top]{%
+          \color{normal text.fg}%
+          \pgfuseimage{codesign-large}%
+        }
+      }
+
+      % Decoration on the left
+      \color{boxcolor1}%
+      \pgfrect[fill]{\pgfpoint{0pt}{\paperheight-\factor*7.36cm}}%
+                    {\pgfpoint{\factor*.7cm}{-\factor*.72cm}}
+
+      \color{boxcolor2}%
+      \pgfrect[fill]{\pgfpoint{0pt}{\paperheight-\factor*8.08cm}}%
+                    {\pgfpoint{\factor*.7cm}{-\factor*.72cm}}
+
+      \color{boxcolor3}%
+      \pgfrect[fill]{\pgfpoint{0pt}{\paperheight-\factor*8.80cm}}%
+                    {\pgfpoint{\factor*.7cm}{-\factor*.72cm}}
+
+      \color{boxcolor4}%
+      \pgfrect[fill]{\pgfpoint{0pt}{\paperheight-\factor*9.52cm}}%
+                    {\pgfpoint{\factor*.7cm}{-\factor*.72cm}}
+
+      \color{boxcolor5}%
+      \pgfrect[fill]{\pgfpoint{0pt}{\paperheight-\factor*10.24cm}}%
+                    {\pgfpoint{\factor*.7cm}{-\factor*.72cm}}
+
+      \color{maincolor}%
+      \pgfrect[fill]{\pgfpoint{0pt}{\paperheight-\factor*3.68cm}}%
+                    {\pgfpoint{\factor*.7cm}{-\factor*3.58cm}}
+
+      \ifbeamer@plain%
+        % Plain background box
+        \pgfrect[fill]{\pgfpoint{\factor*.85cm}{\paperheight-\factor*3.68cm}}%
+                      {\pgfpoint{\paperwidth-\factor*.85cm}{-\factor*14.5cm}}
+
+        % Section
+        \pgfputat{\pgfpoint{\factorx*1.1cm}{\paperheight-\factor*3.88cm}}{%
+          \pgfbox[left,top]{%
+            \color{title page.fg}%
+            \pgfmathparse{\factorx*23.8cm}%
+            \parbox{\pgfmathresult pt}{%
+              \smallskip\raggedright%
+              \usebeamerfont{title}{\insertsection}
+            }
+          }
+        }
+
+      \else%
+
+        %\ifbeamer@longtitle%
+        %  % Upper box
+        %  \pgfrect[fill]{\pgfpoint{\factor*.85cm}{\paperheight-\factor*3.68cm}}%
+        %                {\pgfpoint{\paperwidth-\factor*.85cm}{-\factor*7.25cm}}
+
+        %  % Section
+        %  \pgfputat{\pgfpoint{\factorx*1.1cm}{\paperheight-\factor*3.88cm}}{%
+        %    \pgfbox[left,top]{%
+        %      \color{title page.fg}%
+        %      \pgfmathparse{\factorx*23.8cm}%
+        %      \parbox{\pgfmathresult pt}{%
+        %        \smallskip\raggedright%
+        %        \usebeamerfont{title}{\insertsection}
+        %      }
+        %    }
+        %  }
+
+        %  % Lower box
+        %  \pgfrect[fill]{\pgfpoint{\factor*.85cm}{\paperheight-\factor*11.06cm}}%
+        %                {\pgfpoint{\paperwidth-\factor*.85cm}{-\factor*7.12cm}}
+
+        %  % Draw seal if not logo
+        %  \ifbeamer@logo\else%
+        %    \pgfputat{\pgfpoint{\paperwidth}%
+        %                       {\paperheight-\factor*7.36cm-\factor*10.82cm}}{%
+        %      \pgfbox[right,bottom]{%
+        %        \pgfuseimage{seal-small}
+        %      }
+        %    }
+        %  \fi
+
+        %\else % Not long title
+
+          % Upper box
+          \pgfrect[fill]{\pgfpoint{\factor*.85cm}{\paperheight-\factor*3.68cm}}%
+                        {\pgfpoint{\paperwidth-\factor*.85cm}{-\factor*3.58cm}}
+
+          % Section
+          \pgfputat{\pgfpoint{\factorx*1.1cm}{\paperheight-\factor*3.88cm}}{%
+            \pgfbox[left,top]{%
+              \color{title page.fg}%
+              \pgfmathparse{\factorx*23.8cm}%
+              \parbox{\pgfmathresult pt}{%
+                \smallskip\raggedright%
+                \usebeamerfont{title}{\insertsection}
+              }
+            }
+          }
+
+          % Lower box
+          \pgfrect[fill]{\pgfpoint{\factor*.85cm}{\paperheight-\factor*7.36cm}}%
+                        {\pgfpoint{\paperwidth-\factor*.85cm}{-\factor*10.82cm}}
+
+          % Draw seal if not logo
+          \ifbeamer@logo\else%
+            \pgfputat{\pgfpoint{\paperwidth}%
+                               {\paperheight-\factor*7.36cm-\factor*10.82cm}}{%
+              \pgfbox[right,bottom]{%
+                \pgfuseimage{seal-large}
+              }
+            }
+          \fi
+        %\fi % End long title
+
+        % Draw logo
+        \ifbeamer@logo%
+          \pgfputat{\pgfpoint{\paperwidth-\factorx*1.24cm}%
+                             {\paperheight-\factor*17.1cm}}{%
+            \pgfbox[right,bottom]{%
+              \insertlogo
+            }
+          }
+        \fi
+
+      \fi % End plain
+    \end{pgfpicture}
+  }% End frame
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Section page end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\mode
+<all>

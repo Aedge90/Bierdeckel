@@ -1,0 +1,29 @@
+%-------------------------------------------------------------------------------
+% Outer theme file
+%-------------------------------------------------------------------------------
+
+\mode<presentation>
+
+
+\setbeamertemplate{headline}{%
+  \def\paperheight{\factor*1.83cm}
+  \begin{pgfpicture}{0cm}{0cm}{\paperwidth}{\paperheight}
+    \pgfputat{\pgfpoint{\paperwidth-\factor*.92cm}%
+                       {\paperheight-\factor*.34cm}}{%
+      \pgfbox[right,top]{%
+        \pgfuseimage{faulogo-small}
+      }
+    }
+    \pgfputat{\pgfpoint{\paperwidth-\factor*.92cm-\factor*4.56cm}%
+                       {\paperheight-\factor*.335cm}}{%
+      \pgfbox[right,top]{%
+        \color{normal text.fg}%
+        \pgfuseimage{codesign-small}
+      }
+    }
+  \end{pgfpicture}
+}
+
+
+\mode
+<all>

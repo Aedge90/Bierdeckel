@@ -1,0 +1,117 @@
+%-------------------------------------------------------------------------------
+% Main file
+%-------------------------------------------------------------------------------
+
+\mode<presentation>
+
+
+\usepackage{calc}
+\usepackage{pgf}
+
+
+\newif\ifbeamer@seal
+\beamer@sealtrue
+
+\newif\ifbeamer@logo
+\beamer@logofalse
+
+\newif\ifbeamer@image
+\beamer@imagefalse
+
+\newif\ifbeamer@plain
+\beamer@plainfalse
+
+\newif\ifbeamer@longtitle
+\beamer@longtitlefalse
+
+\newif\ifbeamer@dark
+\beamer@darkfalse
+
+\DeclareOptionBeamer{seal}[true]{%
+  \csname beamer@seal#1\endcsname%
+  \ifbeamer@seal%
+    \beamer@plainfalse%
+    \beamer@logofalse%
+    \beamer@imagefalse%
+  \fi
+}
+
+\DeclareOptionBeamer{logo}[true]{%
+  \csname beamer@logo#1\endcsname%
+  \ifbeamer@logo%
+    \beamer@plainfalse%
+    \beamer@sealfalse%
+    \beamer@imagefalse%
+  \fi
+}
+
+\DeclareOptionBeamer{image}[true]{%
+  \csname beamer@image#1\endcsname%
+  \ifbeamer@image%
+    \beamer@plainfalse%
+    \beamer@sealfalse%
+    \beamer@logofalse%
+  \fi
+}
+
+\DeclareOptionBeamer{plain}[true]{%
+  \csname beamer@plain#1\endcsname%
+  \ifbeamer@plain%
+    \beamer@sealfalse%
+    \beamer@logofalse%
+    \beamer@imagefalse%
+  \fi
+}
+
+\DeclareOptionBeamer{longtitle}[true]{%
+  \csname beamer@longtitle#1\endcsname%
+}
+
+\DeclareOptionBeamer{dark}[true]{%
+  \csname beamer@dark#1\endcsname%
+}
+
+\ProcessOptionsBeamer
+
+
+% Set paths for TechFak images
+\@ifpackagewith{babel}{english}{%
+  \ifbeamer@dark
+    \def\faulogo{art/tf/fau-logo-english-light}
+  \else
+    \def\faulogo{art/tf/fau-logo-english}
+  \fi
+}{%
+  \ifbeamer@dark
+    \def\faulogo{art/tf/fau-logo-deutsch-light}
+  \else
+    \def\faulogo{art/tf/fau-logo-deutsch}
+  \fi
+}
+\def\fauseal{art/tf/fau-seal}
+\def\fauimage{art/tf/image}
+\def\imagecopyrightsmall{\color{black}Bilder: TF / Malter}
+
+
+% Include FAU theme
+\usetheme[
+  seal=\ifbeamer@seal true\else false\fi,
+  logo=\ifbeamer@logo true\else false\fi,
+  image=\ifbeamer@image true\else false\fi,
+  plain=\ifbeamer@plain true\else false\fi,
+  longtitle=\ifbeamer@longtitle true\else false\fi,
+  dark=\ifbeamer@dark true\else false\fi
+]{fau}
+
+
+% Set colors for TechFak
+\colorlet{maincolor}{faugray}
+\colorlet{boxcolor1}{faublue}
+\colorlet{boxcolor2}{faublue}
+\colorlet{boxcolor3}{faublue}
+\colorlet{boxcolor4}{faublue}
+\colorlet{boxcolor5}{faublue}
+
+
+\mode
+<all>
