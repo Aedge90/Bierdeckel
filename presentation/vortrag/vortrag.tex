@@ -8,6 +8,8 @@
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage[backend=biber,sorting=ydnt,doi=true]{biblatex}
+\usepackage{adjustbox}
+\usepackage{subfigure}
 
 
 \usepackage{wrapfig}
@@ -71,27 +73,55 @@
 \frame[plain,c,noframenumbering]{\titlepage}
 
 \begin{frame}{Motivation}
-\includegraphics[width=\textwidth]{images/motivation}
+		\begin{center}
+        \begin{adjustbox}{max width=.8\textwidth, max height=.8\textheight}
+			\includegraphics[]{images/motivation}
+        \end{adjustbox}
+		\end{center}
 \end{frame}
 
 \begin{frame}{Idee}
-\includegraphics[width=\textwidth]{images/idee}
+		\begin{center}
+        \begin{adjustbox}{max width=.8\textwidth, max height=.8\textheight}
+			\includegraphics[]{images/idee}
+        \end{adjustbox}
+		\end{center}
 \end{frame}
 
 \begin{frame}{Aufbau}
-\includegraphics[width=\textwidth]{images/aufbau}
+		\begin{center}
+        \begin{adjustbox}{max width=.8\textwidth, max height=.8\textheight}
+			\includegraphics[]{images/aufbau}
+        \end{adjustbox}
+		\end{center}
 \end{frame}
 
 \begin{frame}{Erweiterungen}
-\begin{itemize}
-\item Unterscheidung von Getraenken
-\item Kommunikation mit Bedienung
-\item Anzeige ob man noch fahrtuechtig ist
-\end{itemize}
+	\begin{figure}
+		\begin{center}
+		
+    	    \begin{adjustbox}{max width=.8\textwidth, max height=.4\textheight}
+				\only<1->{\includegraphics{images/getraenke}}
+				\only<2->{\includegraphics[]{images/auto}}
+	        \end{adjustbox}
+        	\begin{adjustbox}{max width=.8\textwidth, max height=.4\textheight}
+				\only<3>{\includegraphics[]{images/komm}}
+	        \end{adjustbox}
+		\end{center}
+	\end{figure}
+%\begin{itemize}
+%\item Unterscheidung von Getraenken
+%\item Kommunikation mit Bedienung
+%\item Anzeige ob man noch fahrtuechtig ist
+%\end{itemize}
 \end{frame}
 
 \begin{frame}{Vision}
-\includegraphics[width=\textwidth]{images/vision}
+		\begin{center}
+        \begin{adjustbox}{max width=.8\textwidth, max height=.8\textheight}
+			\includegraphics[]{images/vision}
+        \end{adjustbox}
+		\end{center}
 \end{frame}
 
 %\section{Motivation}
