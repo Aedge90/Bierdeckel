@@ -8,11 +8,13 @@ void hx711_init(void)
 	pinMode(SCLK, OUTPUT);
 	pinMode(SDI, INPUT);
 
+	//reset HX711
 	digitalWrite(SCLK, HIGH);
 	delayMicroseconds(100);
 	digitalWrite(SCLK, LOW);
 
 	hx711_averageValue(32);
+	//callibration. _offset is weight of empty glas
 	_offset = hx711_averageValue(32);
 	_scale = .5*742.0f;
 }
@@ -34,6 +36,7 @@ uint32_t hx711_getValue()
 	uint8_t i = 0, j = 0;
 	//uint32_t data = 0;
 	uint8_t data[3] = {0,0,0};
+	//When output data isnt ready for retrieval digital output pin DOUT (=SDI) is high
 	while (digitalRead(SDI));
 	for (i = 24;i--;)
 	{
@@ -41,6 +44,7 @@ uint32_t hx711_getValue()
 		//	data |= (digitalRead(SDI))<<i;
 		//	digitalWrite(SCLK, LOW);
 	}
+	//read data bit by bit by sending 24 positive clock pulses to PD_SCK pin
 	for (j = 3; j--;)
 	{
 		for (i = 8; i--;)
@@ -51,8 +55,11 @@ uint32_t hx711_getValue()
 		}
 	}
 
+	//25th pulse sets DOUT (=SDI) pin back to HIGH
 	digitalWrite(SCLK, HIGH);
 	digitalWrite(SCLK, LOW);
+
+	//no other pulses are sent so we will be using input channel A with a gain of 128
 
 	data[2] ^= 0x80;
 	
