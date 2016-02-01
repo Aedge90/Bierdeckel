@@ -9,6 +9,8 @@
 # CDEF section below
 # 
 #----------------------------------------------------------------------------
+# Modified 02 February 2016 by Achim Herrman
+#----------------------------------------------------------------------------
 # On command line:
 #
 # make all = Make software.
@@ -29,6 +31,10 @@
 #
 # make filename.i = Create a preprocessed source file for use in submitting
 #                   bug reports to the GCC project.
+#
+# make flash = make program
+#
+# make monitor = Start serial monitor
 #
 # To rebuild project do "make clean" then "make all".
 #----------------------------------------------------------------------------
@@ -54,6 +60,7 @@ TARGET = main
 SRC = $(TARGET).c 
 SRC += uart.c
 SRC += hx711.c
+SRC += led.c
 
 # List Assembler source files here.
 #     Make them always end in a capital .S.  Files ending in a lowercase .s
@@ -253,6 +260,19 @@ DEBUG_HOST = localhost
 
 
 
+
+#---------------- Debugging Options ----------------
+
+# Monitor command
+MON_CMD=screen
+# Monitor BAUD rate
+BAUD=9600
+# Options for MON_CMD
+MON_OPT=
+# Port to monitor
+MON_PORT=/dev/ttyUSB0
+
+
 #============================================================================
 
 
@@ -357,6 +377,11 @@ gccversion :
 
 
 # Program the device.  
+flash: program
+	#pkill -f '$(MON_CMD).*$(MON_PORT)'
+	#sleep 1
+	#stty -F $(MON_PORT) hupcl
+
 program: $(TARGET).hex $(TARGET).eep
 	$(AVRDUDE) $(AVRDUDE_FLAGS) $(AVRDUDE_WRITE_FLASH) $(AVRDUDE_WRITE_EEPROM)
 
@@ -490,6 +515,8 @@ clean_list :
 	$(REMOVE) $(SRC:.c=.d)
 	$(REMOVE) .dep/*
 
+monitor:
+	$(MON_CMD) $(MON_OPT) $(MON_PORT) $(BAUD)
 
 
 # Include the dependency files.
@@ -499,5 +526,5 @@ clean_list :
 # Listing of phony targets.
 .PHONY : all begin finish end sizebefore sizeafter gccversion \
 build elf hex eep lss sym coff extcoff \
-clean clean_list program debug gdb-config
-
+clean clean_list program debug gdb-config \
+monitor flash

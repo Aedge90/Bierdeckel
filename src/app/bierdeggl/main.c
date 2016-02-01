@@ -1,46 +1,12 @@
 #include "hx711.h"
 #include "uart.h"
+#include "led.h"
 #include <avr/io.h>
 #include <util/delay.h>
 
 #define bool uint8_t
 #define true 1
 #define false 0
-
-
-void show(uint8_t n) {
-	int zaun = n/5;
-	int strich = n%5;
-	switch(zaun){
-		default:
-			strich = 5;
-		case(4):
-			PORTB |= 0x80;
-		case(3):
-			PORTB |= 0x40;
-		case(2):
-			PORTB |= 0x20;
-		case(1):
-			PORTB |= 0x10;
-			break;
-		case(0):
-			PORTB &= 0x0f;
-	}
-	switch(strich){
-		default:
-		case(4):
-			PORTB |= 0x08;
-		case(3):
-			PORTB |= 0x04;
-		case(2):
-			PORTB |= 0x02;
-		case(1):
-			PORTB |= 0x01;
-			break;
-		case(0):
-			PORTB &= 0xf0;
-	}
-}
 
 // > 0 -> unbenutzt
 // = 0 -> leer
@@ -59,8 +25,7 @@ bool isFull(int32_t val){
 }
 int main(void)
 {
-	// LEDs...
-
+	led_init();
 	hx711_init();
 	uart_init();
 	uint8_t n = 0;
@@ -73,13 +38,13 @@ int main(void)
 			++n;
 			empty = false;
 		}
-		show(n);
+		led_show(n);
 		if(empty) 
-			printf("%ldg -> LEER -> %u Bier\n", valg ,n);
+			printf("%4ldg -> LEER -> %2u Bier\n", valg ,n);
 		else if (isFull(valg)) 
-			printf("%ldg -> VOLL -> %u Bier\n", valg ,n);
+			printf("%4ldg -> VOLL -> %2u Bier\n", valg ,n);
 		else
-			printf("%ldg -> halb -> %u Bier\n", valg ,n);
+			printf("%4ldg -> halb -> %2u Bier\n", valg ,n);
 //		_delay_ms(500);
 	}
 	return 0;
