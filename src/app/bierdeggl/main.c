@@ -10,7 +10,7 @@
 #define true 1
 #define false 0
 
-#define DEBUG
+//#define DEBUG
 
 // > 0 -> unbenutzt
 // = 0 -> leer

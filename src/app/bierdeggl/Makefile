@@ -51,6 +51,7 @@ MCU = atmega328p
 #     calculate timings. Do NOT tack on a 'UL' at the end, this will be done
 #     automatically to create a 32-bit value in your source code.
 F_CPU = 16000000
+#F_CPU = 1000000
 
 # Output format. (can be srec, ihex, binary)
 FORMAT = ihex
@@ -205,6 +206,10 @@ LDFLAGS += $(PRINTF_LIB) $(SCANF_LIB) $(MATH_LIB)
 # to get a full listing.
 #
 AVRDUDE_PROGRAMMER = arduino
+AVRDUDE_PROGRAMMER = stk500v1
+
+AVRDUDE_BAUD = 115200
+AVRDUDE_BAUD = 19200
 
 # com1 = serial port. Use lpt1 to connect to parallel port.
 AVRDUDE_PORT = /dev/ttyUSB0    # programmer connected to serial device
@@ -227,7 +232,7 @@ AVRDUDE_WRITE_FLASH = -U flash:w:$(TARGET).hex:i
 # to submit bug reports.
 #AVRDUDE_VERBOSE = -v -v
 
-AVRDUDE_FLAGS = -p $(MCU) -P $(AVRDUDE_PORT) -c $(AVRDUDE_PROGRAMMER) -b 115200
+AVRDUDE_FLAGS = -p $(MCU) -P $(AVRDUDE_PORT) -c $(AVRDUDE_PROGRAMMER) -b $(AVRDUDE_BAUD)
 AVRDUDE_FLAGS += $(AVRDUDE_NO_VERIFY)
 AVRDUDE_FLAGS += $(AVRDUDE_VERBOSE)
 AVRDUDE_FLAGS += $(AVRDUDE_ERASE_COUNTER)
