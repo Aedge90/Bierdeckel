@@ -42,6 +42,8 @@
 
 # MCU name
 MCU = atmega328p
+#MCU = atmega88p
+#MCU = atmega48p
 
 # Processor frequency.
 #     This will define a symbol, F_CPU, in all source code files equal to the 
@@ -61,6 +63,7 @@ SRC = $(TARGET).c
 SRC += uart.c
 SRC += hx711.c
 SRC += led.c
+SRC += timer.c
 
 # List Assembler source files here.
 #     Make them always end in a capital .S.  Files ending in a lowercase .s
@@ -367,6 +370,7 @@ sizebefore:
 sizeafter:
 	@if test -f $(TARGET).elf; then echo; echo $(MSG_SIZE_AFTER); $(ELFSIZE); \
 	$(AVRMEM) 2>/dev/null; echo; fi
+	$(SIZE) -C --mcu=$(MCU) $(TARGET).elf
 
 
 
@@ -378,9 +382,9 @@ gccversion :
 
 # Program the device.  
 flash: program
-	#pkill -f '$(MON_CMD).*$(MON_PORT)'
-	#sleep 1
-	#stty -F $(MON_PORT) hupcl
+	- pkill -f '$(MON_CMD).*$(MON_PORT)'
+	- sleep 1
+	- stty -F $(MON_PORT) hupcl
 
 program: $(TARGET).hex $(TARGET).eep
 	$(AVRDUDE) $(AVRDUDE_FLAGS) $(AVRDUDE_WRITE_FLASH) $(AVRDUDE_WRITE_EEPROM)
@@ -514,6 +518,7 @@ clean_list :
 	$(REMOVE) $(SRC:.c=.s)
 	$(REMOVE) $(SRC:.c=.d)
 	$(REMOVE) .dep/*
+	$(REMOVE)r .dep
 
 monitor:
 	$(MON_CMD) $(MON_OPT) $(MON_PORT) $(BAUD)
