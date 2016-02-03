@@ -1,0 +1,153 @@
+%-------------------------------------------------------------------------------
+% Main file
+%-------------------------------------------------------------------------------
+
+\mode<presentation>
+
+
+\usepackage{calc}
+\usepackage{pgf}
+
+
+\newif\ifbeamer@seal
+\beamer@sealtrue
+
+\newif\ifbeamer@logo
+\beamer@logofalse
+
+\newif\ifbeamer@image
+\beamer@imagefalse
+
+\newif\ifbeamer@plain
+\beamer@plainfalse
+
+\newif\ifbeamer@longtitle
+\beamer@longtitlefalse
+
+\newif\ifbeamer@dark
+\beamer@darkfalse
+
+\DeclareOptionBeamer{plain}[true]{%
+  \csname beamer@plain#1\endcsname%
+  \ifbeamer@plain%
+    \beamer@sealfalse%
+    \beamer@logofalse%
+    \beamer@imagefalse%
+  \fi
+}
+
+\DeclareOptionBeamer{seal}[true]{%
+  \csname beamer@seal#1\endcsname%
+  \ifbeamer@seal%
+    \beamer@plainfalse%
+    \beamer@logofalse%
+    \beamer@imagefalse%
+  \fi
+}
+
+\DeclareOptionBeamer{logo}[true]{%
+  \csname beamer@logo#1\endcsname%
+  \ifbeamer@logo%
+    \beamer@plainfalse%
+    \beamer@sealfalse%
+    \beamer@imagefalse%
+  \fi
+}
+
+\DeclareOptionBeamer{image}[true]{%
+  \csname beamer@image#1\endcsname%
+  \ifbeamer@image%
+    \beamer@plainfalse%
+    \beamer@sealfalse%
+    \beamer@logofalse%
+  \fi
+}
+
+\DeclareOptionBeamer{longtitle}[true]{%
+  \csname beamer@longtitle#1\endcsname%
+}
+
+\DeclareOptionBeamer{dark}[true]{%
+  \csname beamer@dark#1\endcsname%
+}
+
+\ProcessOptionsBeamer
+
+% Workaround to use RGB colorspace for transparency. Otherwise, colors are not
+% rendered correctly with Acrobat Linux.
+\pdfpageattr{/Group << /S /Transparency /I true /CS /DeviceRGB>>} 
+
+
+\ifdefined\faulogo\else
+  \ifbeamer@dark
+    \def\faulogo{art/fau-logo-light}
+  \else
+    \def\faulogo{art/fau-logo}
+  \fi
+\fi
+
+\ifdefined\fauseal\else
+  \ifbeamer@dark
+    \def\fauseal{art/fau-seal-light}
+  \else
+    \def\fauseal{art/fau-seal}
+  \fi
+\fi
+
+\ifdefined\fauimage\else
+  \def\fauimage{art/image}
+\fi
+
+
+% Graphics
+\pgfmathsetmacro{\beamer@aspectratio}{\beamer@paperwidth/\beamer@paperheight}
+\pgfmathsetmacro{\beamer@fourtothree}{4/3}
+\pgfmathsetmacro{\beamer@sixteentonine}{16/9}
+\ifdim \beamer@aspectratio pt=\beamer@fourtothree pt%
+  % Aspect ratio 4:3
+  \pgfdeclareimage[width=3.18cm]{faulogo-large}{\faulogo}
+  \pgfdeclareimage[width=2.08cm]{faulogo-small}{\faulogo}
+  \pgfdeclareimage[width=3.30cm,height=3.35cm]{seal-large}{\fauseal}
+  \pgfdeclareimage[width=2.63cm,height=2.67cm]{seal-small}{\fauseal}
+  \pgfdeclareimage[width=12.37cm,height=5.44cm]{image-large}{\fauimage-large-43}
+  \pgfdeclareimage[width=12.37cm,height=3.59cm]{image-small}{\fauimage-small-43}
+
+  % Convert 4:3 pptx dimensions to 4:3 beamer
+  \def\factor{.503937}
+  \def\factorx{.503937}
+  \def\factory{.503937}
+\else\ifdim \beamer@aspectratio pt=\beamer@sixteentonine pt%
+  % Aspect ratio 16:9
+  \pgfdeclareimage[width=2.98cm]{faulogo-large}{\faulogo}
+  \pgfdeclareimage[width=1.95cm]{faulogo-small}{\faulogo}
+  \pgfdeclareimage[width=4.12cm,height=4.18cm]{seal-large}{\fauseal}
+  \pgfdeclareimage[width=2.27cm,height=2.31cm]{seal-small}{\fauseal}
+  \pgfdeclareimage[width=15.63cm,height=5.17cm]{image-large}{\fauimage-large-169}
+  \pgfdeclareimage[width=15.63cm,height=3.39cm]{image-small}{\fauimage-small-169}
+
+  % Convert 4:3 pptx dimensions to 16:9 beamer
+  \def\factor{0.9375*.503937}
+  \def\factorx{1.25*.503937}
+  \def\factory{0.75*.503937}
+\else%
+  \errmessage{Any layout other than aspect ratio 4:3 or 16:9 is not supported}
+\fi\fi%
+
+
+% Include each single theme file
+\usefonttheme{fau}
+\usecolortheme{fau}
+\useinnertheme{fau}
+\useoutertheme{fau}
+
+
+\colorlet{maincolor}{faublue}
+\colorlet{boxcolor1}{fauorange}
+\colorlet{boxcolor2}{faured}
+\colorlet{boxcolor3}{faucyan}
+\colorlet{boxcolor4}{faugreen}
+\colorlet{boxcolor5}{faugray}
+
+
+\mode
+<all>

@@ -1,0 +1,83 @@
+\documentclass[aspectratio=43,t]{beamer}
+%\documentclass[aspectratio=43,t,handout]{beamer}
+
+\usepackage[ansinew]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[backend=biber,sorting=ydnt,doi=true]{biblatex}
+\usepackage{adjustbox}
+\usepackage{subfigure}
+
+
+\usepackage{wrapfig}
+\usepackage{chngcntr}
+\setbeamertemplate{caption}[numbered]
+\usepackage{listings}
+
+\usepackage{amssymb}% http://ctan.org/pkg/amssymb
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+% Themes:
+%  - fau:          Default FAU theme
+%  - fau-tf:       TechFak FAU theme
+%  - fau-tf-hscd:  Co-Design FAU theme
+%
+% Options:
+%  - seal:         FAU seal on title page (default)
+	%  - logo:         Beamer logo on all pages
+	%  - image:        Cover image on title page
+	%  - plain:        Plain title page
+	%  - longtitle:    Title page layout for long title
+	%  - dark:         Dark version of theme
+	\usetheme[seal, longtitle]{fau-tf}
+	%\setbeamercovered{transparent}
+
+
+	\lstset{%
+		language=C++,
+			tabsize=2,
+			basicstyle=\tt\scriptsize,
+			keywordstyle=\color{blue},
+			commentstyle=\color{green!50!black},
+			stringstyle=\color{black},
+			% stringstyle=\color{red},
+			numbers=left,
+			numbersep=0.5em,
+			numberstyle=\tt\tiny
+	}
+
+
+\defbibheading{bibliography}{}
+\addbibresource[label=primary]{references.bib}
+\nocite{*}
+
+
+% Title, authors, and date
+\title[SmartBierdeggl]{SmartBierdeggl}
+\subtitle{DIY: Abschlussvortrag}
+\author[Achim Herrmann/Daeubler]{Achim Herrmann/Daeubler}
+\institute[Rechnernetze und Kommunikationssysteme]{Rechnernetze und Kommunikationssysteme, Friedrich-Alexander-Universität Erlangen-Nürnberg}
+\date{\today}
+
+\begin{document}
+% Title
+\frame[plain,c,noframenumbering]{\titlepage}
+
+
+
+{ % Questions?
+	\setbeamertemplate{footline}{}
+	\begin{frame}[c,noframenumbering]
+		\begin{center}
+	Danke für ihre Aufmerksamkeit.\\
+	{\bf Noch Fragen?}
+	\end{center}
+	\end{frame}
+}
+\end{document}
+
