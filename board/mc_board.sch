@@ -12779,30 +12779,6 @@ bridges to GND</text>
 <label x="241.3" y="180.34" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
-<net name="PC4/LED5" class="0">
-<segment>
-<wire x1="233.68" y1="177.8" x2="241.3" y2="177.8" width="0.1524" layer="91"/>
-<pinref part="IC1" gate="G$1" pin="PC4(ADC4/SDA)"/>
-<label x="241.3" y="177.8" size="1.778" layer="95" xref="yes"/>
-</segment>
-<segment>
-<wire x1="340.36" y1="71.12" x2="332.74" y2="71.12" width="0.1524" layer="91"/>
-<pinref part="LED5-8" gate="A" pin="1"/>
-<label x="332.74" y="71.12" size="1.778" layer="95" rot="MR0" xref="yes"/>
-</segment>
-</net>
-<net name="PC5/LED6" class="0">
-<segment>
-<wire x1="233.68" y1="175.26" x2="241.3" y2="175.26" width="0.1524" layer="91"/>
-<pinref part="IC1" gate="G$1" pin="PC5(ADC5/SCL)"/>
-<label x="241.3" y="175.26" size="1.778" layer="95" xref="yes"/>
-</segment>
-<segment>
-<wire x1="340.36" y1="68.58" x2="332.74" y2="68.58" width="0.1524" layer="91"/>
-<pinref part="LED5-8" gate="A" pin="2"/>
-<label x="332.74" y="68.58" size="1.778" layer="95" rot="MR0" xref="yes"/>
-</segment>
-</net>
 <net name="PD6/LED2" class="0">
 <segment>
 <wire x1="241.3" y1="149.86" x2="233.68" y2="149.86" width="0.1524" layer="91"/>
@@ -12930,6 +12906,30 @@ bridges to GND</text>
 <pinref part="UART" gate="G$1" pin="2"/>
 <wire x1="368.3" y1="139.7" x2="355.6" y2="139.7" width="0.1524" layer="91"/>
 <label x="355.6" y="139.7" size="1.778" layer="95" rot="MR0" xref="yes"/>
+</segment>
+</net>
+<net name="PC5/LED5" class="0">
+<segment>
+<wire x1="233.68" y1="175.26" x2="241.3" y2="175.26" width="0.1524" layer="91"/>
+<pinref part="IC1" gate="G$1" pin="PC5(ADC5/SCL)"/>
+<label x="241.3" y="175.26" size="1.778" layer="95" xref="yes"/>
+</segment>
+<segment>
+<wire x1="340.36" y1="71.12" x2="332.74" y2="71.12" width="0.1524" layer="91"/>
+<pinref part="LED5-8" gate="A" pin="1"/>
+<label x="332.74" y="71.12" size="1.778" layer="95" rot="MR0" xref="yes"/>
+</segment>
+</net>
+<net name="PC4/LED6" class="0">
+<segment>
+<wire x1="340.36" y1="68.58" x2="332.74" y2="68.58" width="0.1524" layer="91"/>
+<pinref part="LED5-8" gate="A" pin="2"/>
+<label x="332.74" y="68.58" size="1.778" layer="95" rot="MR0" xref="yes"/>
+</segment>
+<segment>
+<wire x1="233.68" y1="177.8" x2="241.3" y2="177.8" width="0.1524" layer="91"/>
+<pinref part="IC1" gate="G$1" pin="PC4(ADC4/SDA)"/>
+<label x="241.3" y="177.8" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
 </nets>

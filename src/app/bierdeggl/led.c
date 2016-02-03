@@ -5,8 +5,8 @@
 #define LED2 (1<<PD6)
 #define LED3 (1<<PB0)
 #define LED4 (1<<PB1)
-#define LED5 (1<<PC4)
-#define LED6 (1<<PC5)
+#define LED5 (1<<PC5)
+#define LED6 (1<<PC4)
 #define LED7 (1<<PD3)
 #define LED8 (1<<PD4)
 
