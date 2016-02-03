@@ -37,42 +37,28 @@ void timer_init(void){
 }
 
 /*
+Sleep Modes:
     #define SLEEP_MODE_IDLE         0
     #define SLEEP_MODE_PWR_DOWN     1
     #define SLEEP_MODE_PWR_SAVE     2
     #define SLEEP_MODE_ADC          3
     #define SLEEP_MODE_STANDBY      4
     #define SLEEP_MODE_EXT_STANDBY  5
-
-
-    #include <avr/interrupt.h>
-    #include <avr/sleep.h>
-
-    ...
-      set_sleep_mode(<mode>);
-      cli();
-      if (some_condition)
-      {
-        sleep_enable();
-        sleep_bod_disable();
-        sei();
-        sleep_cpu();
-        sleep_disable();
-      }
-      sei();
 */
 
+//Not sure if this would work without ext oszi..
+//..in this case use SLEEP_MODE_EXT_STANDBY
+#define _SLEEP_MODE SLEEP_MODE_PWR_SAVE  
 // t: 1s
+void sleep(uint32_t t){ timer_wait(t); }
 void timer_wait(uint32_t t){
 	uint32_t now = timer_get();
 
-        //set_sleep_mode(SLEEP_MODE_IDLE);
-   	set_sleep_mode(SLEEP_MODE_EXT_STANDBY);
-        //set_sleep_mode(SLEEP_MODE_PWR_SAVE);	//Not sure if this would work in final dev..
+        set_sleep_mode(_SLEEP_MODE);
         cli();
 	while (timer_get() < now + t){
         	sleep_enable();
-	        //sleep_bod_disable();
+	        sleep_bod_disable();
         	sei();
 	        sleep_cpu();
 	        sleep_disable();
@@ -80,17 +66,16 @@ void timer_wait(uint32_t t){
         sei();
 
 }
-// t: 8ms
+// t: 16ms
+void sleep16m(uint32_t t){ timer_wait_16ms(t); }
 void timer_wait_16ms(uint32_t t){
 	uint32_t now = ticks_get();
 
-        //set_sleep_mode(SLEEP_MODE_IDLE);
-   	set_sleep_mode(SLEEP_MODE_EXT_STANDBY);
-        //set_sleep_mode(SLEEP_MODE_PWR_SAVE);	//Not sure if this would work in final dev..
+        set_sleep_mode(_SLEEP_MODE);
         cli();
 	while (ticks_get() < now + t){
         	sleep_enable();
-	        //sleep_bod_disable();
+	        sleep_bod_disable();
         	sei();
 	        sleep_cpu();
 	        sleep_disable();

@@ -1,4 +1,5 @@
 #include "led.h"
+#include "timer.h"
 #include <avr/io.h>
 
 #define LED1 (1<<PD5)
@@ -13,6 +14,7 @@
 
 void led_init(void){
 	DDRD |= 0b01111000;
+	DDRC |= 0b00110000;
 	DDRB |= 0b00000011;
 }
 
@@ -50,4 +52,11 @@ void led_show(uint8_t n) {
 			PORTB &= ~(LED4 | LED3);
 			PORTD &= ~(LED2 | LED1);
 	}
+}
+
+void led_blink(uint8_t n) {
+	sleep16m(10);
+	led_show(0);
+	sleep16m(10);
+	led_show(n);
 }

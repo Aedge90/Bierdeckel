@@ -4,8 +4,8 @@
 #define DDR_HX DDRC
 #define PORT_HX PORTC
 #define PIN_HX PINC
-#define SDI (1<<PC0)
-#define SCLK (1<<PC1)
+#define SDI (1<<PC1)
+#define SCLK (1<<PC0)
 
 #include <avr/io.h>
 #include <util/delay.h>

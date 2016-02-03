@@ -5,5 +5,6 @@
 
 void led_init(void);
 void led_show(uint8_t n);
+void led_blink(uint8_t n);
 
 #endif

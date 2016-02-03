@@ -9,6 +9,8 @@ volatile uint8_t qms;
 
 void timer_init(void);
 // t: 1s
+void sleep(uint32_t t);
+void sleep16m(uint32_t t);
 void timer_wait(uint32_t t);
 void timer_wait_16ms(uint32_t t);
 uint32_t timer_get(void);

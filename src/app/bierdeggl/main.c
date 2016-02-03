@@ -13,7 +13,7 @@
 //#define DEBUG
 
 // > 0 -> unbenutzt
-// = 0 -> leer
+// ~ 0 -> leer
 // < 0 -> nicht leer
 bool isEmpty(int32_t val){
 	const int epsilon = 50;
@@ -38,10 +38,20 @@ int main(void)
 	sei();
 	uint8_t n = 0;
 	bool empty = false;
+	// blink once to indicate initilisation has finished
+	led_show(25);
+	timer_wait(1);
+	led_show(0);
 	for(;;){
-		int32_t valmg = hx711_get_mg();
-		int32_t valg = valmg/1000;
-		empty |= isEmpty(valg);
+		int32_t valg;
+		// blink while glass is empty
+		// if no LEDs are avail, blink LED8
+		while (isEmpty((valg = hx711_get_mg()/1000))){
+			empty |= 1;
+			if (0 == n) PORTD |= 1<<PD4;
+			led_blink(n);
+			if (0 == n) PORTD &= ~(1<<PD4);
+		}
 		if (empty && isFull(valg)){
 			++n;
 			empty = false;
@@ -57,8 +67,7 @@ int main(void)
 		//sleep mode seems to interfere with serial output \n...
 		_delay_ms(1000);
 #else
-		// Wait 1s
-		timer_wait(1);
+		sleep(1);
 #endif
 	}
 	return 0;

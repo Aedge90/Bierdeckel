@@ -53,6 +53,10 @@ MCU = atmega328p
 F_CPU = 16000000
 #F_CPU = 1000000
 
+
+FUSE_L=0xFF
+FUSE_H=0xDE
+FUSE_E=0x05
 # Output format. (can be srec, ihex, binary)
 FORMAT = ihex
 
@@ -528,6 +532,8 @@ clean_list :
 monitor:
 	$(MON_CMD) $(MON_OPT) $(MON_PORT) $(BAUD)
 
+fuse:
+	$(AVRDUDE) -c $(AVRDUDE_PROGRAMMER) -p $(MCU) -P $(AVRDUDE_PORT) -b $(AVRDUDE_BAUD) -U lfuse:w:$(FUSE_L):m -U hfuse:w:$(FUSE_H):m -u efuse:w:$(FUSE_E):m
 
 # Include the dependency files.
 -include $(shell mkdir .dep 2>/dev/null) $(wildcard .dep/*)

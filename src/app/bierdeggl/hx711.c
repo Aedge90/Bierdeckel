@@ -13,7 +13,7 @@ void hx711_init(void)
 
 	hx711_averageValue(32);
 	_offset = hx711_averageValue(32);
-	_scale = 371;//.5*742.0f;
+	_scale = 371; // TODO: adjust
 }
 
 uint32_t hx711_averageValue(uint8_t times)
@@ -48,10 +48,10 @@ uint32_t hx711_getValue()
 	return data;	
 }
 
-float hx711_getGram(void)
+int32_t hx711_getGram(void)
 {
 	int32_t val = (hx711_averageValue(32) - _offset);
-	return ((float) val) / _scale;
+	return val / _scale;
 }
 
 int32_t hx711_get_mg(void)
