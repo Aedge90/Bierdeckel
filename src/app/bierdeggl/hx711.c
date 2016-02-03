@@ -48,7 +48,7 @@ uint32_t hx711_getValue()
 	return data;	
 }
 
-int32_t hx711_getGram(void)
+int32_t hx711_get_g(void)
 {
 	int32_t val = (hx711_averageValue(32) - _offset);
 	return val / _scale;
