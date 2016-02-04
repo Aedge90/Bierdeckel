@@ -88,15 +88,29 @@
 
 \end{frame}
 \begin{frame}{Wiegeeinheit}
-                \begin{center}
-        \begin{adjustbox}{max width=.4\textwidth, max height=.8\textheight}
-                        \includegraphics[trim=1250 0 0 500,clip]{images/loadcell} 
+
+                
+        \begin{itemize}
+        \item Wägezelle mit Dehnmessstreifen (Wheatstone'sche Brückenschaltung)
+        	\begin{figure}
+        	        \begin{adjustbox}{height=.3\textheight}
+                        \includegraphics[trim=1250 500 650  500,clip]{images/loadcell} 
         \end{adjustbox}
-        \begin{adjustbox}{max width=.4\textwidth, max height=.8\textheight}
+        	\end{figure}
+        \item HX711: 24 bit ADC
+        \begin{figure}
+        	        \begin{adjustbox}{height=.3\textheight}
                         \includegraphics[]{images/hx711}
         \end{adjustbox}
-                \end{center}
+        \end{figure}
+        \end{itemize}
 
+\end{frame}
+
+\begin{frame}{Schaltplan}
+  \begin{adjustbox}{height=.9\textheight}
+	\includegraphics[]{images/board_complete}
+   \end{adjustbox}
 \end{frame}
 
 \begin{frame}
@@ -104,9 +118,6 @@
 \end{frame}
 \begin{frame}
 \lstinputlisting[]{code/hx711.c}
-\end{frame}
-\begin{frame}
-\lstinputlisting[]{code/hx711_2.c}
 \end{frame}
 
 { % Questions?
