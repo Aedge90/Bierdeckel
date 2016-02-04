@@ -46,11 +46,15 @@ int main(void)
 		int32_t valg;
 		// blink while glass is empty
 		// if no LEDs are avail, blink LED8
-		while (isEmpty((valg = hx711_get_mg()/1000))){
-			empty |= 1;
-			if (0 == n) PORTD |= 1<<PD4;
-			led_blink(n);
-			if (0 == n) PORTD &= ~(1<<PD4);
+
+		if (isEmpty((valg = hx711_get_mg()/1000))){
+			sleep16m(1);
+			while (isEmpty((valg = hx711_get_mg()/1000))){
+				empty |= 1;
+				if (0 == n) PORTD |= 1<<PD4;
+				led_blink(n);
+				if (0 == n) PORTD &= ~(1<<PD4);
+			}
 		}
 		if (empty && isFull(valg)){
 			++n;
