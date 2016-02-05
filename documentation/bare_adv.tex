@@ -15,6 +15,29 @@
 \usepackage[utf8]{inputenc}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{graphicx}
+
+\ifCLASSOPTIONcompsoc
+  \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+\else
+  \usepackage[caption=false,font=footnotesize]{subfig}
+\fi
+% subfig.sty, written by Steven Douglas Cochran, is the modern replacement
+% for subfigure.sty, the latter of which is no longer maintained and is
+% incompatible with some LaTeX packages including fixltx2e. However,
+% subfig.sty requires and automatically loads Axel Sommerfeldt's caption.sty
+% which will override IEEEtran.cls' handling of captions and this will result
+% in non-IEEE style figure/table captions. To prevent this problem, be sure
+% and invoke subfig.sty's "caption=false" package option (available since
+% subfig.sty version 1.3, 2005/06/28) as this is will preserve IEEEtran.cls
+% handling of captions.
+% Note that the Computer Society format requires a larger sans serif font
+% than the serif footnote size font used in traditional IEEE formatting
+% and thus the need to invoke different subfig.sty package options depending
+% on whether compsoc mode has been enabled.
+%
+% The latest version and documentation of subfig.sty can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/subfig/
 
 
 \include{code_formatting}
@@ -52,8 +75,9 @@
         Achim~Däubler}
 
 % The paper headers
-\markboth{Journal of \LaTeX\ Class Files,~Vol.~11, No.~4, December~2012}%
-{Shell \MakeLowercase{\textit{et al.}}: Bare Advanced Demo of IEEEtran.cls for Journals}
+\markboth{Smart Bierdeckel Dokumentation, Februar~2016}%
+{%Shell \MakeLowercase{\textit{et al.}}: Bare Advanced Demo of IEEEtran.cls for Journals}
+}
 % The only time the second header will appear is for the odd numbered pages
 % after the title page when using the twoside option.
 % 
@@ -106,95 +130,18 @@ Danach zeigen wir Code, der veraunschaulicht, wie die Gewichtsmessung funktionie
 
 \section{Bestandteile}
 
-%[[Datei:LED_Platine_Schema_complete.png|200px|thumb|right|Abbildung 1: Schema der LED Platine]]
-
 Unser Bierdeckel besteht aus einer Billigwaage, die die Wägezelle enthält.
 Als Mikrocontroller verwenden wir einen Atmega328p. Da dieser auch auf dem Arduino Uno verbaut
 ist, konnten wir unsere Andwendung zuert mithilfe des Arduinos auf einem Steckbrett testen.
 Um die Gewichtsdaten, die die Wägezelle liefert verarbeiten zu können verwenden wir den HX711,
 einen 24 Bit Analog zu Digital Converter für Brückensensoren. Diesen gibt es als fertiges Modul
-zu kaufen (siehe Abbildung 4). Um anzeigen wie viele neue Biere abgestellt verwenden wir 8 LEDs
+zu kaufen (siehe Fig. \ref{fig_HX711_board}). Um anzeigen wie viele neue Biere abgestellt verwenden wir 8 LEDs
 (4 gelbe und 4 rote, mit 3 mm Durchmesser). Damit nicht alle LEDs einzeln an einen Widerstand
 und dann ans Board gelötet werden müssen, haben wir die LEDs in zwei Reihen, mit den
-entsprechenden Anschlüssen und Vorwiderständen, auf eine extra Platine gelötet (siehe Abbildung 1).
+entsprechenden Anschlüssen und Vorwiderständen, auf eine extra Platine gelötet (siehe Fig. \ref{fig_led_platine}).
 Die Betriebsspannung wird von 3 AAA Batterien bereitgestellt. Diese liefern zusammen 4,5 Volt.
 Das ist ausreichend da der Atmega ab 3,7 Volt ein HIGH liest. Die Batterien haben wir in einem
 Batteriefach untergebracht, das schon einen An/Aus Schalter enthält.
-
-\section{Verwendung}
-
-Sobald man den Bierdeckel anschaltet, muss das leere Glas auf dem Bierdeckel stehen.
-Der HX711 wird dann durch den Atmega initialisiert und es wird das Gewicht des leeren Glases
-als Offset errechnet, damit man das Gewicht des Glases nicht mitzählt. Wird nun ein volles Glas
-abgestellt, wird erkannt dass vom leeren Zustand in den vollen gewechselt wurde, also ein neues
-Bier da ist. Dann wird die LED Anzeige eins hochgezählt. Die Anzeige funktioniert,
-wie beim klassischen Bierdeckel, mit den Strich/Zaun Zählsystem. Eine 4er Reihe der LEDs
-entspricht also den Strichen und eine den Zäunen.
-
-\section{Beschaltung des Atmega328p}
-
-%[[Datei:atmega328p_pin_belegung.png|200px|thumb|right|Abbildung 2: Atmega328p Pin Belegung]]
-
-%[[Datei:Bierdeckel_board_connectors.png|200px|thumb|right|Abbildung 3: Connectors]]
-
-Um uns das Leben zu erleichtern haben wir eine Platine entworfen, die den Atmega328p enthält
-(Abbildung 2 und Abbildung 3). Die anderen Pins sind mit Konnektoren verbunden (siehe Abbildung 3).
-Wir haben also auf dem Board das den Mikrocontroller enthält mehrere Steckpläzte für die anderen
-Komponenten. Das sind also die Steckplätze für:
-\begin{itemize}
- \item Das Batteriefach, dass so mit der Platine verbunden wird und die Betriebsspannung (VCC) und die Verbindung zu GND für alle Komponenten liefert.
- \item Den HX711 mit den Pins für VCC, SCK, DT und GND
- \item Die erste Reihe der LEDs auf dem Seperaten LED Board
- \item Die zweite Reihe der LEDs plus einem Pin für GND
- \item Einen ISP Konnektor
- \item die Stecker für die UART Schnittstelle
-\end{itemize}
-
-Die letzten beiden tragen nicht zur Funktion unseres Bierdeckels bei aber wurden eingebaut um den
-Bierdeckel neu programmieren (über den ISP Konnektor über die serielle Schnittstelle) zu können
-falls man das möchte. Über die UART Schnittstelle kann man das Programm dann debuggen.
-
-
-\section{Funktionsweise des HX711}
-
-%[[Datei:HX711Board.jpeg|200px|thumb|right|Abbildung 4: HX711 Board]]
-
-%[[Datei:HX711.jpg|200px|thumb|right|Abbildung 5: HX711 Beschaltung]] 
-
-Der Aufbau der Platine, die den  HX711 IC enthält, ist in Abbildung 5 dargestellt.
-Die Pins PD\_SCK und DOUT (entspricht SCK und DT in Abbildung 4) werden für den Datenaustausch
-verwendet. Sobald DOUT von HIGH auf LOW wechselt, sind Daten zur Abholung bereit.
-Dann müssen 25 positive Taktsignale an PD\_SCK geschickt werden (PD\_SCK muss mindestens 2us lang
-HIGH und 2us LOW sein, also nicht zu schnell lesen!), wobei jedes ein Bit aus DOUT shifted.
-Begonnen wird dabei mit dem MSB Bit. Der 25. Takt zieht DOUT wieder auf HIGH.
-Indem weitere Takte gesendet werden (höchstens 27) kann man für das nächste Signal wählen
-ob Eingang A oder B ausgelesen wird welchen Gain das gelesene Signal bekommen soll. 
-
-PD\_SCK wird außerdem verwendet um den HX711 resetten. Wenn der Pin länger als 60us auf HIGH
-steht dann wird der Power Down Mode aktiviert. Wenn der Pin wieder auf LOW gezogen wird,
-dann setzt sich der Chip zurück und geht in den normalen Betriebsmodus über.
-
-
-\section{Code}
-
-In folgendem Code wird unser HX711 initialisiert indem wir ihn einmal resetten.
-Wir setzen also den Pin PD\_SCK (SCLK im Code) 100us lang auf HIGH. Dann lesen wir 32 mal das
-Gewicht aus (hx711\_getValue() wird 32 mal aufgerufen) und nehmen den gemittelten Wert als
-Offset (entspricht dem Gewicht des leeren Glases,
-das zu dem Zeitpunkt auf dem Bierdeckel stehn muss).
-
-\lstinputlisting[language=C++]{code/hx711_init.cpp}
-
-In hx711\_getValue() wird jetzt gewartet bis DOUT (=SDI im Code) auf LOW wechselt.
-Dann werden 24 Taktsignale an PD\_SCK (=SCLK im Code) geschickt um die Daten Bit für Bit auszulesen.
-Mit dem 25. Takt wird DOUT wieder auf HIGH gesetzt. Da kein weiterer Takt gesendet wurde,
-verwenden wir den Input Kanal A des HX711 mit einem Gain von 128 für das nächste Mal.
-
-\lstinputlisting[language=C++]{code/hx711_getValue.cpp}
-
-Die Daten werden dann in mg umgerechnet. Wird nun ein Glas mit einem Inhalt, der über 480 mg wiegt abgestellt, wird erkannt dass vom leeren Zustand (-50 bis +50 mg) in den vollen gewechselt wurde, also ein neues Bier da ist. Dann wird die LED Anzeige eins hochgezählt. Die LEDs werden einzeln über Pins am Atmega328p angesteuert.
-
-
 
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
@@ -209,130 +156,162 @@ Die Daten werden dann in mg umgerechnet. Wird nun ein Glas mit einem Inhalt, der
 % option should be used if it is desired that the figures are to be
 % displayed while in draft mode.
 %
+\begin{figure}[!t]
+  \centering
+    \includegraphics[width=3.5in]{images/HX711Board.jpeg}
+    \caption{HX711 Board}
+  \label{fig_HX711_board}
+\end{figure}
+
+\section{Verwendung}
+
+Sobald man den Bierdeckel anschaltet, muss das leere Glas auf dem Bierdeckel stehen.
+Der HX711 wird dann durch den Atmega initialisiert und es wird das Gewicht des leeren Glases
+als Offset errechnet, damit man das Gewicht des Glases nicht mitzählt. Wird nun ein volles Glas
+abgestellt, wird erkannt dass vom leeren Zustand in den vollen gewechselt wurde, also ein neues
+Bier da ist. Dann wird die LED Anzeige eins hochgezählt. Die Anzeige funktioniert,
+wie beim klassischen Bierdeckel, mit den Strich/Zaun Zählsystem. Eine 4er Reihe der LEDs
+entspricht also den Strichen und eine den Zäunen.
+
+\clearpage
+
+\section{Beschaltung des Atmega328p}
+
+\begin{figure*}[!t]
+\centering
+\subfloat[Atmega328p Pin Belegung]{\includegraphics[width=4in]{images/atmega328p_pin_belegung.png}%
+\label{fig_atmega328_pin}}
+\hfil
+\subfloat[Konnektoren]{\includegraphics[width=2.5in]{images/bierdeckel_board_connectors.png}%
+\label{fig_board_connectors}}
+\caption{Beschaltung des Atmega328p}
+\label{fig_sim}
+\end{figure*}
+
 %\begin{figure}[!t]
-%\centering
-%\includegraphics[width=2.5in]{myfigure}
-% where an .eps filename suffix will be assumed under latex, 
-% and a .pdf suffix will be assumed for pdflatex; or what has been declared
-% via \DeclareGraphicsExtensions.
-%\caption{Simulation Results.}
-%\label{fig_sim}
+%  \centering
+%    \includegraphics[width=3.5in]{images/atmega328p_pin_belegung.png}
+%    \caption{Atmega328p Pin Belegung}
+%  \label{fig_atmega328_pin}
+%\end{figure}
+%
+%\begin{figure}[!t]
+%  \centering
+%    \includegraphics[width=3.5in]{images/bierdeckel_board_connectors.png}
+%    \caption{Konnektoren}
+%  \label{fig_board_connectors}
 %\end{figure}
 
-% Note that IEEE typically puts floats only at the top, even when this
-% results in a large percentage of a column being occupied by floats.
-% However, the Computer Society has been known to put floats at the bottom.
+Um uns das Leben zu erleichtern haben wir eine Platine entworfen, die den Atmega328p enthält
+(siehe Fig. \ref{fig_atmega328_pin}). Die anderen Pins sind mit Konnektoren verbunden (siehe Fig. \ref{fig_board_connectors}).
+Wir haben also auf dem Board das den Mikrocontroller enthält mehrere Steckpläzte für die anderen
+Komponenten. Das sind also die Steckplätze für:
+\begin{itemize}
+ \item Das Batteriefach, dass so mit der Platine verbunden wird und die Betriebsspannung (VCC) und die Verbindung zu GND für alle Komponenten liefert.
+ \item Den HX711 mit den Pins für VCC, SCK, DT und GND
+ \item Die erste Reihe der LEDs auf dem Seperaten LED Board
+ \item Die zweite Reihe der LEDs plus einem Pin für GND
+ \item Einen ISP Konnektor
+ \item die Stecker für die UART Schnittstelle
+\end{itemize}
+
+Die letzten beiden tragen nicht zur Funktion unseres Bierdeckels bei aber wurden eingebaut um den
+Bierdeckel neu programmieren (über den ISP Konnektor über die serielle Schnittstelle) zu können
+falls man das möchte. Über die UART Schnittstelle kann man das Programm dann debuggen.
+Das fertige Layout der Platinen kann man in Fig. \ref{fig_atmega328p_platine} und Fig. \ref {fig_LED_Platine} sehen.
 
 
-% An example of a double column floating figure using two subfigures.
-% (The subfig.sty package must be loaded for this to work.)
-% The subfigure \label commands are set within each subfloat command,
-% and the \label for the overall figure must come after \caption.
-% \hfil is used as a separator to get equal spacing.
-% Watch out that the combined width of all the subfigures on a 
-% line do not exceed the text width or a line break will occur.
-%
-%\begin{figure*}[!t]
-%\centering
-%\subfloat[Case I]{\includegraphics[width=2.5in]{box}%
-%\label{fig_first_case}}
-%\hfil
-%\subfloat[Case II]{\includegraphics[width=2.5in]{box}%
-%\label{fig_second_case}}
-%\caption{Simulation results.}
-%\label{fig_sim}
-%\end{figure*}
-%
-% Note that often IEEE papers with subfigures do not employ subfigure
-% captions (using the optional argument to \subfloat[]), but instead will
-% reference/describe all of them (a), (b), etc., within the main caption.
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=3.5in]{images/LED_Platine_Schema_complete.png}
+    \caption{Schema der LED Platine}
+  \label{fig_led_platine}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=3.5in]{images/atmega328p_platine.png}
+    \caption{Platine mit Atmega328p}
+  \label{fig_atmega328p_platine}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=2.0in]{images/LED_Platine.png}
+    \caption{Platine mit den Zähler LEDs}
+  \label{fig_LED_Platine}
+\end{figure}
 
 
-% An example of a floating table. Note that, for IEEE style tables, the 
-% \caption command should come BEFORE the table. Table text will default to
-% \footnotesize as IEEE normally uses this smaller font for tables.
-% The \label must come after \caption as always.
-%
-%\begin{table}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-%\caption{An Example of a Table}
-%\label{table_example}
-%\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-%\begin{tabular}{|c||c|}
-%\hline
-%One & Two\\
-%\hline
-%Three & Four\\
-%\hline
-%\end{tabular}
-%\end{table}
+\section{Funktionsweise des HX711}
 
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=7in]{images/HX711.jpg}%
+\caption{HX711 Beschaltung}
+\label{fig_HX711}
+\end{figure*}
 
-% Note that IEEE does not put floats in the very first column - or typically
-% anywhere on the first page for that matter. Also, in-text middle ("here")
-% positioning is not used. Most IEEE journals use top floats exclusively.
-% However, Computer Society journals sometimes do use bottom floats - bear
-% this in mind when choosing appropriate optional arguments for the
-% figure/table environments.
-% Note that, LaTeX2e, unlike IEEE journals, places footnotes above bottom
-% floats. This can be corrected via the \fnbelowfloat command of the
-% stfloats package.
+Der Aufbau der Platine, die den  HX711 IC enthält, ist in Fig. \ref{fig_HX711} dargestellt.
+Die Pins PD\_SCK und DOUT (entspricht SCK und DT in Fig. \ref{fig_HX711_board}) werden für den Datenaustausch
+verwendet. Sobald DOUT von HIGH auf LOW wechselt, sind Daten zur Abholung bereit.
+Dann müssen 25 positive Taktsignale an PD\_SCK geschickt werden (PD\_SCK muss mindestens 2us lang
+HIGH und 2us LOW sein, also nicht zu schnell lesen!), wobei jedes ein Bit aus DOUT shifted.
+Begonnen wird dabei mit dem MSB Bit. Der 25. Takt zieht DOUT wieder auf HIGH.
+Indem weitere Takte gesendet werden (höchstens 27) kann man für das nächste Signal wählen
+ob Eingang A oder B ausgelesen wird welchen Gain das gelesene Signal bekommen soll. 
 
+PD\_SCK wird außerdem verwendet um den HX711 resetten. Wenn der Pin länger als 60us auf HIGH
+steht dann wird der Power Down Mode aktiviert. Wenn der Pin wieder auf LOW gezogen wird,
+dann setzt sich der Chip zurück und geht in den normalen Betriebsmodus über.
 
+\clearpage
 
-\section{Conclusion}
-The conclusion goes here.
+\section{Code}
 
+In folgendem Code wird unser HX711 initialisiert indem wir ihn einmal resetten.
+Wir setzen also den Pin PD\_SCK (SCLK im Code) 100us lang auf HIGH. Dann lesen wir 32 mal das
+Gewicht aus (hx711\_getValue() wird 32 mal aufgerufen) und nehmen den gemittelten Wert als
+Offset (entspricht dem Gewicht des leeren Glases,
+das zu dem Zeitpunkt auf dem Bierdeckel stehn muss).
 
+\hfil
+\lstinputlisting[language=C]{code/hx711_init.c}
+\hfil
 
+In hx711\_getValue() wird jetzt gewartet bis DOUT (=SDI im Code) auf LOW wechselt.
+Dann werden 24 Taktsignale an PD\_SCK (=SCLK im Code) geschickt um die Daten Bit für Bit auszulesen.
+Mit dem 25. Takt wird DOUT wieder auf HIGH gesetzt. Da kein weiterer Takt gesendet wurde,
+verwenden wir den Input Kanal A des HX711 mit einem Gain von 128 für das nächste Mal.
 
+\hfil
+\lstinputlisting[language=C]{code/hx711_getValue.c}
+\hfil
 
-% if have a single appendix:
-%\appendix[Proof of the Zonklar Equations]
-% or
-%\appendix  % for no appendix heading
-% do not use \section anymore after \appendix, only \section*
-% is possibly needed
+Die Daten werden dann in mg umgerechnet, mit einem empirisch bestimmten Skalierungsfaktor.
 
-% use appendices with more than one appendix
-% then use \section to start each appendix
-% you must declare a \section before using any
-% \subsection or using \label (\appendices by itself
-% starts a section numbered zero.)
-%
+\hfil
+\lstinputlisting[language=C]{code/main.c}
+\hfil
 
+In der main() wird nun in einer Dauerschleife geprüft, ob das abgestellte Glas leer ist oder voll.
+hx77\_get\_mg() ruft dabei hx711\_getValue() 32 mal auf um einen gemittelten Wert zu erreichen
+und Schwankungen so herauszufiltern. Solange das Glas leer ist blinken die LEDs. Als leer wird das
+Glas erkannt (in der Methode isEmpty()), wenn der Inhalt mit einem Gewicht zwischen -50g und 50g gemessen wird.
+Als voll wird es erkannt wenn der Inhalt über 480g wiegt (wird in isFull() geprüft). Wird nun erkannt,
+dass vom leeren in den vollen Zustand gewechselt wurde, wird daraus geschlossen, dass ein
+neues Bier da ist. Dann wird die LED Anzeige eins hochgezählt. Die LEDs werden einzeln über Pins
+am Atmega328p angesteuert.
 
-\appendices
-\section{Proof of the First Zonklar Equation}
-Appendix one text goes here.
+\section{Ausblick}
 
-% you can choose not to have a title for an appendix
-% if you want by leaving the argument blank
-\section{}
-Appendix two text goes here.
+Zum aktuellen Stand sind die Einzelteile lose miteinander verbunden. Deswegen ist ein Case
+geplant, in dem wir unsere Bestandteile unterbringen wollen. Dieses sollte möglichst klein sein
+auch wenn es schwer werden dürfte den Durchmesser eines Standard Bierdeckels einzuhalten.\\
+Denkbare Erweiterungen wären ein Bluetooth Modul einzubauen und eine App zu erstellen.
+Damit könnte man sich die Anzahl der Biere auch auf dem Handy anzeigen lassen und zum Beispiel
+einen Rechnter einbauen, der berechnet ob und wann man wieder fahrtauglich ist.
 
-
-
-% Can use something like this to put references on a page
-% by themselves when using endfloat and the captionsoff option.
-\ifCLASSOPTIONcaptionsoff
-  \newpage
-\fi
-
-
-
-% trigger a \newpage just before the given reference
-% number - used to balance the columns on the last page
-% adjust value as needed - may need to be readjusted if
-% the document is modified later
-%\IEEEtriggeratref{8}
-% The "triggered" command can be changed if desired:
-%\IEEEtriggercmd{\enlargethispage{-5in}}
 
 % references section
 
@@ -348,11 +327,15 @@ Appendix two text goes here.
 % <OR> manually copy in the resultant .bbl file
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
+
+
 \begin{thebibliography}{1}
 
-\bibitem{IEEEhowto:kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to {\LaTeX}}, 3rd~ed.\hskip 1em plus
-  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
+\bibitem{hx711sheet}
+AVIA Semiconductor, "24-Bit Analog-to-Digital Converter (ADC) for Weigh Scales", HX711 Datasheet
+\\
+\bibitem{atmelavrsheet}
+Atmel, "ATMEL 8-BIT MICROCONTROLLER WITH 4/8/16/32KBYTES", Datasheet, Nov. 2015
 
 \end{thebibliography}
 

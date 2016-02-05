@@ -8,7 +8,6 @@ void hx711_init(void) {
 	//callibration _offset is weight of empty glass
 	_offset = hx711_averageValue(32);
 }
-
 uint32_t hx711_getValue() {
 	uint8_t i = 0;
 	uint32_t data = 0;
