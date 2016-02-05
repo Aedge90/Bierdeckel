@@ -254,70 +254,37 @@ Gewicht aus (hx711\_getValue() wird 32 mal aufgerufen) und nehmen den gemittelte
 Offset (entspricht dem Gewicht des leeren Glases,
 das zu dem Zeitpunkt auf dem Bierdeckel stehn muss).
 
-\lstinputlisting[language=C++]{code/hx711_init.cpp}
+\lstinputlisting[language=C]{code/hx711_init.c}
 
 In hx711\_getValue() wird jetzt gewartet bis DOUT (=SDI im Code) auf LOW wechselt.
 Dann werden 24 Taktsignale an PD\_SCK (=SCLK im Code) geschickt um die Daten Bit für Bit auszulesen.
 Mit dem 25. Takt wird DOUT wieder auf HIGH gesetzt. Da kein weiterer Takt gesendet wurde,
 verwenden wir den Input Kanal A des HX711 mit einem Gain von 128 für das nächste Mal.
 
-\lstinputlisting[language=C++]{code/hx711_getValue.cpp}
+\lstinputlisting[language=C]{code/hx711_getValue.c}
 
-Die Daten werden dann in mg umgerechnet. Wird nun ein Glas mit einem Inhalt,
-der über 480 mg wiegt abgestellt, wird erkannt dass vom leeren Zustand
-(-50 bis +50 mg) in den vollen gewechselt wurde, also ein neues Bier da ist.
-Dann wird die LED Anzeige eins hochgezählt. Die LEDs werden einzeln über Pins
+Die Daten werden dann in mg umgerechnet, mit einem empirisch bestimmten Skalierungsfaktor.
+
+\lstinputlisting[language=C]{code/main.c}
+
+In der main() wird nun in einer Dauerschleife geprüft, ob das abgestellte Glas leer ist oder voll.
+hx77\_get\_mg() ruft dabei hx711\_getValue() 32 mal auf um einen gemittelten Wert zu erreichen
+und Schwankungen so herauszufiltern. Solange das Glas leer ist blinken die LEDs. Als leer wird das
+Glas erkannt (in der Methode isEmpty()), wenn der Inhalt mit einem Gewicht zwischen -50g und 50g gemessen wird.
+Als voll wird es erkannt wenn der Inhalt über 480g wiegt (wird in isFull() geprüft). Wird nun erkannt,
+dass vom leeren in den vollen Zustand gewechselt wurde, wird daraus geschlossen, dass ein
+neues Bier da ist. Dann wird die LED Anzeige eins hochgezählt. Die LEDs werden einzeln über Pins
 am Atmega328p angesteuert.
 
+\section{Ausblick}
 
-\section{Conclusion}
-The conclusion goes here.
+Zum aktuellen Stand sind die Einzelteile lose miteinander verbunden. Deswegen ist ein Case
+geplant, in dem wir unsere Bestandteile unterbringen wollen. Dieses sollte möglichst klein sein
+auch wenn es schwer werden dürfte den Durchmesser eines Standard Bierdeckels einzuhalten.\\
+Denkbare Erweiterungen wären ein Bluetooth Modul einzubauen und eine App zu erstellen.
+Damit könnte man sich die Anzahl der Biere auch auf dem Handy anzeigen lassen und zum Beispiel
+einen Rechnter einbauen, der berechnet ob und wann man wieder fahrtauglich ist.
 
-
-
-
-
-% if have a single appendix:
-%\appendix[Proof of the Zonklar Equations]
-% or
-%\appendix  % for no appendix heading
-% do not use \section anymore after \appendix, only \section*
-% is possibly needed
-
-% use appendices with more than one appendix
-% then use \section to start each appendix
-% you must declare a \section before using any
-% \subsection or using \label (\appendices by itself
-% starts a section numbered zero.)
-%
-
-
-\appendices
-\section{Proof of the First Zonklar Equation}
-Appendix one text goes here.
-
-% you can choose not to have a title for an appendix
-% if you want by leaving the argument blank
-\section{}
-Appendix two text goes here.
-
-
-
-% Can use something like this to put references on a page
-% by themselves when using endfloat and the captionsoff option.
-\ifCLASSOPTIONcaptionsoff
-  \newpage
-\fi
-
-
-
-% trigger a \newpage just before the given reference
-% number - used to balance the columns on the last page
-% adjust value as needed - may need to be readjusted if
-% the document is modified later
-%\IEEEtriggeratref{8}
-% The "triggered" command can be changed if desired:
-%\IEEEtriggercmd{\enlargethispage{-5in}}
 
 % references section
 
@@ -335,13 +302,13 @@ Appendix two text goes here.
 % (used to reserve space for the reference number labels box)
 
 
-TODO Handbuch etc als Quelle angeben
-
 \begin{thebibliography}{1}
 
-\bibitem{IEEEhowto:kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to {\LaTeX}}, 3rd~ed.\hskip 1em plus
-  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
+\bibitem{hx711sheet}
+AVIA Semiconductor, "24-Bit Analog-to-Digital Converter (ADC) for Weigh Scales", HX711 Datasheet
+\\
+\bibitem{atmelavrsheet}
+Atmel, "ATMEL 8-BIT MICROCONTROLLER WITH 4/8/16/32KBYTES", Datasheet, Nov. 2015
 
 \end{thebibliography}
 
