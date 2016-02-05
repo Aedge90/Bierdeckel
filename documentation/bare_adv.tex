@@ -1,5 +1,5 @@
 
-\documentclass[10pt,journal]{IEEEtran}
+\documentclass[12pt,journal]{IEEEtran}
 % The Computer Society requires 12pt.
 % If IEEEtran.cls has not been installed into the LaTeX system files,
 % manually specify the path to it like:
@@ -96,16 +96,12 @@
 % in the abstract or keywords.
 %\IEEEtitleabstractindextext{%
 \begin{abstract}
-Ziel des Projektes SmartBierdeggl ist es einen Bierdeckel zu konstruieren, der mitzählt wie oft man sich ein neues Bier geholt hat.
+Ziel des Projektes SmartBierdeggl ist es einen Bierdeckel zu konstruieren, der automatisch mitzählt wieviele Getränke man bereits hat.
 Er besteht aus einer Wägezelle, mit der das Gewicht des darauf abgestellten Getränks gemessen wird.
 Außerdem enthält er einen Mikrocontroller, der die gemessenen Gewichtsdaten erhält und daraus errechnet ob ein neues Getränk abgestellt wurde oder nicht.
 Wie viele neue Getränke schon abgestellt wurden wird durch LEDs am Bierdeckel veranschaulicht.
 \end{abstract}
 %}
-
-
-
-
 
 \section{Einleitung}
 
@@ -128,20 +124,103 @@ Wie viele neue Getränke schon abgestellt wurden wird durch LEDs am Bierdeckel v
 Es wird erklärt, welche Bestandteile benötigt werden und wie sie funktionieren.
 Danach zeigen wir Code, der veranschaulicht, wie die Gewichtsmessung funktioniert.
 
-\section{Bestandteile}
+\section{Vorabüberlegungen}
+Zunächst wird eine Möglichkeit benötigt, welche die automatischen Detektion eines neuen Getränks ermöglicht.
+Hierfür fiel die Wahl auf Überwachung des aktuellen Gewichts auf dem Bierdeckel.
+Die Grundlage für die Gewichtsmessung sind Dehnmessstreifen (DMS).
+Diese ändern bei Dehnung bzw. Stauchung ihren elektrischen Widerstand.
+Zusammen mit weiteren DMS oder Widerständen kann man damit eine sogenannte Wheatstonesche Messbrücke (Abb. \ref{fig_wheatstone}) konstruieren.
+\begin{figure}[!h]
+  \centering
+    \includegraphics[width=3.5in]{images/wheatstone.png}
+    \caption{Wheatstone'sche Brücke}
+  \label{fig_wheatstone}
+\end{figure}
+Ersetzt man in Abb. \ref{fig_wheatstone} nun einen oder mehrere Widerstände durch DMS, so führen Dehnungen oder Stauchungen auf diesen zu Spannungsänderungen.
+Befestigt man nun die DMS an einem geeigneten Federkörper so erhält man eine sog. Wägezelle (engl. Load Cell, Abb. \ref{fig_loadcell}), welche für das Projekt verwendet wurden.
+\begin{figure}[!h]
+  \centering
+    \includegraphics[width=3.5in]{images/loadcell.jpg}
+    \caption{Wägezelle}
+  \label{fig_loadcell}
+\end{figure}
+Es ist auch möglich die Messstreifen direkt an dem Bierdeckel zu befestigen, dies wurde allerdings aufgrund der hohen Kosten für einen DMS im Vergleich zu einer Wägezelle verworfen.
+Um die Daten der Wägezelle in einem Microcontroller verarbeiten zu können, benötigt man einen Analog-Digital Wandler.
+Dieser kann bereits in dem Mircocontoller vorhanden sein.
+In diesem Fall wird jedoch noch ein Signalverstärker benötigt.
+Eine andere Möglichkeit ist die Verwendung eines dedizierten Moduls, wie dem HX711 \cite{hx711sheet} (Abb. \ref{fig_HX711_board}).
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=3.5in]{images/HX711Board.jpeg}
+    \caption{HX711 Board}
+  \label{fig_HX711_board}
+\end{figure}
+Dieser wandelt das analoge Signal der Wägezelle in einen 24 bit Digitalwert, welcher durch den Microcontroller ausgelesen werden kann.
 
-Unser Bierdeckel besteht aus einer Billigwaage, die die Wägezelle enthält.
-Als Mikrocontroller verwenden wir einen Atmega328p. Da dieser auch auf dem Arduino Uno verbaut
-ist, konnten wir unsere Anwendung zuerst mithilfe des Arduinos auf einem Steckbrett testen.
-Um die Gewichtsdaten, die die Wägezelle liefert verarbeiten zu können verwenden wir den HX711,
-einen 24 Bit Analog zu Digital Konverter für Brückensensoren. Diesen gibt es als fertiges Modul
-zu kaufen (siehe Fig. \ref{fig_HX711_board}). Um anzeigen wie viele neue Biere abgestellt verwenden wir 8 LEDs
-(4 gelbe und 4 rote, mit 3 mm Durchmesser). Damit nicht alle LEDs einzeln an einen Widerstand
-und dann ans Board gelötet werden müssen, haben wir die LEDs in zwei Reihen, mit den
-entsprechenden Anschlüssen und Vorwiderständen, auf eine extra Platine gelötet (siehe Fig. \ref{fig_led_platine}).
-Die Betriebsspannung wird von 3 AA Batterien bereitgestellt. Diese liefern zusammen 4,5 Volt.
-Das ist ausreichend da der Atmega ab 3,7 Volt ein HIGH liest. Die Batterien haben wir in einem
-Batteriefach untergebracht, das schon einen An/Aus Schalter enthält.
+\section{Funktionsweise des HX711}
+
+\begin{figure*}[htbp]
+\centering
+\includegraphics[width=7in]{images/HX711.jpg}%
+\caption{HX711 Beschaltung}
+\label{fig_HX711}
+\end{figure*}
+
+Der Aufbau der Platine, die den  HX711 IC enthält, ist in Fig. \ref{fig_HX711} dargestellt.
+Die Pins PD\_SCK und DOUT (entspricht SCK und DT in Fig. \ref{fig_HX711_board}) werden für den Datenaustausch
+verwendet. Sobald DOUT von HIGH auf LOW wechselt, sind Daten zur Abholung bereit.
+Dann müssen 25 positive Taktsignale an PD\_SCK geschickt werden (PD\_SCK muss mindestens 2$\mu$s lang
+HIGH und 2$\mu$s LOW sein, also nicht zu schnell lesen!), wobei jedes ein Bit aus DOUT shifted.
+Begonnen wird dabei mit dem MSB Bit. Der 25. Takt zieht DOUT wieder auf HIGH.
+Indem weitere Takte gesendet werden (höchstens 27) kann man für das nächste Signal wählen
+ob Eingang A oder B ausgelesen wird welchen Gain das gelesene Signal bekommen soll. 
+
+PD\_SCK wird außerdem verwendet um den HX711 resetten. Wenn der Pin länger als 60$\mu$s auf HIGH
+steht dann wird der Power Down Mode aktiviert. Wenn der Pin wieder auf LOW gezogen wird,
+dann setzt sich der Chip zurück und geht in den normalen Betriebsmodus über.
+
+\section{Aufbau}
+Der SmartBierdeggl besteht aus folgenden Teilen:
+\begin{itemize}
+\item Microcontroller
+\item Wägezelle
+\item HX711
+\item LEDs
+\item Stromversorgung
+\end{itemize}
+Die Wägezelle stammte hierbei von einer Küchenwaage, welche sich auch gut zum Testen eignete.
+Als Microcontroller wurde anfangs das TinyUSBBoard \cite{tinyusb} verwendet.
+Dies wurde für Testzwecke, auf Grundlage des EasyLogger \cite{easylogger}, um eine USB-Ausgabe Funktionalität erweitert.
+Jedoch stellte sich heraus, dass die USB-Ausgabe mit dem Timing des HX711 interferiert.
+Infolge dessen wurde statt des TinyUSBBoard  ein UNO-Board verwendet, welches das Testen über eine serielle Schnittstelle ermöglicht.
+Sobald das System lief, wurde auf einen separaten Mircocontroller umgestiegen.
+Dies ist aktuell noch ein Atmel ATMega328PA, dieser kann jedoch ohne weiteres durch einen ATMega48 ersetzt werden.
+Um diesen herum wurde anschließend auf einem Steckboard ein Prototyp für den SmartBierdeggl entworfen (Abb. \ref{fig_prototyp}).
+\begin{figure}[!h]
+  \centering
+    \includegraphics[width=3.5in]{images/prototyp.jpg}
+    \caption{Prototyp}
+  \label{fig_prototyp}
+\end{figure}
+Als Stromversorgung dienen hierbei 3 AA Batterien mit jeweils 1,5V.
+
+
+
+%
+%\section{Bestandteile}
+%
+%Unser Bierdeckel besteht aus einer Billigwaage, die die Wägezelle enthält.
+%Als Mikrocontroller verwenden wir einen Atmega328p. Da dieser auch auf dem Arduino Uno verbaut
+%ist, konnten wir unsere Anwendung zuerst mithilfe des Arduinos auf einem Steckbrett testen.
+%Um die Gewichtsdaten, die die Wägezelle liefert verarbeiten zu können verwenden wir den HX711,
+%einen 24 Bit Analog zu Digital Konverter für Brückensensoren. Diesen gibt es als fertiges Modul
+%zu kaufen (siehe Fig. \ref{fig_HX711_board}). Um anzeigen wie viele neue Biere abgestellt verwenden wir 8 LEDs
+%(4 gelbe und 4 rote, mit 3 mm Durchmesser). Damit nicht alle LEDs einzeln an einen Widerstand
+%und dann ans Board gelötet werden müssen, haben wir die LEDs in zwei Reihen, mit den
+%entsprechenden Anschlüssen und Vorwiderständen, auf eine extra Platine gelötet (siehe Fig. \ref{fig_led_platine}).
+%Die Betriebsspannung wird von 3 AA Batterien bereitgestellt. Diese liefern zusammen 4,5 Volt.
+%Das ist ausreichend da der Atmega ab 3,7 Volt ein HIGH liest. Die Batterien haben wir in einem
+%Batteriefach untergebracht, das schon einen An/Aus Schalter enthält.
 
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
@@ -156,22 +235,7 @@ Batteriefach untergebracht, das schon einen An/Aus Schalter enthält.
 % option should be used if it is desired that the figures are to be
 % displayed while in draft mode.
 %
-\begin{figure}[!t]
-  \centering
-    \includegraphics[width=3.5in]{images/HX711Board.jpeg}
-    \caption{HX711 Board}
-  \label{fig_HX711_board}
-\end{figure}
 
-\section{Verwendung}
-
-Sobald man den Bierdeckel anschaltet, muss das leere Glas auf dem Bierdeckel stehen.
-Der HX711 wird dann durch den Atmega initialisiert und es wird das Gewicht des leeren Glases
-als Offset errechnet, damit man das Gewicht des Glases nicht mitzählt. Wird nun ein volles Glas
-abgestellt, wird erkannt dass vom leeren Zustand in den vollen gewechselt wurde, also ein neues
-Bier da ist. Dann wird die LED Anzeige eins hochgezählt. Die Anzeige funktioniert,
-wie beim klassischen Bierdeckel, mit den Strich/Zaun Zählsystem. Eine 4er Reihe der LEDs
-entspricht also den Strichen und eine den Zäunen.
 
 %\clearpage
 
@@ -221,21 +285,21 @@ falls man das möchte. Über die UART Schnittstelle kann man das Programm dann d
 Das fertige Layout der Platinen kann man in Fig. \ref{fig_atmega328p_platine} und Fig. \ref {fig_LED_Platine} sehen.
 
 
-\begin{figure}[h]
+\begin{figure}[htbp]
   \centering
     \includegraphics[width=3.5in]{images/LED_Platine_Schema_complete.png}
     \caption{Schema der LED Platine}
   \label{fig_led_platine}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[htbp]
   \centering
     \includegraphics[width=3.5in]{images/atmega328p_platine.png}
     \caption{Platine mit Atmega328p}
   \label{fig_atmega328p_platine}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[htbp]
   \centering
     \includegraphics[width=2.0in]{images/LED_Platine.png}
     \caption{Platine mit den Zähler LEDs}
@@ -243,40 +307,26 @@ Das fertige Layout der Platinen kann man in Fig. \ref{fig_atmega328p_platine} un
 \end{figure}
 
 
-\section{Funktionsweise des HX711}
-
-\begin{figure*}[!t]
-\centering
-\includegraphics[width=7in]{images/HX711.jpg}%
-\caption{HX711 Beschaltung}
-\label{fig_HX711}
-\end{figure*}
-
-Der Aufbau der Platine, die den  HX711 IC enthält, ist in Fig. \ref{fig_HX711} dargestellt.
-Die Pins PD\_SCK und DOUT (entspricht SCK und DT in Fig. \ref{fig_HX711_board}) werden für den Datenaustausch
-verwendet. Sobald DOUT von HIGH auf LOW wechselt, sind Daten zur Abholung bereit.
-Dann müssen 25 positive Taktsignale an PD\_SCK geschickt werden (PD\_SCK muss mindestens 2us lang
-HIGH und 2us LOW sein, also nicht zu schnell lesen!), wobei jedes ein Bit aus DOUT shifted.
-Begonnen wird dabei mit dem MSB Bit. Der 25. Takt zieht DOUT wieder auf HIGH.
-Indem weitere Takte gesendet werden (höchstens 27) kann man für das nächste Signal wählen
-ob Eingang A oder B ausgelesen wird welchen Gain das gelesene Signal bekommen soll. 
-
-PD\_SCK wird außerdem verwendet um den HX711 resetten. Wenn der Pin länger als 60us auf HIGH
-steht dann wird der Power Down Mode aktiviert. Wenn der Pin wieder auf LOW gezogen wird,
-dann setzt sich der Chip zurück und geht in den normalen Betriebsmodus über.
-
 %\clearpage
 
-\section{Code}
+\section{$\mu$C Programm}
+Zur Programmierung des Microcontrollers wurde nach Abbildung \ref{fig_isp} das UNO-Board als ISP genommen.
+Hierbei ist jedoch darauf zu achten, RST und GND durch einen zusätzlichen 100$\mu$F Kondensator zu verbinden, um zu verhinden, dass sich der Uno selbst neu programmiert.
+\begin{figure}[!h]
+  \centering
+    \includegraphics[width=3.5in]{images/isp.png}
+    \caption{UNO als ISP}
+  \label{fig_isp}
+\end{figure}
 
 In folgendem Code wird unser HX711 initialisiert indem wir ihn einmal resetten.
-Wir setzen also den Pin PD\_SCK (SCLK im Code) 100us lang auf HIGH. Dann lesen wir 32 mal das
+Wir setzen also den Pin PD\_SCK (SCLK im Code) 100$\mu$s lang auf HIGH. Dann lesen wir 32 mal das
 Gewicht aus (hx711\_getValue() wird 32 mal aufgerufen) und nehmen den gemittelten Wert als
 Offset (entspricht dem Gewicht des leeren Glases,
 das zu dem Zeitpunkt auf dem Bierdeckel stehen muss).
 
 \hfil
-\lstinputlisting[language=C,float=htbp]{code/hx711_init.c}
+\lstinputlisting[language=C]{code/hx711_init.c}
 \hfil
 
 In hx711\_getValue() wird jetzt gewartet bis DOUT (=SDI im Code) auf LOW wechselt.
@@ -285,32 +335,46 @@ Mit dem 25. Takt wird DOUT wieder auf HIGH gesetzt. Da kein weiterer Takt gesend
 verwenden wir den Input Kanal A des HX711 mit einem Gain von 128 für das nächste Mal.
 
 \hfil
-\lstinputlisting[language=C,float=htbp]{code/hx711_getValue.c}
+\lstinputlisting[language=C]{code/hx711_getValue.c}
 \hfil
 
 Die Daten werden dann in mg umgerechnet, mit einem empirisch bestimmten Skalierungsfaktor.
 
 \hfil
-\lstinputlisting[language=C,float=htbp]{code/main.c}
+\lstinputlisting[language=C]{code/main.c}
 \hfil
 
-In der main() wird nun in einer Dauerschleife geprüft, ob das abgestellte Glas leer ist oder voll.
+In der main() wird nun im Sekundentakt geprüft, ob das abgestellte Glas leer oder voll ist.
 hx77\_get\_mg() ruft dabei hx711\_getValue() 32 mal auf um einen gemittelten Wert zu erreichen
 und Schwankungen so herauszufiltern. Solange das Glas leer ist blinken die LEDs. Als leer wird das
-Glas erkannt (in der Methode isEmpty()), wenn der Inhalt mit einem Gewicht zwischen -50g und 50g gemessen wird.
-Als voll wird es erkannt wenn der Inhalt über 480g wiegt (wird in isFull() geprüft). Wird nun erkannt,
-dass vom leeren in den vollen Zustand gewechselt wurde, wird daraus geschlossen, dass ein
+Glas erkannt, wenn der Inhalt mit einem Gewicht zwischen -50g und 50g gemessen wird.
+Als voll wird es erkannt wenn der Inhalt über 480g wiegt.
+Wird nun erkannt, dass vom leeren in den vollen Zustand gewechselt wurde, wird daraus geschlossen, dass ein
 neues Bier da ist. Dann wird die LED Anzeige eins hochgezählt. Die LEDs werden einzeln über Pins
 am Atmega328p angesteuert.
+Anschließend geht der Microcontroller für eine Sekunde in den Stromsparmodus.
+
+
+
+\section{Verwendung}
+
+Sobald man den Bierdeckel anschaltet, muss das leere Glas auf dem Bierdeckel stehen.
+Der HX711 wird dann durch den Atmega initialisiert und es wird das Gewicht des leeren Glases
+als Offset errechnet, damit man das Gewicht des Glases nicht mitzählt. Wird nun ein volles Glas
+abgestellt, wird erkannt dass vom leeren Zustand in den vollen gewechselt wurde, also ein neues
+Bier da ist. Dann wird die LED Anzeige eins hochgezählt. Die Anzeige funktioniert,
+wie beim klassischen Bierdeckel, mit den Strich/Zaun Zählsystem. Eine 4er Reihe der LEDs
+entspricht also den Strichen und eine den Zäunen.
 
 \section{Ausblick}
 
 Zum aktuellen Stand sind die Einzelteile lose miteinander verbunden. Deswegen ist ein Case
 geplant, in dem wir unsere Bestandteile unterbringen wollen. Dieses sollte möglichst klein sein
 auch wenn es schwer werden dürfte den Durchmesser eines Standard Bierdeckels einzuhalten.\\
-Denkbare Erweiterungen wären ein Bluetooth Modul einzubauen und eine App zu erstellen.
-Damit könnte man sich die Anzahl der Biere auch auf dem Handy anzeigen lassen und zum Beispiel
-einen Rechner einbauen, der berechnet ob und wann man wieder fahrtauglich ist.
+Denkbare Erweiterungen wären ein Funk Modul (z.B. Bluetooth) einzubauen, über welches der Bedienung signalisiert werden kann, dass das Glas leer ist.
+Außerdem wäre es dadurch denkbar eine App zu erstellen, welche es ermöglicht die Kosten anzuzeigen.
+Oder auch, nach Eingabe von Körperdaten, zu berechnen ob und wann man wieder fahrtauglich ist.
+Eine weitere Erweiterung wäre es Getränke zu unterscheiden, entweder durch direkt Eingabe in der App, oder durch eine Codierung bzw. RFID Chip am Glas.
 
 
 % references section
@@ -336,6 +400,16 @@ AVIA Semiconductor, "24-Bit Analog-to-Digital Converter (ADC) for Weigh Scales",
 \\
 \bibitem{atmelavrsheet}
 Atmel, "ATMEL 8-BIT MICROCONTROLLER WITH 4/8/16/32KBYTES", Datasheet, Nov. 2015
+\\
+\bibitem{wiki_wheatstone}
+https://de.wikipedia.org/wiki/Wheatstonesche\_Messbrücke
+\\
+\bibitem{tinyusb}
+https://github.com/i7sid/diy-tinyusbboard
+\\
+\bibitem{easylogger}
+https://www.obdev.at/products/vusb/easylogger.html
+
 
 \end{thebibliography}
 
