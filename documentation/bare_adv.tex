@@ -135,10 +135,10 @@ Als Mikrocontroller verwenden wir einen Atmega328p. Da dieser auch auf dem Ardui
 ist, konnten wir unsere Andwendung zuert mithilfe des Arduinos auf einem Steckbrett testen.
 Um die Gewichtsdaten, die die Wägezelle liefert verarbeiten zu können verwenden wir den HX711,
 einen 24 Bit Analog zu Digital Converter für Brückensensoren. Diesen gibt es als fertiges Modul
-zu kaufen (siehe Abbildung 4). Um anzeigen wie viele neue Biere abgestellt verwenden wir 8 LEDs
+zu kaufen (siehe Fig. \ref{fig_HX711_board}). Um anzeigen wie viele neue Biere abgestellt verwenden wir 8 LEDs
 (4 gelbe und 4 rote, mit 3 mm Durchmesser). Damit nicht alle LEDs einzeln an einen Widerstand
 und dann ans Board gelötet werden müssen, haben wir die LEDs in zwei Reihen, mit den
-entsprechenden Anschlüssen und Vorwiderständen, auf eine extra Platine gelötet (siehe Abbildung 1).
+entsprechenden Anschlüssen und Vorwiderständen, auf eine extra Platine gelötet (siehe Fig. \ref{fig_led_platine}).
 Die Betriebsspannung wird von 3 AAA Batterien bereitgestellt. Diese liefern zusammen 4,5 Volt.
 Das ist ausreichend da der Atmega ab 3,7 Volt ein HIGH liest. Die Batterien haben wir in einem
 Batteriefach untergebracht, das schon einen An/Aus Schalter enthält.
@@ -159,7 +159,7 @@ Batteriefach untergebracht, das schon einen An/Aus Schalter enthält.
 \begin{figure}[!t]
   \centering
     \includegraphics[width=3.5in]{images/LED_Platine_Schema_complete.png}
-    \caption{Abbildung 1: Schema der LED Platine}
+    \caption{Schema der LED Platine}
   \label{fig_led_platine}
 \end{figure}
 
@@ -177,10 +177,10 @@ entspricht also den Strichen und eine den Zäunen.
 
 \begin{figure*}[!t]
 \centering
-\subfloat[Abbildung 2: Atmega328p Pin Belegung]{\includegraphics[width=4in]{images/atmega328p_pin_belegung.png}%
+\subfloat[Atmega328p Pin Belegung]{\includegraphics[width=4in]{images/atmega328p_pin_belegung.png}%
 \label{fig_atmega328_pin}}
 \hfil
-\subfloat[Abbildung 3: Konnektoren]{\includegraphics[width=2.5in]{images/bierdeckel_board_connectors.png}%
+\subfloat[Konnektoren]{\includegraphics[width=2.5in]{images/bierdeckel_board_connectors.png}%
 \label{fig_board_connectors}}
 \caption{Beschaltung des Atmega328p}
 \label{fig_sim}
@@ -189,19 +189,19 @@ entspricht also den Strichen und eine den Zäunen.
 %\begin{figure}[!t]
 %  \centering
 %    \includegraphics[width=3.5in]{images/atmega328p_pin_belegung.png}
-%    \caption{Abbildung 2: Atmega328p Pin Belegung}
+%    \caption{Atmega328p Pin Belegung}
 %  \label{fig_atmega328_pin}
 %\end{figure}
 %
 %\begin{figure}[!t]
 %  \centering
 %    \includegraphics[width=3.5in]{images/bierdeckel_board_connectors.png}
-%    \caption{Abbildung 3: Konnektoren}
+%    \caption{Konnektoren}
 %  \label{fig_board_connectors}
 %\end{figure}
 
 Um uns das Leben zu erleichtern haben wir eine Platine entworfen, die den Atmega328p enthält
-(Abbildung 2 und Abbildung 3). Die anderen Pins sind mit Konnektoren verbunden (siehe Abbildung 3).
+(siehe Fig. \ref{fig_atmega328_pin}). Die anderen Pins sind mit Konnektoren verbunden (siehe Fig. \ref{fig_board_connectors}).
 Wir haben also auf dem Board das den Mikrocontroller enthält mehrere Steckpläzte für die anderen
 Komponenten. Das sind also die Steckplätze für:
 \begin{itemize}
@@ -222,19 +222,19 @@ falls man das möchte. Über die UART Schnittstelle kann man das Programm dann d
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=7in]{images/HX711.jpg}%
-\caption{Abbildung 5: HX711 Beschaltung}
+\caption{HX711 Beschaltung}
 \label{fig_HX711}
 \end{figure*}
 
 \begin{figure}[!t]
   \centering
     \includegraphics[width=3.5in]{images/HX711Board.jpeg}
-    \caption{Abbildung 4: HX711 Board}
+    \caption{HX711 Board}
   \label{fig_HX711_board}
 \end{figure}
 
-Der Aufbau der Platine, die den  HX711 IC enthält, ist in Abbildung 5 dargestellt.
-Die Pins PD\_SCK und DOUT (entspricht SCK und DT in Abbildung 4) werden für den Datenaustausch
+Der Aufbau der Platine, die den  HX711 IC enthält, ist in Fig. \ref{fig_HX711} dargestellt.
+Die Pins PD\_SCK und DOUT (entspricht SCK und DT in Fig. \ref{fig_HX711_board}) werden für den Datenaustausch
 verwendet. Sobald DOUT von HIGH auf LOW wechselt, sind Daten zur Abholung bereit.
 Dann müssen 25 positive Taktsignale an PD\_SCK geschickt werden (PD\_SCK muss mindestens 2us lang
 HIGH und 2us LOW sein, also nicht zu schnell lesen!), wobei jedes ein Bit aus DOUT shifted.
