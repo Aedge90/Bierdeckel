@@ -158,9 +158,9 @@ Batteriefach untergebracht, das schon einen An/Aus Schalter enthält.
 %
 \begin{figure}[!t]
   \centering
-    \includegraphics[width=3.5in]{images/LED_Platine_Schema_complete.png}
-    \caption{Schema der LED Platine}
-  \label{fig_led_platine}
+    \includegraphics[width=3.5in]{images/HX711Board.jpeg}
+    \caption{HX711 Board}
+  \label{fig_HX711_board}
 \end{figure}
 
 \section{Verwendung}
@@ -172,6 +172,8 @@ abgestellt, wird erkannt dass vom leeren Zustand in den vollen gewechselt wurde,
 Bier da ist. Dann wird die LED Anzeige eins hochgezählt. Die Anzeige funktioniert,
 wie beim klassischen Bierdeckel, mit den Strich/Zaun Zählsystem. Eine 4er Reihe der LEDs
 entspricht also den Strichen und eine den Zäunen.
+
+\clearpage
 
 \section{Beschaltung des Atmega328p}
 
@@ -216,6 +218,30 @@ Komponenten. Das sind also die Steckplätze für:
 Die letzten beiden tragen nicht zur Funktion unseres Bierdeckels bei aber wurden eingebaut um den
 Bierdeckel neu programmieren (über den ISP Konnektor über die serielle Schnittstelle) zu können
 falls man das möchte. Über die UART Schnittstelle kann man das Programm dann debuggen.
+Das fertige Layout der Platinen kann man in Fig. \ref{fig_atmega328p_platine} und Fig. \ref {fig_LED_Platine} sehen.
+
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=3.5in]{images/LED_Platine_Schema_complete.png}
+    \caption{Schema der LED Platine}
+  \label{fig_led_platine}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=3.5in]{images/atmega328p_platine.png}
+    \caption{Platine mit Atmega328p}
+  \label{fig_atmega328p_platine}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=2.0in]{images/LED_Platine.png}
+    \caption{Platine mit den Zähler LEDs}
+  \label{fig_LED_Platine}
+\end{figure}
+
 
 \section{Funktionsweise des HX711}
 
@@ -225,13 +251,6 @@ falls man das möchte. Über die UART Schnittstelle kann man das Programm dann d
 \caption{HX711 Beschaltung}
 \label{fig_HX711}
 \end{figure*}
-
-\begin{figure}[!t]
-  \centering
-    \includegraphics[width=3.5in]{images/HX711Board.jpeg}
-    \caption{HX711 Board}
-  \label{fig_HX711_board}
-\end{figure}
 
 Der Aufbau der Platine, die den  HX711 IC enthält, ist in Fig. \ref{fig_HX711} dargestellt.
 Die Pins PD\_SCK und DOUT (entspricht SCK und DT in Fig. \ref{fig_HX711_board}) werden für den Datenaustausch
@@ -246,6 +265,8 @@ PD\_SCK wird außerdem verwendet um den HX711 resetten. Wenn der Pin länger als
 steht dann wird der Power Down Mode aktiviert. Wenn der Pin wieder auf LOW gezogen wird,
 dann setzt sich der Chip zurück und geht in den normalen Betriebsmodus über.
 
+\clearpage
+
 \section{Code}
 
 In folgendem Code wird unser HX711 initialisiert indem wir ihn einmal resetten.
@@ -254,18 +275,24 @@ Gewicht aus (hx711\_getValue() wird 32 mal aufgerufen) und nehmen den gemittelte
 Offset (entspricht dem Gewicht des leeren Glases,
 das zu dem Zeitpunkt auf dem Bierdeckel stehn muss).
 
+\hfil
 \lstinputlisting[language=C]{code/hx711_init.c}
+\hfil
 
 In hx711\_getValue() wird jetzt gewartet bis DOUT (=SDI im Code) auf LOW wechselt.
 Dann werden 24 Taktsignale an PD\_SCK (=SCLK im Code) geschickt um die Daten Bit für Bit auszulesen.
 Mit dem 25. Takt wird DOUT wieder auf HIGH gesetzt. Da kein weiterer Takt gesendet wurde,
 verwenden wir den Input Kanal A des HX711 mit einem Gain von 128 für das nächste Mal.
 
+\hfil
 \lstinputlisting[language=C]{code/hx711_getValue.c}
+\hfil
 
 Die Daten werden dann in mg umgerechnet, mit einem empirisch bestimmten Skalierungsfaktor.
 
+\hfil
 \lstinputlisting[language=C]{code/main.c}
+\hfil
 
 In der main() wird nun in einer Dauerschleife geprüft, ob das abgestellte Glas leer ist oder voll.
 hx77\_get\_mg() ruft dabei hx711\_getValue() 32 mal auf um einen gemittelten Wert zu erreichen
