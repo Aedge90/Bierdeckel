@@ -96,7 +96,7 @@
 % in the abstract or keywords.
 %\IEEEtitleabstractindextext{%
 \begin{abstract}
-Ziel des Projektes SmartBierdeggl ist es einen Bierdeckel zu konstruieren, der automatisch mitzählt wieviele Getränke man bereits hat.
+Ziel des Projektes SmartBierdeggl ist es einen Bierdeckel zu konstruieren, der automatisch mitzählt wieviele Getränke man bereits hat.\\
 Er besteht aus einer Wägezelle, mit der das Gewicht des darauf abgestellten Getränks gemessen wird.
 Außerdem enthält er einen Mikrocontroller, der die gemessenen Gewichtsdaten erhält und daraus errechnet ob ein neues Getränk abgestellt wurde oder nicht.
 Wie viele neue Getränke schon abgestellt wurden wird durch LEDs am Bierdeckel veranschaulicht.
@@ -122,17 +122,18 @@ Wie viele neue Getränke schon abgestellt wurden wird durch LEDs am Bierdeckel v
 % and "HIS" in caps to complete the first word.
 \IEEEPARstart{Z}{uerst} wird der Aufbau des Bierdeckels beschrieben.
 Es wird erklärt, welche Bestandteile benötigt werden und wie sie funktionieren.
-Danach zeigen wir Code, der veranschaulicht, wie die Gewichtsmessung funktioniert.
+Dann zeigen wir unser Platinendesign, das die Bauteile miteinander verbindet.
+Zum Schluss wird anhand unseres Codes veranschaulicht, wie die Gewichtsmessung funktioniert.
 
 \section{Vorabüberlegungen}
-Zunächst wird eine Möglichkeit benötigt, welche die automatischen Detektion eines neuen Getränks ermöglicht.
+Zunächst wird eine Möglichkeit benötigt, welche die automatische Detektion eines neuen Getränks ermöglicht.
 Hierfür fiel die Wahl auf Überwachung des aktuellen Gewichts auf dem Bierdeckel.
 Die Grundlage für die Gewichtsmessung sind Dehnmessstreifen (DMS).
 Diese ändern bei Dehnung bzw. Stauchung ihren elektrischen Widerstand.
 Zusammen mit weiteren DMS oder Widerständen kann man damit eine sogenannte Wheatstonesche Messbrücke (Abb. \ref{fig_wheatstone}) konstruieren.
 \begin{figure}[!h]
   \centering
-    \includegraphics[width=3.5in]{images/wheatstone.png}
+    \includegraphics[width=3.6in]{images/wheatstone.png}
     \caption{Wheatstone'sche Brücke}
   \label{fig_wheatstone}
 \end{figure}
@@ -156,9 +157,6 @@ Eine andere Möglichkeit ist die Verwendung eines dedizierten Moduls, wie dem HX
   \label{fig_HX711_board}
 \end{figure}
 Dieser wandelt das analoge Signal der Wägezelle in einen 24 bit Digitalwert, welcher durch den Microcontroller ausgelesen werden kann.
-
-\section{Funktionsweise des HX711}
-
 \begin{figure*}[htbp]
 \centering
 \includegraphics[width=7in]{images/HX711.jpg}%
@@ -166,7 +164,17 @@ Dieser wandelt das analoge Signal der Wägezelle in einen 24 bit Digitalwert, we
 \label{fig_HX711}
 \end{figure*}
 
+\pagebreak
+
+\section{Funktionsweise des HX711}
+
+
 Der Aufbau der Platine, die den  HX711 IC enthält, ist in Fig. \ref{fig_HX711} dargestellt.
+Wie man in der Abbildung sehen kann werden die Pins AVDD, AGND, INA+ und INA- und  (entspricht
+E+, E-, A+ und A- auf der Platine in Abbildung \ref{fig_HX711_board}) des HX711 mit
+der Wägezelle verbunden. Jetzt wird gemäß der Wheatstone Brückenschaltung die Spannungsdifferenz
+zwischen INA+ und INA- gemessen. Dann wird sie verstärkt und vom 24 Bit Analog-zu-Digitalkonverter
+und in einen Digitalwert umgewandelt. Dieser muss nun ausgelesen werden.\\
 Die Pins PD\_SCK und DOUT (entspricht SCK und DT in Fig. \ref{fig_HX711_board}) werden für den Datenaustausch
 verwendet. Sobald DOUT von HIGH auf LOW wechselt, sind Daten zur Abholung bereit.
 Dann müssen 25 positive Taktsignale an PD\_SCK geschickt werden (PD\_SCK muss mindestens 2$\mu$s lang
@@ -180,6 +188,8 @@ steht dann wird der Power Down Mode aktiviert. Wenn der Pin wieder auf LOW gezog
 dann setzt sich der Chip zurück und geht in den normalen Betriebsmodus über.
 
 \section{Aufbau}
+
+\noindent
 Der SmartBierdeggl besteht aus folgenden Teilen:
 \begin{itemize}
 \item Microcontroller
@@ -196,13 +206,24 @@ Infolge dessen wurde statt des TinyUSBBoard  ein UNO-Board verwendet, welches da
 Sobald das System lief, wurde auf einen separaten Mircocontroller umgestiegen.
 Dies ist aktuell noch ein Atmel ATMega328PA, dieser kann jedoch ohne weiteres durch einen ATMega48 ersetzt werden.
 Um diesen herum wurde anschließend auf einem Steckboard ein Prototyp für den SmartBierdeggl entworfen (Abb. \ref{fig_prototyp}).
-\begin{figure}[!h]
+Als Stromversorgung dienen hierbei 3 AA Batterien mit jeweils 1,5V.
+\begin{figure*}[!t]
+\centering
+\subfloat[Atmega328p Pin Belegung]{\includegraphics[width=4.3in]{images/atmega328p_pin_belegung.png}%
+\label{fig_atmega328_pin}}
+\hfil
+\subfloat[Konnektoren]{\includegraphics[width=2.8in]{images/bierdeckel_board_connectors.png}%
+\label{fig_board_connectors}}
+\caption{Beschaltung des Atmega328p}
+\label{fig_sim}
+\end{figure*}
+
+\begin{figure}[h]
   \centering
     \includegraphics[width=3.5in]{images/prototyp.jpg}
     \caption{Prototyp}
   \label{fig_prototyp}
 \end{figure}
-Als Stromversorgung dienen hierbei 3 AA Batterien mit jeweils 1,5V.
 
 
 
@@ -236,21 +257,10 @@ Als Stromversorgung dienen hierbei 3 AA Batterien mit jeweils 1,5V.
 % displayed while in draft mode.
 %
 
-
 %\clearpage
 
-\section{Beschaltung des Atmega328p}
 
-\begin{figure*}[!t]
-\centering
-\subfloat[Atmega328p Pin Belegung]{\includegraphics[width=4in]{images/atmega328p_pin_belegung.png}%
-\label{fig_atmega328_pin}}
-\hfil
-\subfloat[Konnektoren]{\includegraphics[width=2.5in]{images/bierdeckel_board_connectors.png}%
-\label{fig_board_connectors}}
-\caption{Beschaltung des Atmega328p}
-\label{fig_sim}
-\end{figure*}
+\section{Beschaltung des Atmega328p}
 
 %\begin{figure}[!t]
 %  \centering
@@ -268,7 +278,7 @@ Als Stromversorgung dienen hierbei 3 AA Batterien mit jeweils 1,5V.
 
 Um uns das Leben zu erleichtern haben wir eine Platine entworfen, die den Atmega328p enthält
 (siehe Fig. \ref{fig_atmega328_pin}). Die anderen Pins sind mit Konnektoren verbunden (siehe Fig. \ref{fig_board_connectors}).
-Wir haben also auf dem Board das den Mikrocontroller enthält mehrere Steckpläzte für die anderen
+Wir haben also auf dem Board, das den Mikrocontroller enthält mehrere Steckpläzte für die anderen
 Komponenten. Das sind also die Steckplätze für:
 \begin{itemize}
  \item Das Batteriefach, dass so mit der Platine verbunden wird und die Betriebsspannung (VCC) und die Verbindung zu GND für alle Komponenten liefert.
@@ -294,20 +304,23 @@ Das fertige Layout der Platinen kann man in Fig. \ref{fig_atmega328p_platine} un
 
 \begin{figure}[htbp]
   \centering
+    \includegraphics[width=2.8in]{images/LED_Platine.png}
+    \caption{Platine mit den Zähler LEDs}
+  \label{fig_LED_Platine}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
     \includegraphics[width=3.5in]{images/atmega328p_platine.png}
     \caption{Platine mit Atmega328p}
   \label{fig_atmega328p_platine}
 \end{figure}
 
-\begin{figure}[htbp]
-  \centering
-    \includegraphics[width=2.0in]{images/LED_Platine.png}
-    \caption{Platine mit den Zähler LEDs}
-  \label{fig_LED_Platine}
-\end{figure}
+
 
 
 %\clearpage
+\pagebreak
 
 \section{$\mu$C Programm}
 Zur Programmierung des Microcontrollers wurde nach Abbildung \ref{fig_isp} das UNO-Board als ISP genommen.
@@ -338,7 +351,8 @@ verwenden wir den Input Kanal A des HX711 mit einem Gain von 128 für das nächs
 \lstinputlisting[language=C]{code/hx711_getValue.c}
 \hfil
 
-Die Daten werden dann in mg umgerechnet, mit einem empirisch bestimmten Skalierungsfaktor.
+Die Gewichtsdaten liegen jetzt als 24Bit Wert vor. Dieser muss in Gramm umgerechnet werden.
+Das geschieht mit einem empirisch bestimmten Skalierungsfaktor.
 
 \hfil
 \lstinputlisting[language=C]{code/main.c}
@@ -364,7 +378,8 @@ als Offset errechnet, damit man das Gewicht des Glases nicht mitzählt. Wird nun
 abgestellt, wird erkannt dass vom leeren Zustand in den vollen gewechselt wurde, also ein neues
 Bier da ist. Dann wird die LED Anzeige eins hochgezählt. Die Anzeige funktioniert,
 wie beim klassischen Bierdeckel, mit den Strich/Zaun Zählsystem. Eine 4er Reihe der LEDs
-entspricht also den Strichen und eine den Zäunen.
+entspricht also den Strichen und eine den Zäunen. Wenn 4 Strich-LEDs leuchten und eins
+hochgezählt wird, dann gehen diese aus und eine weitere Zaun-LED fängt an zu leuchten. 
 
 \section{Ausblick}
 
