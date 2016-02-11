@@ -12570,6 +12570,12 @@ bridges to GND</text>
 <pinref part="IC1" gate="G$1" pin="PC3(ADC3)"/>
 <label x="241.3" y="180.34" size="1.778" layer="95" xref="yes"/>
 </segment>
+<segment>
+<wire x1="165.1" y1="55.88" x2="154.94" y2="55.88" width="0.1524" layer="91"/>
+<label x="154.94" y="55.88" size="1.778" layer="95" rot="R180" xref="yes"/>
+<pinref part="S1" gate="1" pin="S1"/>
+<wire x1="165.1" y1="48.26" x2="165.1" y2="55.88" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="PD6/LED2" class="0">
 <segment>
@@ -12584,12 +12590,6 @@ bridges to GND</text>
 </segment>
 </net>
 <net name="RESET" class="0">
-<segment>
-<wire x1="162.56" y1="48.26" x2="162.56" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="162.56" y1="55.88" x2="154.94" y2="55.88" width="0.1524" layer="91"/>
-<label x="154.94" y="55.88" size="1.778" layer="95" rot="R180" xref="yes"/>
-<pinref part="S1" gate="1" pin="S"/>
-</segment>
 <segment>
 <wire x1="185.42" y1="187.96" x2="165.1" y2="187.96" width="0.1524" layer="91"/>
 <pinref part="IC1" gate="G$1" pin="PC6(/RESET)"/>
