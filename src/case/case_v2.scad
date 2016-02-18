@@ -24,10 +24,13 @@ xHX711 = 33.5;
 yHX711 = 20.5;
 zHX711 = 3;
 
+//Ausmase des hx711 Boards
+zBoard = 12 ;  //TODO nachmessen!
+
 //Lasse 4 mm Platz zum Boden damit sich die Load Cell verbiegen kann
 dist = 4;
 
-module Base(diameter, height, $fn) {
+module Base($fn) {
     
     edgeHeight = height - baseHeight;
     
@@ -78,15 +81,38 @@ module HX711(posX, posY){
     }
 }
 
+module Board(yBottom1, yBottom2, $fn){
+    //difference() {
+        translate([0,0,baseHeight]){
+            cylinder(h=zBoard,r=diameter/2-edgeWidth,center=false);
+        }/*
+        union(){
+            translate([-100,-100+yBottom1,0.1]){
+                cube(size=[200,100,30]);
+            }
+            translate([-100,-100+yBottom2,0.1]){
+                cube(size=[100+14,100,30]);
+            }
+        }*/
+    //}
+}
+
 //Freiheitsgrade
 //Durchmesser in mm, Hoehe (mit Rand) in mm, Feinheit
+diameter = 110;
+height = 15;
+feinheit = 100;
+
 #LoadCell();
 LoadCellMount();
 difference() {
-    Base(110, 15, 100);
+    Base(feinheit);
     #Battery(-25, -45);
 }
 #HX711(14, -15);
+color([0,1,1,0.5]){
+    Board(11,20,feinheit);
+}
 
 
 
