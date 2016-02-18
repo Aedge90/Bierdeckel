@@ -30,6 +30,15 @@ zBoard = 12 ;  //TODO nachmessen!
 //Lasse 4 mm Platz zum Boden damit sich die Load Cell verbiegen kann
 dist = 4;
 
+
+module trapezoid(width_base, width_top,height,thickness) {
+    translate([0,thickness,0]){
+    rotate([90,0,0]){
+  linear_extrude(height = thickness) polygon(points=[[0,0],[width_base,0],[width_base-(width_base-width_top),height],[0,height]], paths=[[0,1,2,3]]); 
+    }
+}
+}
+
 module Base($fn) {
     
     edgeHeight = height - baseHeight;
@@ -67,6 +76,14 @@ module LoadCellMount(){
     translate([-47.5,-yLCClamp/2,baseHeight]){
         cube(size=[xLCClamp,yLCClamp,dist+zLoadCell-(zLCClamp-1)], center=false);
     }
+    translate([-47.5+xLCClamp,-yLCClamp/2,baseHeight]){
+        trapezoid(xLoadCell-(2*xLCClamp),17,dist+zLoadCell,
+        (yLCClamp-yLoadCell)/2 - 1);
+    }
+    translate([-47.5+xLCClamp,yLoadCell/2 + 1,baseHeight]){
+        trapezoid(xLoadCell-(2*xLCClamp),17,dist+zLoadCell,
+        (yLCClamp-yLoadCell)/2 - 1);
+    }
 }
 
 module Battery(posX, posY){
@@ -82,10 +99,10 @@ module HX711(posX, posY){
 }
 
 module Board(yBottom1, yBottom2, $fn){
-    //difference() {
+    difference() {
         translate([0,0,baseHeight]){
             cylinder(h=zBoard,r=diameter/2-edgeWidth,center=false);
-        }/*
+        }
         union(){
             translate([-100,-100+yBottom1,0.1]){
                 cube(size=[200,100,30]);
@@ -93,8 +110,8 @@ module Board(yBottom1, yBottom2, $fn){
             translate([-100,-100+yBottom2,0.1]){
                 cube(size=[100+14,100,30]);
             }
-        }*/
-    //}
+        }
+    }
 }
 
 //Freiheitsgrade
