@@ -77,8 +77,13 @@ module LoadCell() {
 
 module LoadCellMount(){
     //Halterung fuer ersten Metallhalter
-    translate([-47.5,-yLCClamp/2,baseHeight]){
-        cube(size=[xLCClamp,yLCClamp,dist+zLoadCell-(zLCClamp-1)], center=false);
+    difference(){
+        translate([-47.5,-yLCClamp/2,baseHeight]){
+            cube(size=[xLCClamp,yLCClamp,dist+zLoadCell-(zLCClamp-1)], center=false);
+        }
+        translate([-47.5,-yLoadCell/2,baseHeight+dist]){
+            cube(size=[xLoadCell,yLoadCell,zLoadCell], center=false);
+        }
     }
     translate([-47.5+xLCClamp,-yLCClamp/2,baseHeight]){
         trapezoid(xLoadCell-(2*xLCClamp),17,dist+zLoadCell,
@@ -87,6 +92,10 @@ module LoadCellMount(){
     translate([-47.5+xLCClamp,yLoadCell/2 + 1,baseHeight]){
         trapezoid(xLoadCell-(2*xLCClamp),17,dist+zLoadCell,
         (yLCClamp-yLoadCell)/2 - 1);
+    }
+    //Mitte
+    translate([-47.5+xLCClamp,-yLoadCell/2 - 1,baseHeight]){
+        trapezoid(xLoadCell-(2*xLCClamp),0,dist,yLoadCell + 1 + 1);
     }
 }
 
@@ -187,27 +196,29 @@ diameter = 110;
 height = 15;
 feinheit = 100;
 
-LoadCell();
-LoadCellMount();
-
 BatteryPosX = -25;
 BatteryPosY = -45;
-Battery();
+
+HX711posX = 14;
+HX711posY = -15;
+HX711distToBase = 3;
+
+yBottom1 = 11;
+yBottom2 = 20;
+
 difference() {
     Base(feinheit);
     BatteryBB();
 }
 
-HX711posX = 14;
-HX711posY = -15;
-HX711distToBase = 3;
-HX711();
+LoadCellMount();
 HX711Mount();
-
-yBottom1 = 11;
-yBottom2 = 20;
-Board(feinheit);
-
 Fill(feinheit);
+
+
+//Battery();
+LoadCell();
+//HX711();
+//Board(feinheit);
 
 
