@@ -103,6 +103,9 @@ module LoadCellBB(){
     translate([-47.5,-yLCClamp/2,0]){
         cube(size=[xLoadCell,yLCClamp,30], center=false);
     }
+    translate([-47.5+xLoadCell-xLCClamp-2,-yLCClamp/2-1,0]){
+        cube(size=[xLCClamp+2,yLCClamp+2,30], center=false);
+    }
 }
 
 module Battery(){
@@ -160,21 +163,19 @@ module Board($fn){
 }
 
 module BoardBB($fn){
-    color([1,0,0]){
-        difference() {
-            translate([0,0,-0.1]){
-                cylinder(h=30,r=diameter/2-edgeWidth,center=false);
+    difference() {
+        translate([0,0,-0.1]){
+            cylinder(h=30,r=diameter/2-edgeWidth,center=false);
+        }
+        union(){
+            translate([-100,-100+yBottom1,-10]){
+                cube(size=[200,100,50]);
             }
-            union(){
-                translate([-100,-100+yBottom1,-10]){
-                    cube(size=[200,100,50]);
-                }
-                translate([-100,-100+yBottom2,-10]){
-                    cube(size=[100+14,100,50]);
-                }
+            translate([-100,-100+yBottom2,-10]){
+                cube(size=[100+14,100,50]);
             }
-        }  
-    }
+        }
+    }  
 }
 
 
@@ -197,13 +198,13 @@ height = 15;
 feinheit = 100;
 
 BatteryPosX = -25;
-BatteryPosY = -45;
+BatteryPosY = -44;
 
 HX711posX = 14;
-HX711posY = -15;
+HX711posY = -14;
 HX711distToBase = 3;
 
-yBottom1 = 11;
+yBottom1 = 12;
 yBottom2 = 20;
 
 difference() {
@@ -216,9 +217,9 @@ HX711Mount();
 Fill(feinheit);
 
 
-//Battery();
+Battery();
 LoadCell();
-//HX711();
-//Board(feinheit);
+HX711();
+Board(feinheit);
 
 
