@@ -92,9 +92,15 @@ module Battery(posX, posY){
     }
 }
 
-module HX711(posX, posY){
-    translate([posX,posY,baseHeight]){
+module HX711(){
+    translate([HX711posX,HX711posY,baseHeight+HX711distToBase]){
         cube(size=[xHX711,yHX711,zHX711], center=false);
+    }
+}
+
+module HX711Mount(){
+    translate([HX711posX,HX711posY,baseHeight]){
+        cube(size=[xHX711,yHX711,HX711distToBase], center=false);
     }
 }
 
@@ -114,6 +120,22 @@ module Board(yBottom1, yBottom2, $fn){
     }
 }
 
+module Fill($fn){
+    difference(){
+        cylinder(h=height,r=diameter/2,center=false);
+        union(){
+            //LoadCell();
+            //LoadCellMount();
+            scale([1,1,2]){
+                Battery(BatteryPosX, BatteryPosY);
+            }
+            //HX711();
+            //HX711Mount();
+            //Board(11,20,feinheit);
+        }
+    }
+}
+
 //Freiheitsgrade
 //Durchmesser in mm, Hoehe (mit Rand) in mm, Feinheit
 diameter = 110;
@@ -122,14 +144,23 @@ feinheit = 100;
 
 #LoadCell();
 LoadCellMount();
+
+BatteryPosX = -25;
+BatteryPosY = -45;
 difference() {
     Base(feinheit);
-    #Battery(-25, -45);
+    #Battery(BatteryPosX, BatteryPosY);
 }
-#HX711(14, -15);
+
+HX711posX = 14;
+HX711posY = -15;
+HX711distToBase = 3;
+#HX711();
+HX711Mount();
 color([0,1,1,0.5]){
     Board(11,20,feinheit);
 }
 
+//Fill(feinheit);
 
 
