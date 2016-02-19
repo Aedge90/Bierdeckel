@@ -56,18 +56,22 @@ module Base($fn) {
 
 //alles was aus Metall ist
 module LoadCell() {
-    //linke Seite der Load Cell muss 47.5mm vom Mittelpunkt entfernt sein
-    //damit das Loch genau im Mittelpunkt liegt
-    translate([-47.5,-yLoadCell/2,baseHeight+dist]){
-        cube(size=[xLoadCell,yLoadCell,zLoadCell], center=false);
-    }
-    //erster Metallhalter ist ca. 1mm dick ueber der Load Cell
-    translate([-47.5,-yLCClamp/2,baseHeight+dist+zLoadCell-(zLCClamp-1)]){
-        cube(size=[xLCClamp,yLCClamp,zLCClamp], center=false);
-    }
-    //zweiter Metallhalter ist ca. 1mm dick unter der Load Cell
-    translate([-47.5+xLoadCell-xLCClamp,-yLCClamp/2,baseHeight+dist-1]){
-        cube(size=[xLCClamp,yLCClamp,zLCClamp], center=false);
+    //+0.01 ist nur ein Hack damit das Grafikflimmern aufhoert
+    translate([0,0,0.01])
+    color([1,0,0]){
+        //linke Seite der Load Cell muss 47.5mm vom Mittelpunkt entfernt sein
+        //damit das Loch genau im Mittelpunkt liegt
+        translate([-47.5,-yLoadCell/2,baseHeight+dist]){
+            cube(size=[xLoadCell,yLoadCell,zLoadCell], center=false);
+        }
+        //erster Metallhalter ist ca. 1mm dick ueber der Load Cell
+        translate([-47.5,-yLCClamp/2,baseHeight+dist+zLoadCell-(zLCClamp-1)]){
+            cube(size=[xLCClamp,yLCClamp,zLCClamp], center=false);
+        }
+        //zweiter Metallhalter ist ca. 1mm dick unter der Load Cell
+        translate([-47.5+xLoadCell-xLCClamp,-yLCClamp/2,baseHeight+dist-1]){
+            cube(size=[xLCClamp,yLCClamp,zLCClamp], center=false);
+        }
     }
 }
 
@@ -86,15 +90,32 @@ module LoadCellMount(){
     }
 }
 
-module Battery(posX, posY){
-    translate([posX,posY,-0.1]){
-        cube(size=[xBattery,yBattery,zBattery+0.1], center=false);
+module LoadCellBB(){
+    translate([-47.5,-yLCClamp/2,0]){
+        cube(size=[xLoadCell,yLCClamp,30], center=false);
     }
 }
 
+module Battery(){
+    color([1,0,0]){
+        translate([BatteryPosX,BatteryPosY,-0.1]){
+            cube(size=[xBattery,yBattery,zBattery+0.1], center=false);
+        }
+    }
+}
+
+module BatteryBB(){
+    translate([BatteryPosX,BatteryPosY,-0.1]){
+        cube(size=[xBattery,yBattery,30], center=false);
+    }
+}
+
+
 module HX711(){
-    translate([HX711posX,HX711posY,baseHeight+HX711distToBase]){
-        cube(size=[xHX711,yHX711,zHX711], center=false);
+    color([1,0,0]){
+        translate([HX711posX,HX711posY,baseHeight+HX711distToBase]){
+            cube(size=[xHX711,yHX711,zHX711], center=false);
+        }
     }
 }
 
@@ -104,19 +125,28 @@ module HX711Mount(){
     }
 }
 
+module HX711BB(){
+    translate([HX711posX,HX711posY,0]){
+        cube(size=[xHX711,yHX711,30], center=false);
+    }
+}
+
 module Board(yBottom1, yBottom2, $fn){
-    difference() {
-        translate([0,0,baseHeight]){
-            cylinder(h=zBoard,r=diameter/2-edgeWidth,center=false);
-        }
-        union(){
-            translate([-100,-100+yBottom1,0.1]){
-                cube(size=[200,100,30]);
+    color([1,0,0]){
+        difference() {
+            //+0.01 ist nur ein Hack damit das Grafikflimmern aufhoert
+            translate([0,0,baseHeight+0.01]){
+                cylinder(h=zBoard,r=diameter/2-edgeWidth,center=false);
             }
-            translate([-100,-100+yBottom2,0.1]){
-                cube(size=[100+14,100,30]);
+            union(){
+                translate([-100,-100+yBottom1,0.1]){
+                    cube(size=[200,100,30]);
+                }
+                translate([-100,-100+yBottom2,0.1]){
+                    cube(size=[100+14,100,30]);
+                }
             }
-        }
+        }  
     }
 }
 
@@ -126,9 +156,7 @@ module Fill($fn){
         union(){
             //LoadCell();
             //LoadCellMount();
-            scale([1,1,2]){
-                Battery(BatteryPosX, BatteryPosY);
-            }
+            BatteryBB();
             //HX711();
             //HX711Mount();
             //Board(11,20,feinheit);
@@ -142,24 +170,23 @@ diameter = 110;
 height = 15;
 feinheit = 100;
 
-#LoadCell();
+LoadCell();
 LoadCellMount();
 
 BatteryPosX = -25;
 BatteryPosY = -45;
+Battery();
 difference() {
     Base(feinheit);
-    #Battery(BatteryPosX, BatteryPosY);
+    BatteryBB();
 }
 
 HX711posX = 14;
 HX711posY = -15;
 HX711distToBase = 3;
-#HX711();
+HX711();
 HX711Mount();
-color([0,1,1,0.5]){
-    Board(11,20,feinheit);
-}
+Board(11,20,feinheit);
 
 //Fill(feinheit);
 
