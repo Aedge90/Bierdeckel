@@ -131,7 +131,7 @@ module HX711BB(){
     }
 }
 
-module Board(yBottom1, yBottom2, $fn){
+module Board($fn){
     color([1,0,0]){
         difference() {
             //+0.01 ist nur ein Hack damit das Grafikflimmern aufhoert
@@ -150,16 +150,33 @@ module Board(yBottom1, yBottom2, $fn){
     }
 }
 
+module BoardBB($fn){
+    color([1,0,0]){
+        difference() {
+            translate([0,0,-0.1]){
+                cylinder(h=30,r=diameter/2-edgeWidth,center=false);
+            }
+            union(){
+                translate([-100,-100+yBottom1,-10]){
+                    cube(size=[200,100,50]);
+                }
+                translate([-100,-100+yBottom2,-10]){
+                    cube(size=[100+14,100,50]);
+                }
+            }
+        }  
+    }
+}
+
+
 module Fill($fn){
     difference(){
         cylinder(h=height,r=diameter/2,center=false);
         union(){
-            //LoadCell();
-            //LoadCellMount();
+            HX711BB();
             BatteryBB();
-            //HX711();
-            //HX711Mount();
-            //Board(11,20,feinheit);
+            LoadCellBB();
+            BoardBB(feinheit);
         }
     }
 }
@@ -186,8 +203,11 @@ HX711posY = -15;
 HX711distToBase = 3;
 HX711();
 HX711Mount();
-Board(11,20,feinheit);
 
-//Fill(feinheit);
+yBottom1 = 11;
+yBottom2 = 20;
+Board(feinheit);
+
+Fill(feinheit);
 
 
