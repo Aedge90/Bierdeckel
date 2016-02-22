@@ -153,7 +153,7 @@ module BoardLEDs($fn, width){
             translate([-width/2,yBottom2+10,0]){
                 cube(size=[width,diameter/2,zBoard], center=false);
             }
-            cylinder(h=zBoard,r=diameter/2 + 0.5,center=false);
+            cylinder(h=zBoard,r=diameter/2,center=false);
         }
     }   
 }
@@ -161,13 +161,13 @@ module BoardLEDs($fn, width){
 module Board($fn){
     color([1,0,0]){
         rotate([0,0,20]){
-            BoardLEDs($fn,LEDHoleWidth);
+            BoardLEDs(feinheit,LEDHoleWidth);
         }
         rotate([0,0,-20]){
-            BoardLEDs($fn,LEDHoleWidth);
+            BoardLEDs(feinheit,LEDHoleWidth);
         }
         rotate([0,0,-50]){
-            BoardLEDs($fn,PWRLEDHoleWidth);
+            BoardLEDs(feinheit,PWRLEDHoleWidth);
         }
         difference() {
             //+0.001 ist nur ein Hack damit das Grafikflimmern aufhoert
@@ -187,19 +187,11 @@ module Board($fn){
 }
 
 module BoardBB($fn){
-    difference() {
-        translate([0,0,-0.1]){
-            cylinder(h=30,r=diameter/2-edgeWidth,center=false);
+    scale([1.001,1.001,2]){
+        translate([0,0,-baseHeight/2]){
+            Board(feinheit);
         }
-        union(){
-            translate([-100,-100+yBottom1,-10]){
-                cube(size=[200,100,50]);
-            }
-            translate([-100,-100+yBottom2,-10]){
-                cube(size=[100+14,100,50]);
-            }
-        }
-    }  
+    }
 }
 
 
@@ -233,7 +225,10 @@ yBottom2 = 20;
 
 difference() {
     Base(feinheit);
-    BatteryBB();
+    union(){
+        BatteryBB();
+        BoardBB();
+    }
 }
 
 LoadCellMount();
@@ -244,6 +239,6 @@ Fill(feinheit);
 //Battery();
 //LoadCell();
 //HX711();
-Board(feinheit);
+//Board(feinheit);
 
 
