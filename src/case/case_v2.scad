@@ -24,6 +24,10 @@ xHX711 = 33.5;
 yHX711 = 20.5;
 zHX711 = 3;
 
+LEDHoleWidth = 22;
+
+PWRLEDHoleWidth = 5;
+
 //Ausmase des hx711 Boards
 zBoard = 12 ;  //TODO nachmessen!
 
@@ -143,11 +147,31 @@ module HX711BB(){
     }
 }
 
+module BoardLEDs($fn, width){
+    translate([0,0,baseHeight+0.001]){
+        intersection(){
+            translate([-width/2,yBottom2+10,0]){
+                cube(size=[width,diameter/2,zBoard], center=false);
+            }
+            cylinder(h=zBoard,r=diameter/2 + 0.5,center=false);
+        }
+    }   
+}
+
 module Board($fn){
     color([1,0,0]){
+        rotate([0,0,20]){
+            BoardLEDs($fn,LEDHoleWidth);
+        }
+        rotate([0,0,-20]){
+            BoardLEDs($fn,LEDHoleWidth);
+        }
+        rotate([0,0,-50]){
+            BoardLEDs($fn,PWRLEDHoleWidth);
+        }
         difference() {
-            //+0.01 ist nur ein Hack damit das Grafikflimmern aufhoert
-            translate([0,0,baseHeight+0.01]){
+            //+0.001 ist nur ein Hack damit das Grafikflimmern aufhoert
+            translate([0,0,baseHeight+0.001]){
                 cylinder(h=zBoard,r=diameter/2-edgeWidth,center=false);
             }
             union(){
@@ -217,9 +241,9 @@ HX711Mount();
 Fill(feinheit);
 
 
-Battery();
-LoadCell();
-HX711();
+//Battery();
+//LoadCell();
+//HX711();
 Board(feinheit);
 
 
