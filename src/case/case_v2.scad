@@ -2,7 +2,7 @@
 //Konstanten
 //Hoehe der Grundflaeche
 baseHeight = 3; //mm
-edgeWidth = 3;
+edgeWidth = 4;
 
 //Ausmase der Load Cell
 xLoadCell = 55;
