@@ -2,14 +2,15 @@
 #include "timer.h"
 #include <avr/io.h>
 
-#define LEDStrich1 (1<<PD5)
-#define LEDStrich2 (1<<PD6)
-#define LEDStrich3 (1<<PD7)
-#define LEDStrich4 (1<<PB0)
-#define LEDZaun1 (1<<PC5)
-#define LEDZaun2 (1<<PC4)
-#define LEDZaun3 (1<<PD3)
-#define LEDZaun4 (1<<PD4)
+
+#define LEDZaun1 (1<<PB0)
+#define LEDZaun2 (1<<PD7)
+#define LEDZaun3 (1<<PD6)
+#define LEDZaun4 (1<<PD5)
+#define LEDStrich1 (1<<PD4)
+#define LEDStrich2 (1<<PD3)
+#define LEDStrich3 (1<<PC4)
+#define LEDStrich4 (1<<PC5)
 
 
 void led_init(void){

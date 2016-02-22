@@ -14438,19 +14438,19 @@ straight</description>
 <part name="R3" library="resistor" deviceset="R-EU_" device="R0805" value="470"/>
 <part name="R4" library="resistor" deviceset="R-EU_" device="R0805" value="470"/>
 <part name="R6" library="resistor" deviceset="R-EU_" device="R0805" value="470"/>
-<part name="LED_STRICH_1" library="led" deviceset="LED" device="3MM"/>
-<part name="LED_STRICH_2" library="led" deviceset="LED" device="3MM"/>
-<part name="LED_STRICH_3" library="led" deviceset="LED" device="3MM"/>
-<part name="LED_STRICH_4" library="led" deviceset="LED" device="3MM"/>
+<part name="LED_ZAUN_4" library="led" deviceset="LED" device="3MM"/>
+<part name="LED_ZAUN_3" library="led" deviceset="LED" device="3MM"/>
+<part name="LED_ZAUN_2" library="led" deviceset="LED" device="3MM"/>
+<part name="LED_ZAUN_1" library="led" deviceset="LED" device="3MM"/>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
 <part name="R7" library="resistor" deviceset="R-EU_" device="R0805" value="470"/>
 <part name="R8" library="resistor" deviceset="R-EU_" device="R0805" value="470"/>
 <part name="R9" library="resistor" deviceset="R-EU_" device="R0805" value="470"/>
 <part name="R10" library="resistor" deviceset="R-EU_" device="R0805" value="470"/>
-<part name="LED_ZAUN_1" library="led" deviceset="LED" device="3MM"/>
-<part name="LED_ZAUN_2" library="led" deviceset="LED" device="3MM"/>
-<part name="LED_ZAUN_3" library="led" deviceset="LED" device="3MM"/>
-<part name="LED_ZAUN_4" library="led" deviceset="LED" device="3MM"/>
+<part name="LED_STRICH_4" library="led" deviceset="LED" device="3MM"/>
+<part name="LED_STRICH_3" library="led" deviceset="LED" device="3MM"/>
+<part name="LED_STRICH_2" library="led" deviceset="LED" device="3MM"/>
+<part name="LED_STRICH_1" library="led" deviceset="LED" device="3MM"/>
 <part name="GND12" library="supply1" deviceset="GND" device=""/>
 <part name="R11" library="resistor" deviceset="R-EU_" device="R0805" value="470"/>
 <part name="PWRLED" library="led" deviceset="LED" device="3MM"/>
@@ -14499,19 +14499,19 @@ bridges to GND</text>
 <instance part="R3" gate="G$1" x="205.74" y="5.08"/>
 <instance part="R4" gate="G$1" x="205.74" y="-2.54"/>
 <instance part="R6" gate="G$1" x="205.74" y="-10.16"/>
-<instance part="LED_STRICH_1" gate="G$1" x="185.42" y="12.7" rot="R270"/>
-<instance part="LED_STRICH_2" gate="G$1" x="185.42" y="5.08" rot="R270"/>
-<instance part="LED_STRICH_3" gate="G$1" x="185.42" y="-2.54" rot="R270"/>
-<instance part="LED_STRICH_4" gate="G$1" x="185.42" y="-10.16" rot="R270"/>
+<instance part="LED_ZAUN_4" gate="G$1" x="185.42" y="12.7" rot="R270"/>
+<instance part="LED_ZAUN_3" gate="G$1" x="185.42" y="5.08" rot="R270"/>
+<instance part="LED_ZAUN_2" gate="G$1" x="185.42" y="-2.54" rot="R270"/>
+<instance part="LED_ZAUN_1" gate="G$1" x="185.42" y="-10.16" rot="R270"/>
 <instance part="GND8" gate="1" x="177.8" y="-20.32"/>
 <instance part="R7" gate="G$1" x="152.4" y="12.7" rot="R180"/>
 <instance part="R8" gate="G$1" x="152.4" y="5.08" rot="R180"/>
 <instance part="R9" gate="G$1" x="152.4" y="-2.54" rot="R180"/>
 <instance part="R10" gate="G$1" x="152.4" y="-10.16" rot="R180"/>
-<instance part="LED_ZAUN_1" gate="G$1" x="170.18" y="12.7" rot="R90"/>
-<instance part="LED_ZAUN_2" gate="G$1" x="170.18" y="5.08" rot="R90"/>
-<instance part="LED_ZAUN_3" gate="G$1" x="170.18" y="-2.54" rot="R90"/>
-<instance part="LED_ZAUN_4" gate="G$1" x="170.18" y="-10.16" rot="R90"/>
+<instance part="LED_STRICH_4" gate="G$1" x="170.18" y="12.7" rot="R90"/>
+<instance part="LED_STRICH_3" gate="G$1" x="170.18" y="5.08" rot="R90"/>
+<instance part="LED_STRICH_2" gate="G$1" x="170.18" y="-2.54" rot="R90"/>
+<instance part="LED_STRICH_1" gate="G$1" x="170.18" y="-10.16" rot="R90"/>
 <instance part="GND12" gate="1" x="177.8" y="-48.26"/>
 <instance part="R11" gate="G$1" x="160.02" y="-38.1" rot="R180"/>
 <instance part="PWRLED" gate="G$1" x="170.18" y="-38.1" rot="R90"/>
@@ -14562,28 +14562,28 @@ bridges to GND</text>
 <segment>
 <pinref part="R1" gate="G$1" pin="1"/>
 <wire x1="187.96" y1="12.7" x2="200.66" y2="12.7" width="0.1524" layer="91"/>
-<pinref part="LED_STRICH_1" gate="G$1" pin="A"/>
+<pinref part="LED_ZAUN_4" gate="G$1" pin="A"/>
 </segment>
 </net>
 <net name="N$2" class="0">
 <segment>
 <pinref part="R3" gate="G$1" pin="1"/>
 <wire x1="187.96" y1="5.08" x2="200.66" y2="5.08" width="0.1524" layer="91"/>
-<pinref part="LED_STRICH_2" gate="G$1" pin="A"/>
+<pinref part="LED_ZAUN_3" gate="G$1" pin="A"/>
 </segment>
 </net>
 <net name="N$3" class="0">
 <segment>
 <pinref part="R4" gate="G$1" pin="1"/>
 <wire x1="187.96" y1="-2.54" x2="200.66" y2="-2.54" width="0.1524" layer="91"/>
-<pinref part="LED_STRICH_3" gate="G$1" pin="A"/>
+<pinref part="LED_ZAUN_2" gate="G$1" pin="A"/>
 </segment>
 </net>
 <net name="N$7" class="0">
 <segment>
 <pinref part="R6" gate="G$1" pin="1"/>
 <wire x1="187.96" y1="-10.16" x2="200.66" y2="-10.16" width="0.1524" layer="91"/>
-<pinref part="LED_STRICH_4" gate="G$1" pin="A"/>
+<pinref part="LED_ZAUN_1" gate="G$1" pin="A"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -14595,19 +14595,19 @@ bridges to GND</text>
 <wire x1="177.8" y1="-2.54" x2="180.34" y2="-2.54" width="0.1524" layer="91"/>
 <wire x1="177.8" y1="-2.54" x2="177.8" y2="-10.16" width="0.1524" layer="91"/>
 <wire x1="177.8" y1="-10.16" x2="180.34" y2="-10.16" width="0.1524" layer="91"/>
-<pinref part="LED_STRICH_1" gate="G$1" pin="C"/>
-<pinref part="LED_STRICH_2" gate="G$1" pin="C"/>
-<pinref part="LED_STRICH_3" gate="G$1" pin="C"/>
-<pinref part="LED_STRICH_4" gate="G$1" pin="C"/>
+<pinref part="LED_ZAUN_4" gate="G$1" pin="C"/>
+<pinref part="LED_ZAUN_3" gate="G$1" pin="C"/>
+<pinref part="LED_ZAUN_2" gate="G$1" pin="C"/>
+<pinref part="LED_ZAUN_1" gate="G$1" pin="C"/>
 <wire x1="177.8" y1="-10.16" x2="177.8" y2="-17.78" width="0.1524" layer="91"/>
 <pinref part="GND8" gate="1" pin="GND"/>
-<pinref part="LED_ZAUN_1" gate="G$1" pin="C"/>
+<pinref part="LED_STRICH_4" gate="G$1" pin="C"/>
 <wire x1="175.26" y1="12.7" x2="177.8" y2="12.7" width="0.1524" layer="91"/>
-<pinref part="LED_ZAUN_2" gate="G$1" pin="C"/>
+<pinref part="LED_STRICH_3" gate="G$1" pin="C"/>
 <wire x1="175.26" y1="5.08" x2="177.8" y2="5.08" width="0.1524" layer="91"/>
-<pinref part="LED_ZAUN_3" gate="G$1" pin="C"/>
+<pinref part="LED_STRICH_2" gate="G$1" pin="C"/>
 <wire x1="175.26" y1="-2.54" x2="177.8" y2="-2.54" width="0.1524" layer="91"/>
-<pinref part="LED_ZAUN_4" gate="G$1" pin="C"/>
+<pinref part="LED_STRICH_1" gate="G$1" pin="C"/>
 <wire x1="175.26" y1="-10.16" x2="177.8" y2="-10.16" width="0.1524" layer="91"/>
 <junction x="177.8" y="12.7"/>
 <junction x="177.8" y="5.08"/>
@@ -14673,28 +14673,28 @@ bridges to GND</text>
 <segment>
 <pinref part="R7" gate="G$1" pin="1"/>
 <wire x1="167.64" y1="12.7" x2="157.48" y2="12.7" width="0.1524" layer="91"/>
-<pinref part="LED_ZAUN_1" gate="G$1" pin="A"/>
+<pinref part="LED_STRICH_4" gate="G$1" pin="A"/>
 </segment>
 </net>
 <net name="N$10" class="0">
 <segment>
 <pinref part="R8" gate="G$1" pin="1"/>
 <wire x1="167.64" y1="5.08" x2="157.48" y2="5.08" width="0.1524" layer="91"/>
-<pinref part="LED_ZAUN_2" gate="G$1" pin="A"/>
+<pinref part="LED_STRICH_3" gate="G$1" pin="A"/>
 </segment>
 </net>
 <net name="N$11" class="0">
 <segment>
 <pinref part="R9" gate="G$1" pin="1"/>
 <wire x1="167.64" y1="-2.54" x2="157.48" y2="-2.54" width="0.1524" layer="91"/>
-<pinref part="LED_ZAUN_3" gate="G$1" pin="A"/>
+<pinref part="LED_STRICH_2" gate="G$1" pin="A"/>
 </segment>
 </net>
 <net name="N$12" class="0">
 <segment>
 <pinref part="R10" gate="G$1" pin="1"/>
 <wire x1="167.64" y1="-10.16" x2="157.48" y2="-10.16" width="0.1524" layer="91"/>
-<pinref part="LED_ZAUN_4" gate="G$1" pin="A"/>
+<pinref part="LED_STRICH_1" gate="G$1" pin="A"/>
 </segment>
 </net>
 <net name="+5V" class="0">
@@ -14795,7 +14795,7 @@ bridges to GND</text>
 <label x="223.52" y="58.42" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
-<net name="PD3/LED_ZAUN_3" class="0">
+<net name="PD3/LED_STRICH_2" class="0">
 <segment>
 <wire x1="215.9" y1="78.74" x2="223.52" y2="78.74" width="0.1524" layer="91"/>
 <pinref part="IC2" gate="G$1" pin="PD3(INT1)"/>
@@ -14807,7 +14807,7 @@ bridges to GND</text>
 <label x="144.78" y="-2.54" size="1.778" layer="95" rot="MR0" xref="yes"/>
 </segment>
 </net>
-<net name="PD4/LED_ZAUN_4" class="0">
+<net name="PD4/LED_STRICH_1" class="0">
 <segment>
 <wire x1="223.52" y1="76.2" x2="215.9" y2="76.2" width="0.1524" layer="91"/>
 <pinref part="IC2" gate="G$1" pin="PD4(XCK/T0)"/>
@@ -14955,7 +14955,7 @@ bridges to GND</text>
 <label x="337.82" y="60.96" size="1.778" layer="95" rot="MR0" xref="yes"/>
 </segment>
 </net>
-<net name="PC5/LED_ZAUN_1" class="0">
+<net name="PC5/LED_STRICH_4" class="0">
 <segment>
 <wire x1="215.9" y1="96.52" x2="223.52" y2="96.52" width="0.1524" layer="91"/>
 <pinref part="IC2" gate="G$1" pin="PC5(ADC5/SCL)"/>
@@ -14967,7 +14967,7 @@ bridges to GND</text>
 <label x="144.78" y="12.7" size="1.778" layer="95" rot="MR0" xref="yes"/>
 </segment>
 </net>
-<net name="PC4/LED_ZAUN_2" class="0">
+<net name="PC4/LED_STRICH_3" class="0">
 <segment>
 <wire x1="215.9" y1="99.06" x2="223.52" y2="99.06" width="0.1524" layer="91"/>
 <pinref part="IC2" gate="G$1" pin="PC4(ADC4/SDA)"/>
@@ -14979,7 +14979,7 @@ bridges to GND</text>
 <label x="144.78" y="5.08" size="1.778" layer="95" rot="MR0" xref="yes"/>
 </segment>
 </net>
-<net name="PB0/LED_STRICH_4" class="0">
+<net name="PB0/LED_ZAUN_1" class="0">
 <segment>
 <wire x1="223.52" y1="63.5" x2="215.9" y2="63.5" width="0.1524" layer="91"/>
 <pinref part="IC2" gate="G$1" pin="PB0(ICP)"/>
@@ -14998,7 +14998,7 @@ bridges to GND</text>
 <label x="223.52" y="60.96" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
-<net name="PD5/LED_STRICH_1" class="0">
+<net name="PD5/LED_ZAUN_4" class="0">
 <segment>
 <pinref part="R1" gate="G$1" pin="2"/>
 <wire x1="210.82" y1="12.7" x2="213.36" y2="12.7" width="0.1524" layer="91"/>
@@ -15010,7 +15010,7 @@ bridges to GND</text>
 <label x="223.52" y="73.66" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
-<net name="PD6/LED_STRICH_2" class="0">
+<net name="PD6/LED_ZAUN_3" class="0">
 <segment>
 <pinref part="R3" gate="G$1" pin="2"/>
 <wire x1="210.82" y1="5.08" x2="213.36" y2="5.08" width="0.1524" layer="91"/>
@@ -15022,7 +15022,7 @@ bridges to GND</text>
 <label x="223.52" y="71.12" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
-<net name="PD7/LED_STRICH_3" class="0">
+<net name="PD7/LED_ZAUN_2" class="0">
 <segment>
 <pinref part="R4" gate="G$1" pin="2"/>
 <wire x1="210.82" y1="-2.54" x2="213.36" y2="-2.54" width="0.1524" layer="91"/>
