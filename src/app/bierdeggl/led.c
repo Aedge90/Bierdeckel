@@ -2,14 +2,14 @@
 #include "timer.h"
 #include <avr/io.h>
 
-#define LED1 (1<<PD5)
-#define LED2 (1<<PD6)
-#define LED3 (1<<PD7)
-#define LED4 (1<<PB0)
-#define LED5 (1<<PC5)
-#define LED6 (1<<PC4)
-#define LED7 (1<<PD3)
-#define LED8 (1<<PD4)
+#define LEDStrich1 (1<<PD5)
+#define LEDStrich2 (1<<PD6)
+#define LEDStrich3 (1<<PD7)
+#define LEDStrich4 (1<<PB0)
+#define LEDZaun1 (1<<PC5)
+#define LEDZaun2 (1<<PC4)
+#define LEDZaun3 (1<<PD3)
+#define LEDZaun4 (1<<PD4)
 
 
 void led_init(void){
@@ -40,17 +40,17 @@ void led_show(uint8_t n) {
 	switch(strich){
 		default:
 		case(4):
-			PORTB |= LED4;
+			PORTB |= LEDStrich4;
 		case(3):
-			PORTB |= LED3;
+			PORTB |= LEDStrich3;
 		case(2):
-			PORTD |= LED2;
+			PORTD |= LEDStrich2;
 		case(1):
-			PORTD |= LED1;
+			PORTD |= LEDStrich1;
 			break;
 		case(0):
-			PORTB &= ~(LED4 | LED3);
-			PORTD &= ~(LED2 | LED1);
+			PORTB &= ~(LEDStrich4 | LEDStrich3);
+			PORTD &= ~(LEDStrich2 | LEDStrich1);
 	}
 }
 
