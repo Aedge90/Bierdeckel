@@ -154,17 +154,30 @@ module BoardLED($fn, width){
     }   
 }
 
+module LED($fn){
+    rotate([-90,90,0]){
+        cylinder(h=5.3-3.85/2,r=3.85/2,center=false);
+        translate([0,0,5.3-3.85/2]){
+            sphere(r = 3.85/2);
+        }
+    }
+}
+
+module BoardLEDsBB() {
+    rotate([0,0,20]){
+        BoardLED(feinheit,LEDHoleWidth);
+    }
+    rotate([0,0,-20]){
+        BoardLED(feinheit,LEDHoleWidth);
+    }
+    rotate([0,0,-50]){
+        BoardLED(feinheit,PWRLEDHoleWidth);
+    }
+}
+
 module BoardLEDs() {
-    color([1,0,0]){
-        rotate([0,0,20]){
-            BoardLED(feinheit,LEDHoleWidth);
-        }
-        rotate([0,0,-20]){
-            BoardLED(feinheit,LEDHoleWidth);
-        }
-        rotate([0,0,-50]){
-            BoardLED(feinheit,PWRLEDHoleWidth);
-        }
+    color([1,0,0]){   
+        LED(21);
     }
 }
 
@@ -232,7 +245,7 @@ difference() {
     Base(feinheit);
     union(){
         BatteryBB();
-        //BoardBB();
+        BoardLEDsBB();
     }
 }
 
@@ -246,5 +259,7 @@ Fill(feinheit);
 //HX711();
 //Board(feinheit);
 BoardLEDs();
+//BoardLEDsBB();
+
 
 
