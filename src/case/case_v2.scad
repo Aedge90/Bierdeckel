@@ -46,22 +46,18 @@ module trapezoid(width_base, width_top,height,thickness) {
 
 //alles was aus Metall ist
 module LoadCell() {
-    //+0.01 ist nur ein Hack damit das Grafikflimmern aufhoert
-    translate([0,0,0.01])
-    color([1,0,0]){
-        //linke Seite der Load Cell muss 47.5mm vom Mittelpunkt entfernt sein
-        //damit das Loch genau im Mittelpunkt liegt
-        translate([-47.5,-yLoadCell/2,baseHeight+dist]){
-            cube(size=[xLoadCell,yLoadCell,zLoadCell], center=false);
-        }
-        //erster Metallhalter ist ca. 1mm dick ueber der Load Cell
-        translate([-47.5,-yLCClamp/2,baseHeight+dist+zLoadCell-(zLCClamp-1)]){
-            cube(size=[xLCClamp,yLCClamp,zLCClamp], center=false);
-        }
-        //zweiter Metallhalter ist ca. 1mm dick unter der Load Cell
-        translate([-47.5+xLoadCell-xLCClamp,-yLCClamp/2,baseHeight+dist-1]){
-            cube(size=[xLCClamp,yLCClamp,zLCClamp], center=false);
-        }
+    //linke Seite der Load Cell muss 47.5mm vom Mittelpunkt entfernt sein
+    //damit das Loch genau im Mittelpunkt liegt
+    translate([-47.5,-yLoadCell/2,baseHeight+dist]){
+        cube(size=[xLoadCell,yLoadCell,zLoadCell], center=false);
+    }
+    //erster Metallhalter ist ca. 1mm dick ueber der Load Cell
+    translate([-47.5,-yLCClamp/2,baseHeight+dist+zLoadCell-(zLCClamp-1)]){
+        cube(size=[xLCClamp,yLCClamp,zLCClamp], center=false);
+    }
+    //zweiter Metallhalter ist ca. 1mm dick unter der Load Cell
+    translate([-47.5+xLoadCell-xLCClamp,-yLCClamp/2,baseHeight+dist-1]){
+        cube(size=[xLCClamp,yLCClamp,zLCClamp], center=false);
     }
 }
 
@@ -99,10 +95,8 @@ module LoadCellBB(){
 }
 
 module Battery(){
-    color([1,0,0]){
-        translate([BatteryPosX,BatteryPosY,-0.1]){
-            cube(size=[xBattery,yBattery,zBattery+0.1], center=false);
-        }
+    translate([BatteryPosX,BatteryPosY,0]){
+        cube(size=[xBattery,yBattery,zBattery], center=false);
     }
 }
 
@@ -114,10 +108,8 @@ module BatteryBB(){
 
 
 module HX711(){
-    color([1,0,0]){
-        translate([HX711posX,HX711posY,baseHeight+HX711distToBase]){
-            cube(size=[xHX711,yHX711,zHX711], center=false);
-        }
+    translate([HX711posX,HX711posY,baseHeight+HX711distToBase]){
+        cube(size=[xHX711,yHX711,zHX711], center=false);
     }
 }
 
@@ -173,21 +165,19 @@ module BoardMount(){
 }
 
 module Board($fn){
-    color([1,0,0]){
-        difference() {
-            translate([0,0,baseHeight]){
-                cylinder(h=zBoard,r=diameter/2-edgeWidth,center=false);
+    difference() {
+        translate([0,0,baseHeight]){
+            cylinder(h=zBoard,r=diameter/2-edgeWidth,center=false);
+        }
+        union(){
+            translate([-100,-100+yBottom1,0.1]){
+                cube(size=[200,100,30]);
             }
-            union(){
-                translate([-100,-100+yBottom1,0.1]){
-                    cube(size=[200,100,30]);
-                }
-                translate([-100,-100+yBottom2,0.1]){
-                    cube(size=[100+14,100,30]);
-                }
+            translate([-100,-100+yBottom2,0.1]){
+                cube(size=[100+14,100,30]);
             }
-        }  
-    }
+        }
+    }  
 }
 
 module BoardBB($fn){
@@ -240,12 +230,15 @@ BoardMount();
 Fill(feinheit);
 
 
-//Battery();
-//LoadCell();
-//HX711();
-//Board(feinheit);
-BoardLEDs();
-//BoardLEDsBB();
+color([0,0,1]){
+    Battery();
+    LoadCell();
+    HX711();
+    translate([0,0,+0.001]){
+        Board(feinheit);
+    }
+    BoardLEDs();
+}
 
 
 
