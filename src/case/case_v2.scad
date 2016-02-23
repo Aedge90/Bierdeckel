@@ -26,6 +26,9 @@ zHX711 = 3;
 
 LEDHoleWidth = 22;
 
+//maximaler Radius des LED Models
+LEDOuterRadius = 3.85;
+
 PWRLEDHoleWidth = 5;
 
 //Ausmase des Boards
@@ -133,9 +136,9 @@ module BoardLED($fn, width){
 
 module LED($fn){
     rotate([-90,90,0]){
-        cylinder(h=5.3-3.85/2,r=3.85/2,center=false);
-        translate([0,0,5.3-3.85/2]){
-            sphere(r = 3.85/2);
+        cylinder(h=5.3-LEDOuterRadius/2,r=LEDOuterRadius/2,center=false);
+        translate([0,0,5.3-LEDOuterRadius/2]){
+            sphere(r = LEDOuterRadius/2);
         }
     }
 }
@@ -153,7 +156,7 @@ module BoardLEDsBB() {
 }
 
 module BoardLEDs() {
-    color([1,0,0]){   
+    translate([0,diameter/2 - edgeWidth,15]){
         LED(21);
     }
 }
@@ -231,11 +234,11 @@ Fill(feinheit);
 
 
 color([0,0,1]){
-    Battery();
-    LoadCell();
-    HX711();
+    //Battery();
+    //LoadCell();
+    //HX711();
     translate([0,0,+0.001]){
-        Board(feinheit);
+    //    Board(feinheit);
     }
     BoardLEDs();
 }
