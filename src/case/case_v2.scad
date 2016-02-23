@@ -28,8 +28,9 @@ LEDHoleWidth = 22;
 
 PWRLEDHoleWidth = 5;
 
-//Ausmase des hx711 Boards
+//Ausmase des Boards
 zBoard = 12 ;  //TODO nachmessen!
+
 
 //Lasse 4 mm Platz zum Boden damit sich die Load Cell verbiegen kann
 dist = 4;
@@ -147,31 +148,31 @@ module HX711BB(){
     }
 }
 
-module BoardLEDs($fn, width){
-    translate([0,0,baseHeight+0.001]){
-        intersection(){
-            translate([-width/2,yBottom2+10,0]){
-                cube(size=[width,diameter/2,zBoard], center=false);
-            }
-            cylinder(h=zBoard,r=diameter/2,center=false);
-        }
+module BoardLED($fn, width){
+    translate([-width/2,diameter/2.4,baseHeight+BoardDistToBase+0.001]){
+        cube(size=[width,diameter/9,zBoard], center=false);
     }   
+}
+
+module BoardLEDs() {
+    color([1,0,0]){
+        rotate([0,0,20]){
+            BoardLED(feinheit,LEDHoleWidth);
+        }
+        rotate([0,0,-20]){
+            BoardLED(feinheit,LEDHoleWidth);
+        }
+        rotate([0,0,-50]){
+            BoardLED(feinheit,PWRLEDHoleWidth);
+        }
+    }
 }
 
 module Board($fn){
     color([1,0,0]){
-        rotate([0,0,20]){
-            BoardLEDs(feinheit,LEDHoleWidth);
-        }
-        rotate([0,0,-20]){
-            BoardLEDs(feinheit,LEDHoleWidth);
-        }
-        rotate([0,0,-50]){
-            BoardLEDs(feinheit,PWRLEDHoleWidth);
-        }
         difference() {
             //+0.001 ist nur ein Hack damit das Grafikflimmern aufhoert
-            translate([0,0,baseHeight+0.001]){
+            translate([0,0,baseHeight+BoardDistToBase+0.001]){
                 cylinder(h=zBoard,r=diameter/2-edgeWidth,center=false);
             }
             union(){
@@ -211,7 +212,7 @@ module Fill($fn){
 //Durchmesser in mm, Hoehe (mit Rand) in mm, Feinheit
 diameter = 110;
 height = 15;
-feinheit = 100;
+feinheit = 200;
 
 BatteryPosX = -25;
 BatteryPosY = -44;
@@ -223,11 +224,15 @@ HX711distToBase = 3;
 yBottom1 = 12;
 yBottom2 = 20;
 
+LEDHoleZ = 4;
+
+BoardDistToBase = 3;
+
 difference() {
     Base(feinheit);
     union(){
         BatteryBB();
-        BoardBB();
+        //BoardBB();
     }
 }
 
@@ -240,5 +245,6 @@ Fill(feinheit);
 //LoadCell();
 //HX711();
 //Board(feinheit);
+BoardLEDs();
 
 
