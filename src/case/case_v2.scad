@@ -44,21 +44,6 @@ module trapezoid(width_base, width_top,height,thickness) {
 }
 }
 
-module Base($fn) {
-    
-    edgeHeight = height - baseHeight;
-    
-    //Grundflaeche
-    cylinder(h=baseHeight,r=diameter/2,center=false);
-    //Rand
-    translate([0,0,baseHeight]){
-        difference() {
-            cylinder(h=edgeHeight,r=diameter/2,center=false);
-            cylinder(h=edgeHeight*3,r=(diameter/2)-edgeWidth,center=true);
-        }
-    }
-}
-
 //alles was aus Metall ist
 module LoadCell() {
     //+0.01 ist nur ein Hack damit das Grafikflimmern aufhoert
@@ -105,10 +90,10 @@ module LoadCellMount(){
 }
 
 module LoadCellBB(){
-    translate([-47.5,-yLCClamp/2,0]){
+    translate([-47.5,-yLCClamp/2,baseHeight]){
         cube(size=[xLoadCell,yLCClamp,30], center=false);
     }
-    translate([-47.5+xLoadCell-xLCClamp-2,-yLCClamp/2-1,0]){
+    translate([-47.5+xLoadCell-xLCClamp-2,-yLCClamp/2-1,baseHeight]){
         cube(size=[xLCClamp+2,yLCClamp+2,30], center=false);
     }
 }
@@ -143,13 +128,13 @@ module HX711Mount(){
 }
 
 module HX711BB(){
-    translate([HX711posX,HX711posY,0]){
+    translate([HX711posX,HX711posY,baseHeight]){
         cube(size=[xHX711,yHX711,30], center=false);
     }
 }
 
 module BoardLED($fn, width){
-    translate([-width/2,diameter/2.4,baseHeight+BoardDistToBase+0.001]){
+    translate([-width/2,diameter/2.4,baseHeight+BoardDistToBase]){
         cube(size=[width,diameter/9,zBoard], center=false);
     }   
 }
@@ -181,11 +166,16 @@ module BoardLEDs() {
     }
 }
 
+module BoardMount(){
+    translate([-10,23,baseHeight]){
+        cube(size=[xHX711,yHX711,BoardDistToBase], center=false);
+    }
+}
+
 module Board($fn){
     color([1,0,0]){
         difference() {
-            //+0.001 ist nur ein Hack damit das Grafikflimmern aufhoert
-            translate([0,0,baseHeight+BoardDistToBase+0.001]){
+            translate([0,0,baseHeight]){
                 cylinder(h=zBoard,r=diameter/2-edgeWidth,center=false);
             }
             union(){
@@ -217,6 +207,7 @@ module Fill($fn){
             BatteryBB();
             LoadCellBB();
             BoardBB(feinheit);
+            BoardLEDsBB();
         }
     }
 }
@@ -241,16 +232,11 @@ LEDHoleZ = 4;
 
 BoardDistToBase = 3;
 
-difference() {
-    Base(feinheit);
-    union(){
-        BatteryBB();
-        BoardLEDsBB();
-    }
-}
+
 
 LoadCellMount();
 HX711Mount();
+BoardMount();
 Fill(feinheit);
 
 
