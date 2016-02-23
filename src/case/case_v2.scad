@@ -26,8 +26,9 @@ zHX711 = 3;
 
 LEDHoleWidth = 22;
 
-//maximaler Radius des LED Models
+//maximaler Durchmesser des LED Models
 LEDOuterRadius = 3.85;
+LEDInnerRadius = 3;
 
 PWRLEDHoleWidth = 5;
 
@@ -135,10 +136,13 @@ module BoardLED($fn, width){
 }
 
 module LED($fn){
-    rotate([-90,90,0]){
-        cylinder(h=5.3-LEDOuterRadius/2,r=LEDOuterRadius/2,center=false);
-        translate([0,0,5.3-LEDOuterRadius/2]){
-            sphere(r = LEDOuterRadius/2);
+    translate([0,diameter/2 - edgeWidth,height-LEDHoleZ+LEDInnerRadius/2]){
+        rotate([-90,90,0]){
+            cylinder(h=1,r=LEDOuterRadius/2,center=false);
+            cylinder(h=5.3-LEDInnerRadius/2,r=LEDInnerRadius/2,center=false);
+            translate([0,0,5.3-LEDInnerRadius/2]){
+                sphere(r = LEDInnerRadius/2);
+            }
         }
     }
 }
@@ -156,8 +160,38 @@ module BoardLEDsBB() {
 }
 
 module BoardLEDs() {
-    translate([0,diameter/2 - edgeWidth,15]){
-        LED(21);
+    color([1,1,0]){
+        rotate([0,0,11]){
+            LED(21);
+        }
+        rotate([0,0,17]){
+            LED(21);
+        }
+        rotate([0,0,23]){
+            LED(21);
+        }
+        rotate([0,0,29]){
+            LED(21);
+        }
+    }
+    color([1,0,0]){
+        rotate([0,0,-11]){
+            LED(21);
+        }
+        rotate([0,0,-17]){
+            LED(21);
+        }
+        rotate([0,0,-23]){
+            LED(21);
+        }
+        rotate([0,0,-29]){
+            LED(21);
+        }
+    }
+    color([0,1,0]){
+        rotate([0,0,-50]){
+            LED(21);
+        }
     }
 }
 
@@ -221,18 +255,17 @@ HX711distToBase = 3;
 yBottom1 = 12;
 yBottom2 = 20;
 
-LEDHoleZ = 4;
+LEDHoleZ = 3.5;
 
 BoardDistToBase = 3;
 
-
-
-LoadCellMount();
-HX711Mount();
-BoardMount();
-Fill(feinheit);
-
-
+color([0,1,0]){
+    LoadCellMount();
+    HX711Mount();
+    BoardMount();
+    Fill(feinheit);
+}
+    
 color([0,0,1]){
     //Battery();
     //LoadCell();
@@ -240,8 +273,9 @@ color([0,0,1]){
     translate([0,0,+0.001]){
     //    Board(feinheit);
     }
-    BoardLEDs();
 }
+
+BoardLEDs();
 
 
 
