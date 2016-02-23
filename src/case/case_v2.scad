@@ -134,8 +134,8 @@ module HX711BB(){
 }
 
 module BoardLED($fn, width){
-    translate([-width/2,diameter/2.4,baseHeight+BoardDistToBase]){
-        cube(size=[width,diameter/9,zBoard], center=false);
+    translate([-width/2,diameter/2.4,height-LEDHoleZ+0.001]){
+        cube(size=[width,diameter/9,LEDHoleZ], center=false);
     }   
 }
 
