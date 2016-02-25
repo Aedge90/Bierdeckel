@@ -2,7 +2,7 @@
 //Konstanten
 //Hoehe der Grundflaeche
 baseHeight = 3; //mm
-edgeWidth = 4;
+edgeWidth = 5;
 
 //Ausmase der Load Cell
 xLoadCell = 55;
@@ -241,7 +241,7 @@ module Fill($fn){
 
 //Freiheitsgrade
 //Durchmesser in mm, Hoehe (mit Rand) in mm, Feinheit
-diameter = 110;
+diameter = 108;
 height = 15;
 feinheit = 200;
 
@@ -259,12 +259,12 @@ LEDHoleZ = 3.5;
 
 BoardDistToBase = 3;
 
-color([0,1,0]){
+//color([0,1,0]){
     LoadCellMount();
     HX711Mount();
     BoardMount();
     Fill(feinheit);
-}
+//}
     
 color([0,0,1]){
     //Battery();
