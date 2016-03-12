@@ -9,17 +9,17 @@
 <grid distance="5" unitdist="mil" unit="mm" style="lines" multiple="1" display="no" altdistance="5" altunitdist="mil" altunit="mil"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="no" active="yes"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="yes"/>
-<layer number="20" name="Dimension" color="15" fill="1" visible="no" active="yes"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="yes"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="yes"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="yes"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="yes"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
@@ -44,8 +44,8 @@
 <layer number="48" name="Document" color="7" fill="1" visible="no" active="yes"/>
 <layer number="49" name="Reference" color="7" fill="1" visible="no" active="yes"/>
 <layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="yes"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="yes"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="53" name="tGND_GNDA" color="7" fill="9" visible="no" active="no"/>
 <layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
 <layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
@@ -92,7 +92,7 @@
 <layer number="153" name="FabDoc1" color="6" fill="1" visible="no" active="no"/>
 <layer number="154" name="FabDoc2" color="2" fill="1" visible="no" active="no"/>
 <layer number="155" name="FabDoc3" color="7" fill="15" visible="no" active="no"/>
-<layer number="199" name="Contour" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="199" name="Contour" color="7" fill="1" visible="no" active="yes"/>
 <layer number="200" name="200bmp" color="7" fill="1" visible="no" active="yes"/>
 <layer number="201" name="201bmp" color="2" fill="1" visible="no" active="no"/>
 <layer number="202" name="202bmp" color="3" fill="1" visible="no" active="no"/>
@@ -125,10 +125,10 @@
 </layers>
 <board>
 <plain>
-<wire x1="20.345471875" y1="24.64364375" x2="20.617596875" y2="49.016115625" width="0" layer="20"/>
-<wire x1="20.617596875" y1="49.016115625" x2="90.63675" y2="49.349575" width="0" layer="20"/>
-<wire x1="90.63675" y1="49.349575" x2="89.912409375" y2="14.87245" width="0" layer="20"/>
-<wire x1="89.912409375" y1="14.87245" x2="20.345471875" y2="24.64364375" width="0" layer="20"/>
+<wire x1="18.440471875" y1="23.50064375" x2="18.458596875" y2="49.524115625" width="0" layer="20"/>
+<wire x1="18.458596875" y1="49.524115625" x2="93.55775" y2="49.603575" width="0" layer="20"/>
+<wire x1="93.55775" y1="49.603575" x2="93.595409375" y2="12.84045" width="0" layer="20"/>
+<wire x1="93.595409375" y1="12.84045" x2="18.440471875" y2="23.50064375" width="0" layer="20"/>
 <text x="34.544" y="40.513" size="0.9144" layer="1" font="vector" ratio="28">RX</text>
 <text x="41.402" y="40.259" size="0.9144" layer="1" font="vector" ratio="28">TX</text>
 <text x="51.562" y="26.797" size="0.9144" layer="1" font="vector" ratio="28">GND</text>
