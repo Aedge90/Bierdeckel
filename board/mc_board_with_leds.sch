@@ -17488,12 +17488,12 @@ Source: www.bourns.com .. 6000_series.pdf</description>
 <part name="GND18" library="supply1" deviceset="GND" device=""/>
 <part name="P+17" library="supply1" deviceset="+5V" device=""/>
 <part name="UART1" library="pinhead" deviceset="PINHD-1X2" device="" value="JP2"/>
-<part name="IC1" library="texas" deviceset="TPS6107*" device="DDC" technology="0"/>
-<part name="L1" library="rcl" deviceset="L-EU" device="L4532P"/>
-<part name="R2" library="resistor" deviceset="R-EU_" device="R0805"/>
-<part name="R12" library="resistor" deviceset="R-EU_" device="R0805"/>
-<part name="C_IN" library="rcl-2" deviceset="C-EU" device="C0805"/>
-<part name="C_OUT" library="rcl-2" deviceset="C-EU" device="C0805"/>
+<part name="MCP1640BT-I" library="texas" deviceset="TPS6107*" device="DDC" technology="0"/>
+<part name="L1" library="rcl" deviceset="L-EU" device="L4532P" value="4,7µH"/>
+<part name="R_TOP" library="resistor" deviceset="R-EU_" device="R0805" value="560k"/>
+<part name="R_BOT" library="resistor" deviceset="R-EU_" device="R0805" value="330k"/>
+<part name="C_IN" library="rcl-2" deviceset="C-EU" device="C0805" value="4.7μF"/>
+<part name="C_OUT" library="rcl-2" deviceset="C-EU" device="C0805" value="47μF"/>
 <part name="GND1" library="supply1" deviceset="GND" device=""/>
 <part name="GND2" library="supply1" deviceset="GND" device=""/>
 <part name="P+1" library="supply1" deviceset="+5V" device=""/>
@@ -17570,10 +17570,10 @@ bridges to GND</text>
 <instance part="GND18" gate="1" x="281.94" y="25.4"/>
 <instance part="P+17" gate="1" x="304.8" y="48.26"/>
 <instance part="UART1" gate="G$1" x="353.06" y="60.96"/>
-<instance part="IC1" gate="G$1" x="76.2" y="-48.26"/>
+<instance part="MCP1640BT-I" gate="G$1" x="76.2" y="-48.26"/>
 <instance part="L1" gate="G$1" x="60.96" y="-25.4" rot="R90"/>
-<instance part="R2" gate="G$1" x="99.06" y="-48.26" rot="R270"/>
-<instance part="R12" gate="G$1" x="99.06" y="-63.5" rot="R270"/>
+<instance part="R_TOP" gate="G$1" x="99.06" y="-48.26" rot="R270"/>
+<instance part="R_BOT" gate="G$1" x="99.06" y="-63.5" rot="R270"/>
 <instance part="C_IN" gate="G$1" x="50.8" y="-53.34"/>
 <instance part="C_OUT" gate="G$1" x="111.76" y="-48.26"/>
 <instance part="GND1" gate="1" x="50.8" y="-66.04"/>
@@ -17702,7 +17702,7 @@ bridges to GND</text>
 </segment>
 <segment>
 <pinref part="GND2" gate="1" pin="GND"/>
-<pinref part="IC1" gate="G$1" pin="GND"/>
+<pinref part="MCP1640BT-I" gate="G$1" pin="GND"/>
 <wire x1="60.96" y1="-63.5" x2="60.96" y2="-53.34" width="0.1524" layer="91"/>
 <wire x1="60.96" y1="-53.34" x2="66.04" y2="-53.34" width="0.1524" layer="91"/>
 </segment>
@@ -17713,7 +17713,7 @@ bridges to GND</text>
 </segment>
 <segment>
 <pinref part="GND3" gate="1" pin="GND"/>
-<pinref part="R12" gate="G$1" pin="2"/>
+<pinref part="R_BOT" gate="G$1" pin="2"/>
 <wire x1="99.06" y1="-71.12" x2="99.06" y2="-68.58" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -17790,9 +17790,9 @@ bridges to GND</text>
 <wire x1="304.8" y1="30.48" x2="304.8" y2="45.72" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="IC1" gate="G$1" pin="VOUT"/>
+<pinref part="MCP1640BT-I" gate="G$1" pin="VOUT"/>
 <wire x1="88.9" y1="-40.64" x2="99.06" y2="-40.64" width="0.1524" layer="91"/>
-<pinref part="R2" gate="G$1" pin="1"/>
+<pinref part="R_TOP" gate="G$1" pin="1"/>
 <wire x1="99.06" y1="-40.64" x2="111.76" y2="-40.64" width="0.1524" layer="91"/>
 <wire x1="111.76" y1="-40.64" x2="114.3" y2="-40.64" width="0.1524" layer="91"/>
 <wire x1="99.06" y1="-43.18" x2="99.06" y2="-40.64" width="0.1524" layer="91"/>
@@ -18098,7 +18098,7 @@ bridges to GND</text>
 <label x="289.56" y="93.98" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="IC1" gate="G$1" pin="VBAT"/>
+<pinref part="MCP1640BT-I" gate="G$1" pin="VBAT"/>
 <wire x1="66.04" y1="-45.72" x2="58.42" y2="-45.72" width="0.1524" layer="91"/>
 <pinref part="C_IN" gate="G$1" pin="1"/>
 <wire x1="58.42" y1="-45.72" x2="50.8" y2="-45.72" width="0.1524" layer="91"/>
@@ -18109,7 +18109,7 @@ bridges to GND</text>
 <pinref part="L1" gate="G$1" pin="1"/>
 <wire x1="55.88" y1="-25.4" x2="50.8" y2="-25.4" width="0.1524" layer="91"/>
 <wire x1="50.8" y1="-25.4" x2="50.8" y2="-45.72" width="0.1524" layer="91"/>
-<pinref part="IC1" gate="G$1" pin="EN"/>
+<pinref part="MCP1640BT-I" gate="G$1" pin="EN"/>
 <wire x1="66.04" y1="-48.26" x2="58.42" y2="-48.26" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="-48.26" x2="58.42" y2="-45.72" width="0.1524" layer="91"/>
 <junction x="58.42" y="-45.72"/>
@@ -18117,17 +18117,17 @@ bridges to GND</text>
 </net>
 <net name="N$5" class="0">
 <segment>
-<pinref part="IC1" gate="G$1" pin="SW"/>
+<pinref part="MCP1640BT-I" gate="G$1" pin="SW"/>
 <pinref part="L1" gate="G$1" pin="2"/>
 <wire x1="66.04" y1="-40.64" x2="66.04" y2="-25.4" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$6" class="0">
 <segment>
-<pinref part="R12" gate="G$1" pin="1"/>
-<pinref part="R2" gate="G$1" pin="2"/>
+<pinref part="R_BOT" gate="G$1" pin="1"/>
+<pinref part="R_TOP" gate="G$1" pin="2"/>
 <wire x1="99.06" y1="-58.42" x2="99.06" y2="-55.88" width="0.1524" layer="91"/>
-<pinref part="IC1" gate="G$1" pin="FB"/>
+<pinref part="MCP1640BT-I" gate="G$1" pin="FB"/>
 <wire x1="99.06" y1="-55.88" x2="99.06" y2="-53.34" width="0.1524" layer="91"/>
 <wire x1="88.9" y1="-45.72" x2="88.9" y2="-55.88" width="0.1524" layer="91"/>
 <wire x1="88.9" y1="-55.88" x2="99.06" y2="-55.88" width="0.1524" layer="91"/>
