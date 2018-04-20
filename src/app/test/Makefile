@@ -1,0 +1,5 @@
+# -U lfuse:w:0x6d:m -U hfuse:w:0xdd:m -U efuse:w:0xf9:m
+
+all:
+	avrdude -c avrisp -p atmega88P -P /dev/ttyUSB0 -b 4800 -U lfuse:w:0x6d:m -U hfuse:w:0xdd:m -U efuse:w:0xf9:m
+
