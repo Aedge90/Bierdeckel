@@ -40,7 +40,10 @@ int main(void)
 	bool empty = false;
 	// blink once to indicate initilisation has finished
 	for(;;) {
+		sleep16m(1);
 		led_show(25);
+		sleep16m(1);
+		led_show(0);
 	}
 	for(;;){
 		int32_t valg;

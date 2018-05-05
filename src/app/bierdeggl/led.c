@@ -12,7 +12,7 @@
 #define LEDStrich3 (1<<PC4)
 #define LEDStrich4 (1<<PC5)
 
-
+// defines the data direction of the pins. 1 is output, 0 is input
 void led_init(void){
 	DDRD |= 0b11111000;
 	DDRC |= 0b00110000;
@@ -36,7 +36,7 @@ void led_show(uint8_t n) {
 			break;
 		case(0):
 			PORTD &= ~(LEDZaun4 | LEDZaun3 | LEDZaun2);
-			PORTC &= ~(LEDZaun1);
+			PORTB &= ~(LEDZaun1);
 	}
 	switch(strich){
 		default:
