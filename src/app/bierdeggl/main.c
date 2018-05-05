@@ -39,9 +39,9 @@ int main(void)
 	uint8_t n = 0;
 	bool empty = false;
 	// blink once to indicate initilisation has finished
-	led_show(25);
-	timer_wait(1);
-	led_show(0);
+	for(;;) {
+		led_show(25);
+	}
 	for(;;){
 		int32_t valg;
 		// blink while glass is empty

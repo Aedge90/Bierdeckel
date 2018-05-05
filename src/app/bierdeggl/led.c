@@ -30,27 +30,27 @@ void led_show(uint8_t n) {
 		case(3):
 			PORTD |= LEDZaun3;
 		case(2):
-			PORTC |= LEDZaun2;
+			PORTD |= LEDZaun2;
 		case(1):
-			PORTC |= LEDZaun1;
+			PORTB |= LEDZaun1;
 			break;
 		case(0):
-			PORTD &= ~(LEDZaun4 | LEDZaun3);
-			PORTC &= ~(LEDZaun2 | LEDZaun1);
+			PORTD &= ~(LEDZaun4 | LEDZaun3 | LEDZaun2);
+			PORTC &= ~(LEDZaun1);
 	}
 	switch(strich){
 		default:
 		case(4):
-			PORTB |= LEDStrich4;
+			PORTC |= LEDStrich4;
 		case(3):
-			PORTB |= LEDStrich3;
+			PORTC |= LEDStrich3;
 		case(2):
 			PORTD |= LEDStrich2;
 		case(1):
 			PORTD |= LEDStrich1;
 			break;
 		case(0):
-			PORTB &= ~(LEDStrich4 | LEDStrich3);
+			PORTC &= ~(LEDStrich4 | LEDStrich3);
 			PORTD &= ~(LEDStrich2 | LEDStrich1);
 	}
 }
