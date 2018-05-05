@@ -21,10 +21,8 @@ void led_init(void){
 
 void led_show(uint8_t n) {
 	int zaun = n/5;
-	int strich = n%5;
+	int strich = n-(zaun*5);
 	switch(zaun){
-		default:
-			strich = 5;
 		case(4):
 			PORTD |= LEDZaun4;
 		case(3):
@@ -34,12 +32,11 @@ void led_show(uint8_t n) {
 		case(1):
 			PORTB |= LEDZaun1;
 			break;
-		case(0):
+		default:
 			PORTD &= ~(LEDZaun4 | LEDZaun3 | LEDZaun2);
 			PORTB &= ~(LEDZaun1);
 	}
 	switch(strich){
-		default:
 		case(4):
 			PORTC |= LEDStrich4;
 		case(3):
@@ -49,7 +46,7 @@ void led_show(uint8_t n) {
 		case(1):
 			PORTD |= LEDStrich1;
 			break;
-		case(0):
+		default:
 			PORTC &= ~(LEDStrich4 | LEDStrich3);
 			PORTD &= ~(LEDStrich2 | LEDStrich1);
 	}

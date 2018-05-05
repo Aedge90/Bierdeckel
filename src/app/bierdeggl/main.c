@@ -39,11 +39,12 @@ int main(void)
 	uint8_t n = 0;
 	bool empty = false;
 	// blink once to indicate initilisation has finished
-	for(;;) {
-		sleep16m(1);
-		led_show(25);
-		sleep16m(1);
-		led_show(0);
+	for(int i = 0; true; i++) {
+		if (i == 25) {
+			i = 0;
+		}
+		sleep16m(2);
+		led_show(i);
 	}
 	for(;;){
 		int32_t valg;
