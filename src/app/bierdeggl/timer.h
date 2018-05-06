@@ -3,9 +3,8 @@
 
 #include <inttypes.h>
 
-volatile uint32_t systime;
+volatile uint32_t seconds;
 volatile uint32_t ticks;
-volatile uint8_t qms;
 
 void timer_init(void);
 void timer_wait(uint32_t t);

@@ -6,16 +6,13 @@
 
 
 // The Overflow Interrupt Handler is called when TCNT2 is set from 255 to 0 wechselt (256 Cycles)
-// So this is called every F_CPU / 256 / Prescaler 
+// So this is called F_CPU / 256 / Prescaler per second
 // (F_CPU, which was set in the Makefile = the Clock Speed of the external Oscillator)
 // (256, because TCNT2 is 8 bit; Prescaler, which divides the input clock)
 ISR(TIMER2_OVF_vect){
-	if (++qms >= 61){ // 100ms -> 128/10
-		qms = 0;
-		++systime; //1 Hz
-	}
-	++ticks; //61 Hz
-	//RFM_GetMode();
+	ticks++;
+	// prescaler is 1024, so this is called 4194304/256/1024 = 16 times per second
+	seconds = ticks/16;
 }
 
 void timer_init(void){
@@ -36,13 +33,12 @@ void timer_init(void){
 	 * 1    1    0    clk_T2S/256
 	 * 1    1    1    clk_T2S/1024
 	*/
-	TCCR2B = (1<<CS20);
+	TCCR2B = (1<<CS22) | (1<<CS21) | (1<<CS20); // /1024
 
 	TIMSK2 |= 1<<TOIE2;	
 	
-	systime = 0;
+	seconds = 0;
 	ticks = 0;
-	qms = 0;	
 }
 
 /*
@@ -61,10 +57,10 @@ Sleep Modes:
 
 // t: Time in seconds
 void timer_wait(uint32_t t){
-	uint32_t now = timer_get();
+	uint32_t now = seconds;
 	set_sleep_mode(_SLEEP_MODE);
 	cli();
-	while (timer_get() < now + t){
+	while (seconds < now + t){
 		sleep_enable();
 		sleep_bod_disable();
 		sei();
@@ -72,13 +68,5 @@ void timer_wait(uint32_t t){
 		sleep_disable();
 	}
 	sei();
-}
-
-uint32_t timer_get(void){
-	return systime;
-}
-
-uint32_t ticks_get(void){
-	return ticks;
 }
 
