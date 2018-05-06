@@ -4,7 +4,11 @@
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
 
-// F_CPU / 2**8 / Prescaler
+
+// The Overflow Interrupt Handler is called when TCNT2 is set from 255 to 0 wechselt (256 Cycles)
+// So this is called every F_CPU / 256 / Prescaler 
+// (F_CPU, which was set in the Makefile = the Clock Speed of the external Oscillator)
+// (256, because TCNT2 is 8 bit; Prescaler, which divides the input clock)
 ISR(TIMER2_OVF_vect){
 	if (++qms >= 61){ // 100ms -> 128/10
 		qms = 0;
