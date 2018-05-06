@@ -55,7 +55,7 @@ F_CPU = 4194304
 
 FUSE_L=0xED
 FUSE_H=0xDD
-FUSE_E=0x01
+FUSE_E=0xF9
 # Output format. (can be srec, ihex, binary)
 FORMAT = ihex
 
