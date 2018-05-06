@@ -15,19 +15,24 @@ ISR(TIMER2_OVF_vect){
 }
 
 void timer_init(void){
+	
+	// When AS2 is written to one, Timer/Counter2 is clocked from a crystal Oscillator
+	// connected to the Timer Oscillator 1 (TOSC1) pin
 	ASSR |= (1<<AS2);
+	
+	// The three Clock Select bits select the clock source to be used by the Timer/Counter
 	/*
-	 * CS 	Pre
-	 * 000 	inf
-	 * 001	1
-	 * 010	8
-	 * 011	32
-	 * 100	64
-	 * 101	128
-	 * 110	256
-	 * 111	1024
+	 * CS22 CS21 CS20 Prescaling
+	 * 0    0    0    No clock source (Timer/Counter stopped)
+	 * 0    0    1    clk_T2S/1 (no prescaling)
+	 * 0    1    0    clk_T2S/8
+	 * 0    1    1    clk_T2S/32
+	 * 1    0    0    clk_T2S/64
+	 * 1    0    1    clk_T2S/128
+	 * 1    1    0    clk_T2S/256
+	 * 1    1    1    clk_T2S/1024
 	*/
-	TCCR2B = (1<<CS22) | (1<<CS21) | (1<<CS20); // /1024
+	TCCR2B = (1<<CS20);
 
 	TIMSK2 |= 1<<TOIE2;	
 	
@@ -49,39 +54,20 @@ Sleep Modes:
 //Not sure if this would work without ext oszi..
 //..in this case use SLEEP_MODE_EXT_STANDBY
 #define _SLEEP_MODE SLEEP_MODE_PWR_SAVE  
-// t: 1s
-void sleep(uint32_t t){ timer_wait(t); }
+
+// t: Time in seconds
 void timer_wait(uint32_t t){
 	uint32_t now = timer_get();
-
-        set_sleep_mode(_SLEEP_MODE);
-        cli();
+	set_sleep_mode(_SLEEP_MODE);
+	cli();
 	while (timer_get() < now + t){
-        	sleep_enable();
-	        sleep_bod_disable();
-        	sei();
-	        sleep_cpu();
-	        sleep_disable();
-	}	
-        sei();
-
-}
-// t: 16ms
-void sleep16m(uint32_t t){ timer_wait_16ms(t); }
-void timer_wait_16ms(uint32_t t){
-	uint32_t now = ticks_get();
-
-        set_sleep_mode(_SLEEP_MODE);
-        cli();
-	while (ticks_get() < now + t){
-        	sleep_enable();
-	        sleep_bod_disable();
-        	sei();
-	        sleep_cpu();
-	        sleep_disable();
-	}	
-        sei();
-
+		sleep_enable();
+		sleep_bod_disable();
+		sei();
+		sleep_cpu();
+		sleep_disable();
+	}
+	sei();
 }
 
 uint32_t timer_get(void){
@@ -91,3 +77,4 @@ uint32_t timer_get(void){
 uint32_t ticks_get(void){
 	return ticks;
 }
+

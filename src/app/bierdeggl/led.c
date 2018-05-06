@@ -53,8 +53,8 @@ void led_show(uint8_t n) {
 }
 
 void led_blink(uint8_t n) {
-	sleep16m(10);
+	timer_wait(1);
 	led_show(0);
-	sleep16m(10);
+	timer_wait(1);
 	led_show(n);
 }

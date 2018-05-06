@@ -52,7 +52,7 @@ int main(void)
 		// if no LEDs are avail, blink LED8
 
 		if (isEmpty((valg = hx711_get_mg()/1000))){
-			sleep16m(1);
+			timer_wait(1);
 			while (isEmpty((valg = hx711_get_mg()/1000))){
 				empty |= 1;
 				if (0 == n) PORTD |= 1<<PD4;
