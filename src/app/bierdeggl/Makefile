@@ -50,13 +50,12 @@ MCU = atmega88p
 #     processor frequency. You can then use this symbol in your source code to 
 #     calculate timings. Do NOT tack on a 'UL' at the end, this will be done
 #     automatically to create a 32-bit value in your source code.
-F_CPU = 16000000
-#F_CPU = 1000000
+F_CPU = 4194304
 
 
-FUSE_L=0xFF
-FUSE_H=0xDE
-FUSE_E=0x05
+FUSE_L=0xED
+FUSE_H=0xDD
+FUSE_E=0x01
 # Output format. (can be srec, ihex, binary)
 FORMAT = ihex
 
@@ -209,10 +208,8 @@ LDFLAGS += $(PRINTF_LIB) $(SCANF_LIB) $(MATH_LIB)
 # Type: avrdude -c ?
 # to get a full listing.
 #
-AVRDUDE_PROGRAMMER = arduino
-AVRDUDE_PROGRAMMER = stk500v1
+AVRDUDE_PROGRAMMER = avrisp
 
-AVRDUDE_BAUD = 115200
 AVRDUDE_BAUD = 19200
 
 # com1 = serial port. Use lpt1 to connect to parallel port.
@@ -533,7 +530,7 @@ monitor:
 	$(MON_CMD) $(MON_OPT) $(MON_PORT) $(BAUD)
 
 fuse:
-	$(AVRDUDE) -c $(AVRDUDE_PROGRAMMER) -p $(MCU) -P $(AVRDUDE_PORT) -b $(AVRDUDE_BAUD) -U lfuse:w:$(FUSE_L):m -U hfuse:w:$(FUSE_H):m -u efuse:w:$(FUSE_E):m
+	$(AVRDUDE) -c $(AVRDUDE_PROGRAMMER) -p $(MCU) -P $(AVRDUDE_PORT) -b $(AVRDUDE_BAUD) -U lfuse:w:$(FUSE_L):m -U hfuse:w:$(FUSE_H):m -U efuse:w:$(FUSE_E):m
 
 # Include the dependency files.
 -include $(shell mkdir .dep 2>/dev/null) $(wildcard .dep/*)

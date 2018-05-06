@@ -43,7 +43,7 @@ int main(void)
 		if (i == 25) {
 			i = 0;
 		}
-		sleep16m(2);
+		timer_wait(1);
 		led_show(i);
 	}
 	for(;;){
