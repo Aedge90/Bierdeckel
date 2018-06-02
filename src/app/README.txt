@@ -16,4 +16,13 @@ Das Arduino-Board arbeitet jetzt selbst als Programmer.
 
 ### Debugging
 
+The serial to USB(TTL) IC (either FTDI FT232RL or ATmega8U2) is connected to Arduino pins 0 and 1.
+If we hold the processor in RESET mode, then all its GPIO pins will be in tri-state, effectively removing it from the circuit and you 
+can directly interface the serial to USB IC with your device.
+To hold the processor in RESET mode, just connect the RESET pin (which is active-low) with the ground.
+This will hold the processor in RESET mode.
+Now you can connect the serial device to the Arduino pins 0 and 1.
+You should however note that the Rx pin (pin 0) goes to the Rx of the device and Tx pin (pin 1) goes to the Tx of the device and not the other way around.
+In your computer the device will appear as a Virtual COM port. You can connect to it using programs like screen or hyper terminal.
 
+1. run "make monitor" (runs the program "screen" (To end the session, press Ctrl+a followed by k))

@@ -108,7 +108,7 @@ CSTANDARD = -std=gnu99
 
 
 # Place -D or -U options here
-CDEFS = -DF_CPU=$(F_CPU)UL  
+CDEFS = -DF_CPU=$(F_CPU)UL -DBAUD=$(BAUD)
 
 # uncomment and adapt these line if you want different UART library buffer size
 #CDEFS += -DUART_RX_BUFFER_SIZE=128

@@ -2,13 +2,7 @@
 #include <stdio.h>
 #include "uart.h"
 
-#ifndef F_CPU
-#define F_CPU 16000000UL
-#endif
-
-#ifndef BAUD
-#define BAUD 9600
-#endif
+// F_CPU and BAUD are defined in the Makefile
 #include <util/setbaud.h>
 
 // Shit, this works :O

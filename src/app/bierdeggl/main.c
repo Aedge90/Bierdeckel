@@ -10,7 +10,7 @@
 #define true 1
 #define false 0
 
-//#define DEBUG
+#define DEBUG
 
 // > 0 -> unbenutzt
 // ~ 0 -> leer
@@ -39,13 +39,14 @@ int main(void)
 	uint8_t n = 0;
 	bool empty = false;
 	// blink once to indicate initilisation has finished
-	for(int i = 0; true; i++) {
-		if (i == 25) {
-			i = 0;
-		}
-		timer_wait(1);
-		led_show(i);
-	}
+	char input;
+    while(1) {
+        //puts("Hello everybody in this great world!");
+		printf("Hello everybody in this great world!");
+		//input = getchar();
+        //printf("You wrote %c\n", input);
+		led_blink(1);
+    }
 	for(;;){
 		int32_t valg;
 		// blink while glass is empty
