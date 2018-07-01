@@ -42,23 +42,22 @@ void timer_init(void){
 }
 
 /*
-Sleep Modes:
-    #define SLEEP_MODE_IDLE         0
-    #define SLEEP_MODE_PWR_DOWN     1
-    #define SLEEP_MODE_PWR_SAVE     2
-    #define SLEEP_MODE_ADC          3
-    #define SLEEP_MODE_STANDBY      4
-    #define SLEEP_MODE_EXT_STANDBY  5
+possible sleep modes:
+
+SLEEP_MODE_IDLE         
+SLEEP_MODE_PWR_DOWN     
+SLEEP_MODE_PWR_SAVE     
+SLEEP_MODE_ADC          
+SLEEP_MODE_STANDBY      
+SLEEP_MODE_EXT_STANDBY  
 */
 
-//Not sure if this would work without ext oszi..
-//..in this case use SLEEP_MODE_EXT_STANDBY
-#define _SLEEP_MODE SLEEP_MODE_PWR_SAVE  
 
 // t: Time in seconds
 void timer_wait(uint32_t t){
 	uint32_t now = seconds;
-	set_sleep_mode(_SLEEP_MODE);
+	// use SLEEP_MODE_IDLE. Other sleep modes sometimes interfere with UART. Not sure why...
+	set_sleep_mode(SLEEP_MODE_IDLE);
 	cli();
 	while (seconds < now + t){
 		sleep_enable();
@@ -69,4 +68,3 @@ void timer_wait(uint32_t t){
 	}
 	sei();
 }
-

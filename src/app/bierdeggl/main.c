@@ -42,7 +42,8 @@ int main(void)
 	char input;
     while(1) {
         //puts("Hello everybody in this great world!");
-		printf("Hello everybody in this great world!");
+		//printf("Hello everybody in this great world we live in! The quick brown fox jumps over the lazy dog. Lorem ispum dolor sit amet. Mir fällt nichts ein. Die Sonne scheint im Sommer\r\n");
+		printf("Hello\r\n");
 		//input = getchar();
         //printf("You wrote %c\n", input);
 		led_blink(1);

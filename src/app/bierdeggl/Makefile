@@ -279,7 +279,7 @@ BAUD=9600
 # Options for MON_CMD
 MON_OPT=
 # Port to monitor
-MON_PORT=/dev/ttyUSB0
+MON_PORT=/dev/ttyUSB1
 
 
 #============================================================================
